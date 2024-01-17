@@ -1,4 +1,4 @@
-import { Button, Input, Tab, Tabs } from "@nextui-org/react"
+import { Button, Input, Tab, Tabs, Tooltip } from "@nextui-org/react"
 import { useState } from "react"
 import { useAuth } from "../../hooks/auth/useAuth"
 import { UserCredentials, UserFormValues } from "../../types/auth.types"
@@ -56,6 +56,11 @@ const AuthContainer: React.FC = () => {
                   onChange={(event) => setUserPassword(event.target.value)}
                   required
                 />
+                <Tooltip content="Estamos trabalhando nessa função" color="warning">
+                  <Button color="primary" variant="light" disabled>
+                    Esqueci minha senha
+                  </Button>
+                </Tooltip>
                 <Button
                   className="rounded-md"
                   color="primary"
@@ -65,7 +70,7 @@ const AuthContainer: React.FC = () => {
                 >
                   { isLoading ? 'Carregando...' : 'Entrar' }
                 </Button>
-                <Button
+                {/* <Button
                   className="rounded-md"
                   color="primary"
                   size="lg"
@@ -73,7 +78,7 @@ const AuthContainer: React.FC = () => {
                   type="submit"
                 >
                   Entrar com Google
-                </Button>
+                </Button> */}
               </div>
             </form>
           </Tab>
@@ -112,7 +117,7 @@ const AuthContainer: React.FC = () => {
                 >
                   { isLoading ? 'Carregando...' : 'Criar conta' }
                 </Button>
-                <Button
+                {/* <Button
                   className="rounded-md"
                   color="primary"
                   size="lg"
@@ -120,7 +125,7 @@ const AuthContainer: React.FC = () => {
                   type="submit"
                 >
                   Criar com Google
-                </Button>
+                </Button> */}
               </div>
             </form>
           </Tab>
