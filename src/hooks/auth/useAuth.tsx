@@ -11,22 +11,29 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const sigIng = async (userCreds: UserCredentials) => {
-    const result = await SigInService(userCreds)
+    setIsLoading(true)
 
-    if(typeof(result) === 'object') {
-      const user: User = {
-        uid: result.uid,
-        displayName: result.displayName,
-        email: result.email,
-        emailVerified: result.emailVerified,
-        phoneNumber: result.phoneNumber,
-        photoUrl: result.photoURL,
-        isLogged: true,
+    SigInService(userCreds).then((result) => {
+      if(typeof(result) === 'object') {
+        const user: User = {
+          uid: result.uid,
+          displayName: result.displayName,
+          email: result.email,
+          emailVerified: result.emailVerified,
+          phoneNumber: result.phoneNumber,
+          photoUrl: result.photoURL,
+          isLogged: true,
+        }
+        dispatch(changeUser(user))
+      } else {
+        window.alert('Erro ao logar')
       }
-      dispatch(changeUser(user))
-    } else {
-      window.alert('Erro ao logar')
-    }
+    }).catch((err) => {
+      console.error(err)
+    }).finally(() => {
+      setIsLoading(false)
+    })
+
   }
 
   return {
