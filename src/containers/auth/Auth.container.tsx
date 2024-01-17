@@ -72,8 +72,8 @@ const AuthContainer: React.FC = () => {
                       onChange={(event) => setUserPassword(event.target.value)}
                       required
                     />
-                    <Tooltip content="Estamos trabalhando nessa função" color="warning">
-                      <Button color="primary" variant="light" disabled>
+                    <Tooltip content="Estamos trabalhando nessa função" color="warning" delay={800}>
+                      <Button color="primary" variant="light" isDisabled>
                         Esqueci minha senha
                       </Button>
                     </Tooltip>

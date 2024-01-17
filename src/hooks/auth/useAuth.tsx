@@ -35,7 +35,6 @@ export const useAuth = () => {
       }).catch((err) => {
         console.error(err)
       }).finally(() => {
-        console.log('aqui')
         setIsLoading(false)
       })
     }
