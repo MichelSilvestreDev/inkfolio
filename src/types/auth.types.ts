@@ -23,5 +23,5 @@ export type UserCredentials = {
 export type UserFormValues = {
   email: string
   password: string
-  displayName: string
+  // displayName: string
 }

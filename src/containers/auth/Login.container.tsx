@@ -6,7 +6,7 @@ import { UserCredentials } from "../../types/auth.types"
 
 const LoginContainer: React.FC = () => {
   // Hooks
-  const { isLoading, sigIng } = useAuth()
+  const { isLoading, sigIn } = useAuth()
   // States
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
@@ -17,7 +17,7 @@ const LoginContainer: React.FC = () => {
       userPassword: userPassword
     }
     event.preventDefault()
-    await sigIng(userCreds)
+    await sigIn(userCreds)
   }
 
   return (
@@ -26,6 +26,26 @@ const LoginContainer: React.FC = () => {
         <h1 className="text-2xl text-center font-bold">InkFolio</h1>
       </div>
 
+      {/* <Tabs aria-label="Options" color="default" variant="bordered">
+        <Tab
+          key="photos"
+          title={
+            <div className="flex items-center space-x-2">
+              <User theme="outline" size="24" fill="#333" strokeWidth={3}/>
+              <span>Sign</span>
+            </div>
+          }
+        />
+        <Tab
+          key="music"
+          title={
+            <div className="flex items-center space-x-2">
+              <User theme="outline" size="24" fill="#333" strokeWidth={3}/>
+              <span>SigUp</span>
+            </div>
+          }
+        />
+      </Tabs> */}
       <form onSubmit={handleLogin}>
         <div className="flex flex-col gap-4">
           <Input

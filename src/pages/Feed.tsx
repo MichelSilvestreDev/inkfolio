@@ -1,13 +1,13 @@
 import { Button } from "@nextui-org/react"
-import { useDispatch } from "react-redux"
-import { logout } from "../store/auth/authSlice"
+import { useAuth } from "../hooks/auth/useAuth"
 
 const Feed: React.FC = () => {
   // Hooks
-  const dispatch = useDispatch()
+  const { signOut } = useAuth()
 
-  const handleLogout = () => {
-    dispatch(logout())
+  const handleLogout = async () => {
+    await signOut()
+    window.alert('Deslogado')
   }
 
   return (

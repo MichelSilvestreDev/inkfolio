@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { UserCredentials } from '../types/auth.types'
+import { UserCredentials, UserFormValues } from '../types/auth.types'
 import { firebaseAuth } from '../config/firebase/baseConfig'
 
 setPersistence(firebaseAuth, browserLocalPersistence)
@@ -17,7 +17,6 @@ export const SigInService = async ({
 }: UserCredentials): Promise<User | boolean> => {
   try {
     const result = await signInWithEmailAndPassword(firebaseAuth, userEmail, userPassword)
-    console.log(result)
     return result.user
   } catch (err) {
     console.error(err)
@@ -26,13 +25,13 @@ export const SigInService = async ({
 }
 
 export const SigUpService = async ({
-  userEmail,
-  userPassword,
-}: UserCredentials): Promise<boolean> => {
+  email,
+  password,
+}: UserFormValues): Promise<User | boolean> => {
   try {
-    const result = await createUserWithEmailAndPassword(firebaseAuth, userEmail, userPassword)
+    const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
     console.log(result)
-    return true
+    return result.user
   } catch (err) {
     console.error(err)
     return false
@@ -41,8 +40,7 @@ export const SigUpService = async ({
 
 export const SignOutService = async (): Promise<boolean> => {
   try {
-    const result = await signOut(firebaseAuth)
-    console.log(result)
+    await signOut(firebaseAuth)
     return true
   } catch (err) {
     console.error(err)
