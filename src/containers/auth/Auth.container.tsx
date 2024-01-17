@@ -1,4 +1,4 @@
-import { Button, Input, Tab, Tabs, Tooltip } from "@nextui-org/react"
+import { Button, Input, Skeleton, Spinner, Tab, Tabs, Tooltip } from "@nextui-org/react"
 import { useState } from "react"
 import { useAuth } from "../../hooks/auth/useAuth"
 import { UserCredentials, UserFormValues } from "../../types/auth.types"
@@ -40,94 +40,131 @@ const AuthContainer: React.FC = () => {
       {/* =========== LOGIN FORM ================= */}
       <Tabs aria-label="Options" className="w-full flex justify-center">
           <Tab key="login" title="Login">
-            <form onSubmit={handleLogin}>
-              <div className="flex flex-col gap-4">
-                <Input
-                  type="email"
-                  label="E-mail"
-                  radius="sm"
-                  onChange={(event) => setUserEmail(event.target.value)}
-                  required
-                  />
-                <Input
-                  type="password"
-                  label="Senha"
-                  radius="sm"
-                  onChange={(event) => setUserPassword(event.target.value)}
-                  required
-                />
-                <Tooltip content="Estamos trabalhando nessa função" color="warning">
-                  <Button color="primary" variant="light" disabled>
-                    Esqueci minha senha
+            {
+              isLoading ? (
+                <div className="flex flex-col gap-8">
+                  <Skeleton className="h-14 w-full rounded-lg"/>
+                  <Skeleton className="h-14 w-full rounded-lg"/>
+                  <Button
+                    className="rounded-md"
+                    color="primary"
+                    size="lg"
+                    type="submit"
+                    disabled
+                  >
+                    <Spinner color="default" labelColor="foreground"/>
                   </Button>
-                </Tooltip>
-                <Button
-                  className="rounded-md"
-                  color="primary"
-                  size="lg"
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  { isLoading ? 'Carregando...' : 'Entrar' }
-                </Button>
-                {/* <Button
-                  className="rounded-md"
-                  color="primary"
-                  size="lg"
-                  variant="ghost"
-                  type="submit"
-                >
-                  Entrar com Google
-                </Button> */}
-              </div>
-            </form>
+                </div>
+              ) : (
+                <form onSubmit={handleLogin}>
+                  <div className="flex flex-col gap-4">
+                    <Input
+                      type="email"
+                      label="E-mail"
+                      radius="sm"
+                      onChange={(event) => setUserEmail(event.target.value)}
+                      required
+                      />
+                    <Input
+                      type="password"
+                      label="Senha"
+                      radius="sm"
+                      onChange={(event) => setUserPassword(event.target.value)}
+                      required
+                    />
+                    <Tooltip content="Estamos trabalhando nessa função" color="warning">
+                      <Button color="primary" variant="light" disabled>
+                        Esqueci minha senha
+                      </Button>
+                    </Tooltip>
+                    <Button
+                      className="rounded-md"
+                      color="primary"
+                      size="lg"
+                      type="submit"
+                      disabled={isLoading}
+                    >
+                      { isLoading ? 'Carregando...' : 'Entrar' }
+                    </Button>
+                    {/* <Button
+                      className="rounded-md"
+                      color="primary"
+                      size="lg"
+                      variant="ghost"
+                      type="submit"
+                    >
+                      Entrar com Google
+                    </Button> */}
+                  </div>
+                </form>
+              )
+            }
           </Tab>
 
           {/* =========== CREATE ACCOUNT FORM ================= */}
           <Tab key="sigup" title="Criar conta">
-            <form onSubmit={handleCreateAccount}>
-              <div className="flex flex-col gap-4">
-                <Input
-                  type="text"
-                  label="Nome"
-                  radius="sm"
-                  onChange={(event) => setUserName(event.target.value)}
-                  required
-                  />
-                <Input
-                  type="email"
-                  label="E-mail"
-                  radius="sm"
-                  onChange={(event) => setUserEmail(event.target.value)}
-                  required
-                  />
-                <Input
-                  type="password"
-                  label="Senha"
-                  radius="sm"
-                  onChange={(event) => setUserPassword(event.target.value)}
-                  required
-                />
-                <Button
-                  className="rounded-md"
-                  color="primary"
-                  size="lg"
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  { isLoading ? 'Carregando...' : 'Criar conta' }
-                </Button>
-                {/* <Button
-                  className="rounded-md"
-                  color="primary"
-                  size="lg"
-                  variant="ghost"
-                  type="submit"
-                >
-                  Criar com Google
-                </Button> */}
-              </div>
-            </form>
+            {
+              isLoading ? (
+                <div className="flex flex-col gap-8">
+                  <Skeleton className="h-14 w-full rounded-lg"/>
+                  <Skeleton className="h-14 w-full rounded-lg"/>
+                  <Skeleton className="h-14 w-full rounded-lg"/>
+                  <Button
+                    className="rounded-md"
+                    color="primary"
+                    size="lg"
+                    type="submit"
+                    disabled
+                  >
+                    <Spinner color="default" labelColor="foreground"/>
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handleCreateAccount}>
+                  <div className="flex flex-col gap-4">
+                    <Input
+                      type="text"
+                      label="Nome"
+                      radius="sm"
+                      onChange={(event) => setUserName(event.target.value)}
+                      required
+                      />
+                    <Input
+                      type="email"
+                      label="E-mail"
+                      radius="sm"
+                      onChange={(event) => setUserEmail(event.target.value)}
+                      required
+                      />
+                    <Input
+                      type="password"
+                      label="Senha"
+                      radius="sm"
+                      onChange={(event) => setUserPassword(event.target.value)}
+                      required
+                    />
+                    <Button
+                      className="rounded-md"
+                      color="primary"
+                      size="lg"
+                      type="submit"
+                      disabled={isLoading}
+                    >
+                      { isLoading ? 'Carregando...' : 'Criar conta' }
+                    </Button>
+                    {/* <Button
+                      className="rounded-md"
+                      color="primary"
+                      size="lg"
+                      variant="ghost"
+                      type="submit"
+                    >
+                      Criar com Google
+                    </Button> */}
+                  </div>
+                </form>
+              )
+            }
           </Tab>
       </Tabs>
     </div>

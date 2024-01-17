@@ -2,6 +2,8 @@ import {
   User,
   browserLocalPersistence,
   createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
   setPersistence,
   signInWithEmailAndPassword,
   signOut,
@@ -9,15 +11,40 @@ import {
 import { UserCredentials, UserFormValues } from '../types/auth.types'
 import { firebaseAuth } from '../config/firebase/baseConfig'
 
+type UserResponse = {
+  user: User
+  token: string
+}
+
 setPersistence(firebaseAuth, browserLocalPersistence)
+const auth = getAuth()
+
+export const GetUserService = async (): Promise<User | null> => {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve(user)
+      } else {
+        resolve(null)
+      }
+      unsubscribe()
+    })
+  })
+}
 
 export const SigInService = async ({
   userEmail,
   userPassword,
-}: UserCredentials): Promise<User | boolean> => {
+}: UserCredentials): Promise<UserResponse | boolean> => {
   try {
     const result = await signInWithEmailAndPassword(firebaseAuth, userEmail, userPassword)
-    return result.user
+    const token = await result.user.getIdToken()
+
+    const userResponse: UserResponse = {
+      user: result.user,
+      token: token,
+    }
+    return userResponse
   } catch (err) {
     console.error(err)
     return false

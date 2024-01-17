@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/auth/useAuth"
 
 const Feed: React.FC = () => {
   // Hooks
-  const { signOut } = useAuth()
+  const { user, signOut } = useAuth()
 
   const handleLogout = async () => {
     await signOut()
@@ -12,7 +12,7 @@ const Feed: React.FC = () => {
 
   return (
     <div className="shadow-lg w-1/4 min-w-96 flex flex-col gap-10 p-8 rounded-sm">
-      <h1>LOGADO</h1>
+      <h1>Bem vindo(a) { user.email }</h1>
       <Button
         className="rounded-md"
         color="primary"
