@@ -15,26 +15,29 @@ export const useAuth = () => {
 
   // Função assíncrona para buscar os dados do usuário
   const fetchUserData = useCallback(async () => {
-    setIsLoading(true)
     if(!user.uid) {
-      const res = await GetUserService()
-  
-      if (token && res) {
-        const userData: UserData = {
-          uid: res.uid,
-          displayName: res.displayName,
-          email: res.email,
-          emailVerified: res.emailVerified,
-          phoneNumber: res.phoneNumber,
-          photoUrl: res.photoURL,
-          isLogged: true,
+      setIsLoading(true)
+      await GetUserService().then((res) => {
+        if (token && res) {
+          const userData: UserData = {
+            uid: res.uid,
+            displayName: res.displayName,
+            email: res.email,
+            emailVerified: res.emailVerified,
+            phoneNumber: res.phoneNumber,
+            photoUrl: res.photoURL,
+            isLogged: true,
+          }
+          dispatch(changeUser(userData))
+        } else {
+          console.log('Usuário não autenticado.');
         }
-        dispatch(changeUser(userData))
+      }).catch((err) => {
+        console.error(err)
+      }).finally(() => {
+        console.log('aqui')
         setIsLoading(false)
-      } else {
-        console.log('Usuário não autenticado.');
-        setIsLoading(false)
-      }
+      })
     }
   }, [dispatch, token, user])
 
@@ -45,7 +48,7 @@ export const useAuth = () => {
   const sigIn = async (userCreds: UserCredentials) => {
     setIsLoading(true)
 
-    SigInService(userCreds).then((result) => {
+    await SigInService(userCreds).then((result) => {
       if(typeof(result) === 'object') {
         const user: UserData = {
           uid: result.user.uid,
@@ -72,7 +75,7 @@ export const useAuth = () => {
   const sigUp = async (userCreds: UserFormValues) => {
     setIsLoading(true)
 
-    SigUpService(userCreds).then((result) => {
+    await SigUpService(userCreds).then((result) => {
       if(typeof(result) === 'object') {
         const user: UserData = {
           uid: result.uid,
@@ -97,7 +100,7 @@ export const useAuth = () => {
   const signOut = async () => {
     setIsLoading(true)
 
-    SignOutService().then((result) => {
+    await SignOutService().then((result) => {
       if(result) {
         dispatch(logout())
         Cookies.remove('token')
