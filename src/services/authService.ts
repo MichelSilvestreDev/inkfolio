@@ -30,7 +30,6 @@ export const SigUpService = async ({
 }: UserFormValues): Promise<User | boolean> => {
   try {
     const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
-    console.log(result)
     return result.user
   } catch (err) {
     console.error(err)

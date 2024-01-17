@@ -1,0 +1,15 @@
+.login-page {
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: login-bg-animation 5s ease-in 0s infinite alternate-reverse;
+}
+
+@keyframes login-bg-animation {
+  1% {
+    background-image: url('./img/auth_background_2.jpg');
+  }
+
+  50% {
+    background-image: url('./img/auth_background_3.jpg');
+  }
+}
