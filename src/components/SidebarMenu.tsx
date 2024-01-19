@@ -8,43 +8,43 @@ const SidebarMenu: React.FC = () => {
   const { user, isLoading } = useAuth()
 
   return (
-    <nav className="w-full h-screen bg-white shadow-xl">
+    <nav className="w-full h-screen border-r border-gray-50 shadow-xl bg-white">
       <Link to='/' >
-        <h1 className="text-2xl text-center font-bold mt-10 mb-16">InkFolio</h1>
+        <h1 className="text-2xl text-center font-bold mt-10 mb-12">InkFolio</h1>
       </Link>
-      <ul className="px-8 flex flex-col gap-8">
+      <ul className="px-4 flex flex-col gap-4">
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Home theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Página incial
           </li>
         </Link>
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Message theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Mensagens
           </li>
         </Link>
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Calendar theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Agenda
           </li>
         </Link>
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <AddFour theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Criar
           </li>
         </Link>
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <TipsOne theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Notificações
           </li>
         </Link>
         <Link to='/'>
-          <li className="flex gap-4">
+          <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Search theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Pesquisar
           </li>
