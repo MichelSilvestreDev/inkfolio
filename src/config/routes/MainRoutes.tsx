@@ -1,11 +1,18 @@
 import { lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+const Template = lazy(() => import('../../components/Template'));
 const Feed = lazy(() => import('./../../pages/Feed'));
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Feed />,
+    element: <Template />,
+    children: [
+      {
+        path: '/',
+        element: <Feed />,
+      },
+    ]
   },
   // {
   //   path: '*',
