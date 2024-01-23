@@ -31,7 +31,7 @@ const SidebarMenu: React.FC = () => {
             Agenda
           </li>
         </Link>
-        <Link to='/'>
+        <Link to='/novo'>
           <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <AddFour theme="outline" size="24" fill="#333" strokeWidth={3}/>
             Criar
