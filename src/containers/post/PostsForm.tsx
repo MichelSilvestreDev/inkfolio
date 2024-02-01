@@ -48,14 +48,14 @@ const PostsForm: React.FC = () => {
   };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
-    
     event.preventDefault()
     console.log('aqui', formData);
     await newPost(formData)
   }
 
   return (
-    <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
+    <form className='flex flex-col gap-4 p-8 rounded-lg border' onSubmit={handleSubmit}>
+      <h1 className='font-bold text-2xl'>Criar nova publicação</h1>
       <Textarea
         isRequired
         label='Descrição'
