@@ -8,13 +8,16 @@ const usePost = () => {
 
   const newPost = async (post: PostFormValues) => {
     setIsLoading(true)
+    const created: string = new Date().toISOString()
+
+    post['created_at'] = created
 
     await NewPostService(post)
       .then((result) => {
-        if (typeof result === 'object') {
+        if (result) {
           window.alert('Salvo com sucesso!')
         } else {
-          window.alert('Erro ao logar')
+          window.alert('Erro ao salvar')
         }
       })
       .catch((err) => {
