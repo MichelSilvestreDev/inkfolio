@@ -34,7 +34,7 @@ import usePost from '../../../hooks/posts/usePost'
     },
   ]
 
-const PostsForm: React.FC = () => {
+const PostContainer: React.FC = () => {
   // Hooks
   const { isLoading, newPost } = usePost()
   // States
@@ -63,12 +63,7 @@ const PostsForm: React.FC = () => {
         placeholder='Adicione uma descrição ao seu post'
         // className='max-w-xs'
         onChange={(e) => handleInputChange('description', e.target.value)}
-      />
-
-      <Input
-        name='urls'
-        type='file'
-      />
+        />
 
       <Select
         label='Selecione os estilos'
@@ -120,4 +115,4 @@ const PostsForm: React.FC = () => {
   )
 }
 
-export default PostsForm
+export default PostContainer

@@ -1,5 +1,5 @@
 import { AddFour, Calendar, Home, Message, Search, TipsOne } from "@icon-park/react"
-import { Skeleton, User } from "@nextui-org/react"
+import { Badge, Skeleton, User } from "@nextui-org/react"
 import { Link } from "react-router-dom"
 import { useAuth } from "../hooks/auth/useAuth"
 
@@ -22,13 +22,17 @@ const SidebarMenu: React.FC = () => {
         <Link to='/'>
           <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Message theme="outline" size="24" fill="#333" strokeWidth={3}/>
-            Mensagens
+            <Badge content="" color="danger">
+              Mensagens
+            </Badge>
           </li>
         </Link>
         <Link to='/'>
           <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Calendar theme="outline" size="24" fill="#333" strokeWidth={3}/>
-            Agenda
+            <Badge content="" color="danger">
+              Agenda
+            </Badge>
           </li>
         </Link>
         <Link to='/novo'>
@@ -40,13 +44,17 @@ const SidebarMenu: React.FC = () => {
         <Link to='/'>
           <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <TipsOne theme="outline" size="24" fill="#333" strokeWidth={3}/>
-            Notificações
+            <Badge content="" color="danger">
+              Notificações
+            </Badge>
           </li>
         </Link>
         <Link to='/'>
           <li className="flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200">
             <Search theme="outline" size="24" fill="#333" strokeWidth={3}/>
-            Pesquisar
+            <Badge content="" color="danger">
+              Pesquisar
+            </Badge>
           </li>
         </Link>
         { isLoading && (
