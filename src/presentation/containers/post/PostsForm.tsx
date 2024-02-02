@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { PostFormValues } from '../../types/posts.types'
+import { PostFormValues } from '../../../types/posts.types'
 import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
-import usePost from '../../hooks/posts/usePost'
+import usePost from '../../../hooks/posts/usePost'
 
   const initialValues:PostFormValues = {
     user_id: '',

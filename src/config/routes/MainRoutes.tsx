@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 const Template = lazy(() => import('../../components/Template'));
-const Feed = lazy(() => import('./../../pages/Feed'));
-const NewPost = lazy(() => import('../../pages/posts/NewPost'));
+const Feed = lazy(() => import('../../presentation/pages/Feed'));
+const NewPost = lazy(() => import('../../presentation/pages/posts/NewPost'));
 
 const router = createBrowserRouter([
   {

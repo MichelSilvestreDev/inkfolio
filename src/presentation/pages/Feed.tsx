@@ -1,5 +1,5 @@
 import { Button, Skeleton } from "@nextui-org/react"
-import { useAuth } from "../hooks/auth/useAuth"
+import { useAuth } from "../../hooks/auth/useAuth"
 
 const Feed: React.FC = () => {
   // Hooks
