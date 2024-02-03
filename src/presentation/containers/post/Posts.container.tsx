@@ -1,17 +1,20 @@
 import { useState } from 'react'
 import { PostFormValues } from '../../../types/posts.types'
-import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
 import usePost from '../../../hooks/posts/usePost'
+import useUploadFile from '../../../hooks/posts/useUploadFile'
+import PostForm from '../../components/posts/PostForm'
+import PostFilesForm from '../../components/posts/PostFilesForm'
 
   const initialValues:PostFormValues = {
     user_id: '',
     description: '',
     styles: [],
-    urls: ['https://pbs.twimg.com/profile_images/740345504949768192/xbj5lvnD_400x400.jpg'],
+    urls: [],
     created_at: '',
   }
 
-  const styles = [
+// eslint-disable-next-line react-refresh/only-export-components
+export const styles = [
     {
       label: 'Old School',
       value: 'old-school'
@@ -36,9 +39,15 @@ import usePost from '../../../hooks/posts/usePost'
 
 const PostContainer: React.FC = () => {
   // Hooks
-  const { isLoading, newPost } = usePost()
+  const { isLoading: posting, newPost } = usePost()
+  const { isLoading: uploading, upload } = useUploadFile()
   // States
   const [formData, setFormData] = useState(initialValues)
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
+
+  const handleFiles = (files: FileList | null) => {
+    if(files) setSelectedFiles(files)
+  }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
     setFormData({
@@ -48,70 +57,73 @@ const PostContainer: React.FC = () => {
   };
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault()
-    console.log('aqui', formData);
-    await newPost(formData)
-  }
+    event.preventDefault();
+    
+    try {
+      const uploadedFiles = await handleUploadFiles();
+      
+      if (uploadedFiles.length > 0) {    
+        const post = Object.assign(formData)
+        post['urls'] = uploadedFiles
+        
+        // Submit the post
+        await submitPost(post);
+      } else {
+        window.alert('No files uploaded.');
+      }
+    } catch (error) {
+      console.error('Error handling file uploads:', error);
+      window.alert('Error handling file uploads.');
+    }
+  };
+
+  const handleUploadFiles = async () => {
+    if (!selectedFiles || selectedFiles.length === 0) {
+      return [];
+    }
+
+    const uploadedFiles:string[] = [];
+    
+    for (const file of selectedFiles) {
+      try {
+        const url = await upload(file);
+        if(typeof(url) === 'string') uploadedFiles.push(url);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        window.alert('Error uploading file.');
+      }
+    }
+
+    return uploadedFiles;
+  };
+
+  const submitPost = async (post: PostFormValues) => {
+    try {
+      await newPost(post);
+      window.alert('Cadastrado com sucesso!');
+    } catch (error) {
+      console.error('Error submitting post:', error);
+      window.alert('Ocorreu um erro ao tentar salvar');
+    }
+  };
 
   return (
-    <form className='flex flex-col gap-4 p-8 rounded-lg border' onSubmit={handleSubmit}>
-      <h1 className='font-bold text-2xl'>Criar nova publicação</h1>
-      <Textarea
-        isRequired
-        label='Descrição'
-        name='description'
-        placeholder='Adicione uma descrição ao seu post'
-        // className='max-w-xs'
-        onChange={(e) => handleInputChange('description', e.target.value)}
-        />
-
-      <Select
-        label='Selecione os estilos'
-        name='styles'
-        placeholder='Selecione ao menos um estilo'
-        selectionMode='multiple'
-        isRequired
-        onChange={(e) => handleInputChange('styles', e.target.value)}
-      >
-        {styles.map((animal) => (
-          <SelectItem key={animal.value} value={animal.value}>
-            {animal.label}
-          </SelectItem>
-        ))}
-      </Select>
-
-      <Input
-        name='price'
-        label='Preço do serviço'
-        type='text'
-        onChange={(e) => handleInputChange('price', e.target.value)}
-      />
-
-      <Input
-        name='tags'
-        label='Marcar pessoas'
-        type='text'
-        onChange={(e) => handleInputChange('tags', e.target.value)}
-      />
-
-      <Input
-        name='location'
-        label='Localização'
-        type='text'
-        onChange={(e) => handleInputChange('location', e.target.value)}
-      />
-
-      <Button
-        className='rounded-md'
-        color='primary'
-        size='lg'
-        type='submit'
-        isLoading={isLoading}
-        disabled={isLoading}
-      >
-        { isLoading ? 'Salvando...' : 'Salvar' }
-      </Button>
-    </form>
+    <>
+      {
+        selectedFiles && selectedFiles?.length > 0 ? (
+          <PostForm
+            handleSubmit={handleSubmit}
+            handleInputChange={handleInputChange}
+            setSelectedFiles={setSelectedFiles}
+            posting={uploading || posting}
+          />
+        ) : (
+          <PostFilesForm
+            handleFiles={handleFiles}
+          />
+        )
+      }
+    </>
   )
 }
 
