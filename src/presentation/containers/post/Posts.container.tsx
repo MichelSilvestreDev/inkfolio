@@ -85,6 +85,25 @@ const PostContainer: React.FC = () => {
     }
   }
 
+const createFileList = (files: File[]): FileList => {
+  const dataTransfer = new DataTransfer();
+  files.forEach((file) => {
+    dataTransfer.items.add(file);
+  });
+  return dataTransfer.files;
+};
+
+const removeFile = (index: number) => {
+  if (selectedFiles) {
+    const updatedSelectedFiles = Array.from(selectedFiles);
+    updatedSelectedFiles.splice(index, 1);
+    setSelectedFiles(createFileList(updatedSelectedFiles));
+
+    const updatedPreviewFiles = [...previewFiles];
+    updatedPreviewFiles.splice(index, 1);
+    setPreviewFiles(updatedPreviewFiles);
+  }
+};
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
     setFormData({
       ...formData,
@@ -150,6 +169,7 @@ const PostContainer: React.FC = () => {
           <div className='grid grid-cols-2 gap-4'>
             <PreviewFiles
               previewFiles={previewFiles}
+              removeFile={removeFile}
             />
             <PostForm
               handleSubmit={handleSubmit}

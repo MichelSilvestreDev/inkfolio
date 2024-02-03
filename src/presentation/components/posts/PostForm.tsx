@@ -10,7 +10,7 @@ type Form = {
 
 const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Form) => {
   return(
-    <form className='flex flex-col gap-4 p-8 rounded-lg border' onSubmit={handleSubmit}>
+    <form className='flex flex-col gap-4 p-4 rounded-lg border' onSubmit={handleSubmit}>
       <Textarea
         isRequired
         label='Descrição'
