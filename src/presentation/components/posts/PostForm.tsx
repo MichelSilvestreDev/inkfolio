@@ -11,13 +11,11 @@ type Form = {
 const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Form) => {
   return(
     <form className='flex flex-col gap-4 p-8 rounded-lg border' onSubmit={handleSubmit}>
-      <h1 className='font-bold text-2xl'>Criar nova publicação</h1>
       <Textarea
         isRequired
         label='Descrição'
         name='description'
         placeholder='Adicione uma descrição ao seu post'
-        // className='max-w-xs'
         onChange={(e) => handleInputChange('description', e.target.value)}
         />
 

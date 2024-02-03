@@ -7,7 +7,6 @@ type FilesForm = {
 const PostFilesForm: React.FC<FilesForm> = ({handleFiles}: FilesForm) => {
   return (
     <div className='text-center flex flex-col gap-4 p-8 rounded-lg border'>
-      <h1 className='font-bold text-2xl mb-8'>Criar nova publicação</h1>
       <h2>Arrastes as fotos e vídeos aqui</h2>
 
       <label htmlFor='files' className='w-full py-4 rounded-lg block text-white cursor-pointer text-center bg-primary'>

@@ -10,7 +10,6 @@ export const UploadFileService = (file: File, directory: string) => {
         .then((snapshot) => {
           getDownloadURL(snapshot.ref)
             .then((url) => {
-              console.log(url, 'cheguei')
               resolve(url)
             })
             .catch((error) => {
