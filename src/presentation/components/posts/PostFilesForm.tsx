@@ -1,4 +1,3 @@
-import { Input } from "@nextui-org/react"
 
 type FilesForm = {
   handleFiles: (files: FileList | null) => void
@@ -13,7 +12,7 @@ const PostFilesForm: React.FC<FilesForm> = ({handleFiles}: FilesForm) => {
         Selecione do computador
       </label>
 
-      <Input
+      <input
         name='urls'
         type='file'
         id='files'
