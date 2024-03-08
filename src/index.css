@@ -1,3 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.bg-primary {
+  background-color: #e03f5c;
+}
+
+.text-primary {
+  color: #e03f5c;
+}

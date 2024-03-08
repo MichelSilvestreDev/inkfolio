@@ -1,7 +1,7 @@
 import { Button, Input, Skeleton, Spinner, Tab, Tabs, Tooltip } from "@nextui-org/react"
 import { useState } from "react"
-import { useAuth } from "../../hooks/auth/useAuth"
-import { UserCredentials, UserFormValues } from "../../types/auth.types"
+import { useAuth } from "../../../hooks/auth/useAuth"
+import { UserCredentials, UserFormValues } from "../../../types/auth.types"
 
 
 const AuthContainer: React.FC = () => {

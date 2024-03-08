@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-const Login = lazy(() => import('../../pages/login/Login'));
+const Login = lazy(() => import('../../presentation/pages/login/Login'));
 
 const router = createBrowserRouter([
   {
