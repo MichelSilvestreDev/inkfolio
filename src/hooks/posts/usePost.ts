@@ -15,9 +15,9 @@ const usePost = () => {
     await NewPostService(post)
       .then((result) => {
         if (result) {
-          window.alert('Salvo com sucesso!')
+          console.log('Salvo com sucesso!')
         } else {
-          window.alert('Erro ao salvar')
+          console.log('Erro ao salvar')
         }
       })
       .catch((err) => {

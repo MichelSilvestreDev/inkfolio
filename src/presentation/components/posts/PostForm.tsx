@@ -23,7 +23,6 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
         label='Selecione os estilos'
         name='styles'
         placeholder='Selecione ao menos um estilo'
-        selectionMode='multiple'
         isRequired
         onChange={(e) => handleInputChange('styles', e.target.value)}
       >

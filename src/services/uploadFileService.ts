@@ -14,13 +14,12 @@ export const UploadFileService = (file: File, directory: string) => {
             })
             .catch((error) => {
               const message = error.message
-              window.alert('Deu ruim')
               console.error(message)
               reject(message)
             })
         })
         .catch((error) => {
-          window.alert(error.message)
+          console.error(error.message)
         })
     } catch (err) {
       console.error(err)

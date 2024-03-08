@@ -5,6 +5,9 @@ import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
 import PostFilesForm from '../../components/posts/PostFilesForm'
 import PreviewFiles from '../../components/posts/PreviewFiles'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import useNotification from '../../../hooks/common/useNotification'
 
   const initialValues:PostFormValues = {
     user_id: '',
@@ -12,6 +15,10 @@ import PreviewFiles from '../../components/posts/PreviewFiles'
     styles: [],
     urls: [],
     created_at: '',
+  }
+
+  type Post = {
+    closeModal: () => void
   }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -38,10 +45,11 @@ export const styles = [
     },
   ]
 
-const PostContainer: React.FC = () => {
+const PostContainer: React.FC<Post> = ({closeModal}: Post) => {
   // Hooks
   const { isLoading: posting, newPost } = usePost()
   const { isLoading: uploading, upload } = useUploadFile()
+  const {successMessage, errorMessage} = useNotification()
   // States
   const [formData, setFormData] = useState(initialValues)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
@@ -74,7 +82,7 @@ const PostContainer: React.FC = () => {
         })
         .catch((error) => {
           console.error('Error creating image previews:', error);
-          window.alert('Error creating image previews.');
+          errorMessage('Ocorreu um erro no preview das imagens, tente novamente.');
         });
     }
   }, [selectedFiles]);
@@ -124,11 +132,11 @@ const removeFile = (index: number) => {
         // Submit the post
         await submitPost(post);
       } else {
-        window.alert('No files uploaded.');
+        errorMessage('Adicione ao menos uma imagem');
       }
     } catch (error) {
       console.error('Error handling file uploads:', error);
-      window.alert('Error handling file uploads.');
+      errorMessage('Ocorreu um erro inesperado ao enviar as imagens, tente novamente mais tarde');
     }
   };
 
@@ -145,7 +153,7 @@ const removeFile = (index: number) => {
         if(typeof(url) === 'string') uploadedFiles.push(url);
       } catch (error) {
         console.error('Error uploading file:', error);
-        window.alert('Error uploading file.');
+        errorMessage('Ocorreu um erro inesperado, tente novamente mais tarde');
       }
     }
 
@@ -155,15 +163,19 @@ const removeFile = (index: number) => {
   const submitPost = async (post: PostFormValues) => {
     try {
       await newPost(post);
-      window.alert('Cadastrado com sucesso!');
+      successMessage('Post publicado com sucesso!');
+      setTimeout(() => {
+        closeModal();
+      }, 1000);
     } catch (error) {
       console.error('Error submitting post:', error);
-      window.alert('Ocorreu um erro ao tentar salvar');
+      errorMessage('Ocorreu um erro inesperado, tente novamente mais tarde');
     }
   };
 
   return (
     <>
+      <ToastContainer />
       {
         selectedFiles && selectedFiles?.length > 0 ? (
           <div className='grid grid-cols-2 gap-4'>
