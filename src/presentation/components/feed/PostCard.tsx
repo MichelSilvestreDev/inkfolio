@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, User } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip, User } from '@nextui-org/react'
 import { Post } from '../../../types/posts.types'
 import { formatDate } from '../../../utils/formatDate'
 import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
@@ -11,13 +11,13 @@ type Card = {
 
 const PostCard:React.FC<Card> = ({post}: Card) => {
   return (
-    <Card className='py-4 max-w-[700px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
+    <Card className='py-4 max-w-[700px] min-h-[500px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
       <CardHeader className='pb-0 pt-2 px-0 justify-between mb-4'>
         <User
-          name={'user.email'}
+          name={post.user.email}
           description='InkFolio'
           avatarProps={{
-            src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
+            src: post.user.avatar
           }}
         />
         <p className='text-xs'>
@@ -34,7 +34,11 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
               <p className="text-tiny text-white/60">{ post.description }</p>
               {
                 post.price && (
-                  <p className="text-tiny text-white/60 text-primary">{ convertToBRACurrency(post.price) }</p>
+                  <Tooltip content='Em breve'>
+                    <div>
+                      <p className="text-tiny text-white/60 text-primary">{ convertToBRACurrency(post.price) }</p>
+                    </div>
+                  </Tooltip>
                 )
               }
             </div>
@@ -42,11 +46,30 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
           <Button radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
         </div>
       </CardBody>
-      <CardFooter className="flex gap-4 pt-8 px-0">
-        <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
-        <Message theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
-        <ShareTwo theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
-        <SaveOne theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+      <CardFooter className="flex gap-4 pt-8 px-0 relative z-20">
+        <Tooltip content='Em breve'>
+          <div>
+            <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+          </div>
+        </Tooltip>
+
+        <Tooltip content='Em breve'>
+          <div>
+            <Message theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+          </div>
+        </Tooltip>
+
+        <Tooltip content='Em breve'>
+          <div>
+            <ShareTwo theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+          </div>
+        </Tooltip>
+
+        <Tooltip content='Em breve'>
+          <div>
+            <SaveOne theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+          </div>
+        </Tooltip>
       </CardFooter>
     </Card>
   )

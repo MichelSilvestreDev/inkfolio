@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PostFormValues } from '../../../types/posts.types'
+import { PostFormValues, PostUser } from '../../../types/posts.types'
 import usePost from '../../../hooks/posts/usePost'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
@@ -128,7 +128,14 @@ const removeFile = (index: number) => {
       const uploadedFiles = await handleUploadFiles();
       
       if (uploadedFiles.length > 0) {
-        const post = Object.assign(formData, {user_id: user.uid, urls: uploadedFiles})
+        const postUser: PostUser = {
+          id: user.uid,
+          email: user.email || '',
+          name: user.displayName || '',
+          avatar: user.photoUrl || ''
+        }
+        
+        const post = Object.assign(formData, {user: postUser, urls: uploadedFiles})
         
         // Submit the post
         await submitPost(post);

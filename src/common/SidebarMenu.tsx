@@ -78,7 +78,7 @@ const SidebarMenu: React.FC = () => {
                   name={user.email}
                   description='InkFolio'
                   avatarProps={{
-                    src: 'https://i.pravatar.cc/150?u=a04258114e29026702d'
+                    src: user.photoUrl || ''
                   }}
                 />
               </Tooltip>

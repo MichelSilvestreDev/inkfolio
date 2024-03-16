@@ -13,7 +13,7 @@ export type PostFormValues = {
 
 export type Post = {
   id: string
-  user_id: string
+  user: PostUser
   description: string
   price?: number
   styles: string[]
@@ -21,4 +21,11 @@ export type Post = {
   created_at: string
   updated_at?: string
   deleted_at?: string
+}
+
+export type PostUser = {
+  id: string
+  email: string
+  name: string
+  avatar: string
 }
