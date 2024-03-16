@@ -72,16 +72,14 @@ const SidebarMenu: React.FC = () => {
             </div>
           )}
           { !isLoading && (
-            <Link to='/'>
-              <Tooltip content='Em breve' color='primary' placement={'right-end'}>
-                <User
-                  name={user.email}
-                  description='InkFolio'
-                  avatarProps={{
-                    src: user.photoUrl || ''
-                  }}
-                />
-              </Tooltip>
+            <Link to='/perfil'>
+              <User
+                name={user.email}
+                description='InkFolio'
+                avatarProps={{
+                  src: user.photoUrl || ''
+                }}
+              />
             </Link>
           ) }
         </ul>

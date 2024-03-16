@@ -27,7 +27,7 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
       <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
         <PostImgSlide urls={post.urls} />
         <div
-          className="w-full h-16 px-4 rounded-b-xl flex absolute bottom-0 bg-black/40 z-10 border-t-1 border-default-600 dark:border-default-100"
+          className="w-full h-16 z-50 px-4 rounded-b-xl flex absolute bottom-0 bg-black/40 border-t-1 border-default-600 dark:border-default-100"
         >
           <div className="w-full flex flex-grow gap-2 items-center">
             <div className="flex flex-col">
@@ -40,7 +40,7 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
             </div>
           </div>
           <Tooltip content='Em breve'>
-            <Button radius="full" size="sm" className='mt-4 min-w-16 z-50'>Pedir orçamento</Button>
+            <Button radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
           </Tooltip>
         </div>
       </CardBody>
