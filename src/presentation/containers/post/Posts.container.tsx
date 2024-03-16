@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PostFormValues } from '../../../types/posts.types'
+import { PostFormValues, PostUser } from '../../../types/posts.types'
 import usePost from '../../../hooks/posts/usePost'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
@@ -8,6 +8,7 @@ import PreviewFiles from '../../components/posts/PreviewFiles'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
+import { useAuth } from '../../../hooks/auth/useAuth'
 
   const initialValues:PostFormValues = {
     user_id: '',
@@ -47,6 +48,7 @@ export const styles = [
 
 const PostContainer: React.FC<Post> = ({closeModal}: Post) => {
   // Hooks
+  const { user } = useAuth()
   const { isLoading: posting, newPost } = usePost()
   const { isLoading: uploading, upload } = useUploadFile()
   const {successMessage, errorMessage} = useNotification()
@@ -125,9 +127,15 @@ const removeFile = (index: number) => {
     try {
       const uploadedFiles = await handleUploadFiles();
       
-      if (uploadedFiles.length > 0) {    
-        const post = Object.assign(formData)
-        post['urls'] = uploadedFiles
+      if (uploadedFiles.length > 0) {
+        const postUser: PostUser = {
+          id: user.uid,
+          email: user.email || '',
+          name: user.displayName || '',
+          avatar: user.photoUrl || ''
+        }
+        
+        const post = Object.assign(formData, {user: postUser, urls: uploadedFiles})
         
         // Submit the post
         await submitPost(post);
