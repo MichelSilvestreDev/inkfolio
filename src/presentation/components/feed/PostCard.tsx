@@ -34,16 +34,14 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
               <p className="text-tiny text-white/60">{ post.description }</p>
               {
                 post.price && (
-                  <Tooltip content='Em breve'>
-                    <div>
-                      <p className="text-tiny text-white/60 text-primary">{ convertToBRACurrency(post.price) }</p>
-                    </div>
-                  </Tooltip>
+                  <p className="text-tiny text-white/60 text-primary">{ convertToBRACurrency(post.price) }</p>
                 )
               }
             </div>
           </div>
-          <Button radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
+          <Tooltip content='Em breve'>
+            <Button radius="full" size="sm" className='mt-4 min-w-16 z-50'>Pedir orçamento</Button>
+          </Tooltip>
         </div>
       </CardBody>
       <CardFooter className="flex gap-4 pt-8 px-0 relative z-20">
