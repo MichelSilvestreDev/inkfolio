@@ -30,6 +30,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
