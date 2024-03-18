@@ -1,0 +1,29 @@
+name: Continuos Integration
+
+on:
+  pull_request:
+    branches: ['main']
+
+  push:
+    branches: ['main']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Using Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.
+
+      - name: Install dependencies
+        run: yarn install
+
+      # - name: Run tests
+      #   run: npm test
+
+      - name: Run Build
+        run: yarn build
