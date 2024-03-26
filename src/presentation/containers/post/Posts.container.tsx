@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PostFormValues, PostUser } from '../../../types/posts.types'
+import { IPostFormValues, IPostUser } from '../../../types/posts.types'
 import usePost from '../../../hooks/posts/usePost'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
 
-  const initialValues:PostFormValues = {
+  const initialValues:IPostFormValues = {
     user_id: '',
     description: '',
     styles: [],
@@ -128,7 +128,7 @@ const removeFile = (index: number) => {
       const uploadedFiles = await handleUploadFiles();
       
       if (uploadedFiles.length > 0) {
-        const postUser: PostUser = {
+        const postUser: IPostUser = {
           id: user.uid,
           email: user.email || '',
           name: user.displayName || '',
@@ -168,7 +168,7 @@ const removeFile = (index: number) => {
     return uploadedFiles;
   };
 
-  const submitPost = async (post: PostFormValues) => {
+  const submitPost = async (post: IPostFormValues) => {
     try {
       await newPost(post);
       successMessage('Post publicado com sucesso!');

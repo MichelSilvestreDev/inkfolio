@@ -1,6 +1,6 @@
 import { Button, Skeleton } from "@nextui-org/react"
-import { useAuth } from "../../hooks/auth/useAuth"
-import ProfileContainer from "../containers/profile/profile.container"
+import { useAuth } from "../../../hooks/auth/useAuth"
+import ProfileContainer from "../../containers/profile/profile.container"
 
 const Profile: React.FC = () => {
   // Hooks

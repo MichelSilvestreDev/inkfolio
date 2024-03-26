@@ -2,7 +2,8 @@ import { lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 const Template = lazy(() => import('../../common/Template'));
 const Feed = lazy(() => import('../../presentation/pages/Feed'));
-const Profile = lazy(() => import('../../presentation/pages/Profile'));
+const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
+const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
     ]
+  },
+  {
+    path: '/completar-cadastro',
+    element: <RegisterProfile />,
   },
   // {
   //   path: '*',

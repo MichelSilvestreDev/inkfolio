@@ -128,6 +128,7 @@ const AuthContainer: React.FC = () => {
                       radius="sm"
                       onChange={(event) => setUserName(event.target.value)}
                       required
+                      className="hidden"
                       />
                     <Input
                       type="email"

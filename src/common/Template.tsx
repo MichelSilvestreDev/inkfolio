@@ -1,7 +1,16 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import SidebarMenu from "./SidebarMenu"
+import useProfile from "../hooks/profile/useProfile"
+import React, { useEffect } from "react"
 
 const Template: React.FC = () => {
+  const {profile} = useProfile()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(profile.name === "") navigate('/completar-cadastro')
+  }, [profile.name])
+
   return(
     <div className="w-screen h-screen flex flex-col justify-center items-center bg-gray-50">
       <div className="w-full h-screen grid grid-cols-12 gap-8">
