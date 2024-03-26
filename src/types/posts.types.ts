@@ -1,11 +1,11 @@
 export type PostFormValues = {
-  user_id: string
+  title: string
   description: string
   styles: string[]
   urls: string[]
   price?: number
-  tags?: string[]
-  location?: string
+  discount?: number
+  avaliable_negociation?: boolean
   created_at: string
   updated_at?: string
   deleted_at?: string
@@ -14,6 +14,7 @@ export type PostFormValues = {
 export type Post = {
   id: string
   user: PostUser
+  title: string
   description: string
   price?: number
   styles: string[]
