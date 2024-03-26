@@ -7,10 +7,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <Login />,
   },
-  // {
-  //   path: '*',
-  //   element: <LoaderPage />,
-  // },
+  {
+    path: '*',
+    element: <Login />,
+  },
 ])
 
 const SignRoutes: React.FC = () => {

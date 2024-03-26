@@ -4,10 +4,14 @@ import { changeUser, logout, selectUser } from "../../store/auth/authSlice"
 import { UserData, UserCredentials, UserFormValues } from "../../types/auth.types"
 import { GetUserService, SigInService, SigUpService, SignOutService } from "../../services/authService"
 import Cookies from 'js-cookie';
+import { getProfile } from "../../services/profileService"
+import { changeProfile } from "../../store/profile/profileSlice"
+import { useNavigate } from "react-router-dom"
 
 export const useAuth = () => {
   // Hooks
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // States
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const user = useSelector(selectUser)
@@ -17,7 +21,7 @@ export const useAuth = () => {
   const fetchUserData = useCallback(async () => {
     if(!user.uid) {
       setIsLoading(true)
-      await GetUserService().then((res) => {
+      await GetUserService().then(async (res) => {
         if (token && res) {
           const userData: UserData = {
             uid: res.uid,
@@ -29,6 +33,13 @@ export const useAuth = () => {
             isLogged: true,
           }
           dispatch(changeUser(userData))
+          const profileData = await getProfile(userData.uid)
+          if(profileData) dispatch(changeProfile(profileData))
+          else {
+            setTimeout(() => {
+              navigate('/completar-cadastro')
+            }, 1000)
+          }
         } else {
           console.log('Usuário não autenticado.');
         }

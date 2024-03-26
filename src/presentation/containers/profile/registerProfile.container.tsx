@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProfileForm from "../../components/profile/ProfileForm";
 import { IProfile } from "../../../types/profile.types";
 import useProfile from "../../../hooks/profile/useProfile";
+import { useAuth } from "../../../hooks/auth/useAuth";
 
 const initialValues: IProfile = {
   user_id: '',
@@ -17,6 +18,7 @@ const initialValues: IProfile = {
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const { registerProfile, isLoading } = useProfile()
+  const { user } = useAuth()
   // States
   const [formData, setFormData] = useState(initialValues)
 
@@ -28,12 +30,15 @@ const RegisterProfileContainer: React.FC = () => {
   };
 
   const submitProfile = async (profile: IProfile) => {
-    await registerProfile(profile)
+    const profileData = {...profile}
+    profileData.user_id = user.uid
+    await registerProfile(profileData)
   }
 
   return (
     <div>
       <ProfileForm
+        isLoading={isLoading}
         formValues={formData}
         handleInputChange={handleInputChange}
         submitProfile={submitProfile}

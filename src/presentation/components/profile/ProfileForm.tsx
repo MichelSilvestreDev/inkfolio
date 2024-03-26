@@ -7,12 +7,13 @@ import { IProfile } from '../../../types/profile.types'
 import { FormEvent } from 'react'
 
 interface IForm {
+  isLoading: boolean
   formValues: IProfile
   handleInputChange: (fieldName: string, value: string) => void
   submitProfile: (profile: IProfile) => void
 }
 
-const ProfileForm: React.FC<IForm> = ({formValues, handleInputChange, submitProfile}) => {
+const ProfileForm: React.FC<IForm> = ({formValues, isLoading, handleInputChange, submitProfile}) => {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -90,7 +91,7 @@ const ProfileForm: React.FC<IForm> = ({formValues, handleInputChange, submitProf
         label='Link de redes sociais'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
       />
-      <Button color='primary' size='lg' type='submit'>
+      <Button color='primary' size='lg' type='submit' isLoading={isLoading}>
         Salvar
       </Button>
     </form>

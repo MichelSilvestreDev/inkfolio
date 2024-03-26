@@ -21,6 +21,24 @@ const getUserPosts = async (userID: string): Promise<IPost[]> => {
   }
 }
 
+const getProfile = async (userID: string): Promise<IProfile> => {
+  const profileRef = collection(db, 'profiles')
+
+  try {
+    const profiles: IProfile[] = []
+    const res = query(profileRef, where('user_id', '==', userID))
+    const querySnapshot = await getDocs(res)
+    querySnapshot.forEach((doc) => {
+      const profile = doc.data()
+      profiles.push(profile as IProfile)
+    })
+    return profiles[0]
+  } catch (err) {
+    console.error(err)
+    throw new Error()
+  }
+}
+
 const postProfile = async (profile: IProfile) => {
   try {
     const teste = await addDoc(collection(db, 'profiles'), profile)
@@ -30,4 +48,4 @@ const postProfile = async (profile: IProfile) => {
   }
 }
 
-export { getUserPosts, postProfile }
+export { getUserPosts, getProfile, postProfile }
