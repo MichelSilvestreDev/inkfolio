@@ -3,14 +3,27 @@ import InkFolio from '/img/InkFolio.png'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Button } from '@nextui-org/button'
 import { Avatar } from '@nextui-org/avatar'
+import { IProfile } from '../../../types/profile.types'
+import { FormEvent } from 'react'
 
 interface IForm {
+  formValues: IProfile
   handleInputChange: (fieldName: string, value: string) => void
+  submitProfile: (profile: IProfile) => void
 }
 
-const ProfileForm: React.FC<IForm> = ({handleInputChange}) => {
+const ProfileForm: React.FC<IForm> = ({formValues, handleInputChange, submitProfile}) => {
+
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    submitProfile(formValues)
+  }
+
   return(
-    <form className='w-full max-w-[500px] mx-auto p-4 rounded-lg shadow-lg bg-white flex flex-col gap-4'>
+    <form
+      className='w-full max-w-[500px] mx-auto p-4 rounded-lg shadow-lg bg-white flex flex-col gap-4'
+      onSubmit={onSubmit}
+    >
       <img
         src={InkFolio}
         className='text-center my-8 mx-auto'
@@ -77,7 +90,7 @@ const ProfileForm: React.FC<IForm> = ({handleInputChange}) => {
         label='Link de redes sociais'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
       />
-      <Button color='primary' size='lg'>
+      <Button color='primary' size='lg' type='submit'>
         Salvar
       </Button>
     </form>
