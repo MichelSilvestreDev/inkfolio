@@ -34,7 +34,10 @@ export const useAuth = () => {
           }
           dispatch(changeUser(userData))
           const profileData = await getProfile(userData.uid)
-          if(profileData) dispatch(changeProfile(profileData))
+          if(profileData) {
+            dispatch(changeProfile(profileData))
+            navigate('/')
+          }
           else {
             setTimeout(() => {
               navigate('/completar-cadastro')
