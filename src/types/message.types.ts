@@ -1,4 +1,5 @@
 export type PostMessageValues = {
+    id: string
     label: string
     text: string
     type: string

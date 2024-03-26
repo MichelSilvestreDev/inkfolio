@@ -1,4 +1,5 @@
-import { Button, Input } from "@nextui-org/react"
+import { Button, Input, Select, SelectItem } from "@nextui-org/react"
+import { useState } from "react"
 
 type Form = {
   handleSubmit: (event: { preventDefault: () => void }) => void
@@ -7,12 +8,15 @@ type Form = {
 }
 
 const MessageForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Form) => {
+  const [ selectValue, setSelectValue] = useState('');
+
   return(
     <form className='flex flex-col gap-4 p-4 rounded-lg border' onSubmit={handleSubmit}>
 
       <Input
         name='label'
-        label='Titulo'
+        label='Título'
+        placeholder="Exemplos: Seu nome, assunto da mensagem, data do evento, etc..."
         type='text'
         onChange={(e) => handleInputChange('label', e.target.value)}
       />
@@ -20,16 +24,25 @@ const MessageForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}:
       <Input
         name='text'
         label='Mensagem'
+        placeholder="Exemplos: Olá! Como posso ajudar? Por favor, digite sua mensagem aqui..."
         type='text'
         onChange={(e) => handleInputChange('text', e.target.value)}
       />
 
-      <Input
+      <Select
         name='type'
         label='Tipo'
-        type='text'
-        onChange={(e) => handleInputChange('type', e.target.value)}
-      />
+        value={selectValue}
+        onChange={(e) => {
+          handleInputChange('type', e.target.value);
+          setSelectValue(e.target.value)
+        }}
+      >
+        <SelectItem key="text" value="text">Texto</SelectItem>
+        <SelectItem key="number" value="number">Numérico</SelectItem>
+        <SelectItem key="date" value="date">Data</SelectItem>
+        <SelectItem key="textarea" value="textarea">Textos Maiores</SelectItem>
+      </Select>
 
       <Button
         className='rounded-md'
