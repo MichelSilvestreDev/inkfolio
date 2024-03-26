@@ -10,48 +10,50 @@ import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
 
-  const initialValues:PostFormValues = {
-    user_id: '',
-    description: '',
-    styles: [],
-    urls: [],
-    created_at: '',
-  }
+const initialValues: PostFormValues = {
+  title: '',
+  avaliable_negociation: false,
+  discount: 0,
+  description: '',
+  styles: [],
+  urls: [],
+  created_at: '',
+}
 
-  type Post = {
-    closeModal: () => void
-  }
+type Post = {
+  closeModal: () => void
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const styles = [
-    {
-      label: 'Old School',
-      value: 'old-school'
-    },
-    {
-      label: 'New School',
-      value: 'new-school'
-    },
-    {
-      label: 'Tribal',
-      value: 'tribal'
-    },
-    {
-      label: 'Minimalista',
-      value: 'minimalista'
-    },
-    {
-      label: 'Realista',
-      value: 'realista'
-    },
-  ]
+  {
+    label: 'Old School',
+    value: 'old-school'
+  },
+  {
+    label: 'New School',
+    value: 'new-school'
+  },
+  {
+    label: 'Tribal',
+    value: 'tribal'
+  },
+  {
+    label: 'Minimalista',
+    value: 'minimalista'
+  },
+  {
+    label: 'Realista',
+    value: 'realista'
+  },
+]
 
-const PostContainer: React.FC<Post> = ({closeModal}: Post) => {
+const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
   // Hooks
   const { user } = useAuth()
   const { isLoading: posting, newPost } = usePost()
   const { isLoading: uploading, upload } = useUploadFile()
-  const {successMessage, errorMessage} = useNotification()
+  const { successMessage, errorMessage } = useNotification()
   // States
   const [formData, setFormData] = useState(initialValues)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
@@ -90,31 +92,31 @@ const PostContainer: React.FC<Post> = ({closeModal}: Post) => {
   }, [selectedFiles]);
 
   const handleFiles = (files: FileList | null) => {
-    if(files) {
+    if (files) {
       setSelectedFiles(files)
     }
   }
 
-const createFileList = (files: File[]): FileList => {
-  const dataTransfer = new DataTransfer();
-  files.forEach((file) => {
-    dataTransfer.items.add(file);
-  });
-  return dataTransfer.files;
-};
+  const createFileList = (files: File[]): FileList => {
+    const dataTransfer = new DataTransfer();
+    files.forEach((file) => {
+      dataTransfer.items.add(file);
+    });
+    return dataTransfer.files;
+  };
 
-const removeFile = (index: number) => {
-  if (selectedFiles) {
-    const updatedSelectedFiles = Array.from(selectedFiles);
-    updatedSelectedFiles.splice(index, 1);
-    setSelectedFiles(createFileList(updatedSelectedFiles));
+  const removeFile = (index: number) => {
+    if (selectedFiles) {
+      const updatedSelectedFiles = Array.from(selectedFiles);
+      updatedSelectedFiles.splice(index, 1);
+      setSelectedFiles(createFileList(updatedSelectedFiles));
 
-    const updatedPreviewFiles = [...previewFiles];
-    updatedPreviewFiles.splice(index, 1);
-    setPreviewFiles(updatedPreviewFiles);
-  }
-};
-  const handleInputChange = (fieldName: string, value: string | number | string[]) => {
+      const updatedPreviewFiles = [...previewFiles];
+      updatedPreviewFiles.splice(index, 1);
+      setPreviewFiles(updatedPreviewFiles);
+    }
+  };
+  const handleInputChange = (fieldName: string, value: string | number | string[] | boolean) => {
     setFormData({
       ...formData,
       [fieldName]: value,
@@ -123,10 +125,10 @@ const removeFile = (index: number) => {
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    
+
     try {
       const uploadedFiles = await handleUploadFiles();
-      
+
       if (uploadedFiles.length > 0) {
         const postUser: PostUser = {
           id: user.uid,
@@ -134,9 +136,9 @@ const removeFile = (index: number) => {
           name: user.displayName || '',
           avatar: user.photoUrl || ''
         }
-        
-        const post = Object.assign(formData, {user: postUser, urls: uploadedFiles})
-        
+
+        const post = Object.assign(formData, { user: postUser, urls: uploadedFiles })
+
         // Submit the post
         await submitPost(post);
       } else {
@@ -153,12 +155,12 @@ const removeFile = (index: number) => {
       return [];
     }
 
-    const uploadedFiles:string[] = [];
-    
+    const uploadedFiles: string[] = [];
+
     for (const file of selectedFiles) {
       try {
         const url = await upload(file);
-        if(typeof(url) === 'string') uploadedFiles.push(url);
+        if (typeof (url) === 'string') uploadedFiles.push(url);
       } catch (error) {
         console.error('Error uploading file:', error);
         errorMessage('Ocorreu um erro inesperado, tente novamente mais tarde');

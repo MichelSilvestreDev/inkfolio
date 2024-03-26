@@ -94,7 +94,7 @@ const SidebarMenu: React.FC = () => {
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>Criar nova publicação</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>Adicionar Tatuagem</ModalHeader>
               <ModalBody>
                 <PostContainer closeModal={closeModal}/>
               </ModalBody>
