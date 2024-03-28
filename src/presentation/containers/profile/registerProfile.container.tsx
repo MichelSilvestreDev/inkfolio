@@ -46,22 +46,21 @@ const RegisterProfileContainer: React.FC = () => {
   const submitProfile = async (profile: IProfile) => {
     const profileData:IProfile = {...profile, user_id: user.uid}
 
-    if(selectedFiles) {
-      try {
+    try {
+      if(selectedFiles) {
         const uploadedUrls = await uploadFiles(selectedFiles);
-
         profileData.avatar = uploadedUrls[0];
-
-        await registerProfile(profileData);
-
-        successMessage('Perfil cadastrado com sucesso!')
-        setTimeout(() => {
-          navigate('/perfil')
-        }, 1500)
-      } catch(err) {
-        console.error('Erro ao cadastrar o perfil', err)
-        errorMessage('Ocorreu um erro inesperado ao cadastrar o perfil')
       }
+
+      await registerProfile(profileData);
+
+      successMessage('Perfil cadastrado com sucesso!')
+      setTimeout(() => {
+        navigate('/perfil')
+      }, 1500)
+    } catch(err) {
+      console.error('Erro ao cadastrar o perfil', err)
+      errorMessage('Ocorreu um erro inesperado ao cadastrar o perfil')
     }
   }
 

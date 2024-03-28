@@ -50,7 +50,7 @@ const PostContainer: React.FC<Post> = ({closeModal}: Post) => {
   // Hooks
   const { user } = useAuth()
   const { isLoading: posting, newPost } = usePost()
-  const { isLoading: uploading, upload } = useUploadFile()
+  const { isLoading: uploading, uploadFiles } = useUploadFile()
   const {successMessage, errorMessage} = useNotification()
   // States
   const [formData, setFormData] = useState(initialValues)
@@ -125,9 +125,9 @@ const removeFile = (index: number) => {
     event.preventDefault();
     
     try {
-      const uploadedFiles = await handleUploadFiles();
+      const urls = selectedFiles ? await uploadFiles(selectedFiles) : [];
       
-      if (uploadedFiles.length > 0) {
+      if (urls.length > 0) {
         const postUser: IPostUser = {
           id: user.uid,
           email: user.email || '',
@@ -135,7 +135,7 @@ const removeFile = (index: number) => {
           avatar: user.photoUrl || ''
         }
         
-        const post = Object.assign(formData, {user: postUser, urls: uploadedFiles})
+        const post = Object.assign(formData, {user: postUser, urls: urls})
         
         // Submit the post
         await submitPost(post);
@@ -146,26 +146,6 @@ const removeFile = (index: number) => {
       console.error('Error handling file uploads:', error);
       errorMessage('Ocorreu um erro inesperado ao enviar as imagens, tente novamente mais tarde');
     }
-  };
-
-  const handleUploadFiles = async () => {
-    if (!selectedFiles || selectedFiles.length === 0) {
-      return [];
-    }
-
-    const uploadedFiles:string[] = [];
-    
-    for (const file of selectedFiles) {
-      try {
-        const url = await upload(file);
-        if(typeof(url) === 'string') uploadedFiles.push(url);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        errorMessage('Ocorreu um erro inesperado, tente novamente mais tarde');
-      }
-    }
-
-    return uploadedFiles;
   };
 
   const submitPost = async (post: IPostFormValues) => {

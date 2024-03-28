@@ -46,12 +46,9 @@ const useUploadFile = () => {
     try {
       // Wait for all uploads to complete
       const urls = await Promise.all(uploadPromises)
-      console.log('All files uploaded successfully!')
-      window.alert('Salvo com sucesso!')
       return urls
     } catch (error) {
       console.error('Error uploading files:', error)
-      window.alert('Erro ao salvar')
       // Handle errors if necessary
       throw error
     } finally {
