@@ -9,11 +9,20 @@ import { FormEvent } from 'react'
 interface IForm {
   isLoading: boolean
   formValues: IProfile
+  previewFiles: string[]
+  handleFiles: (files: FileList | null) => void
   handleInputChange: (fieldName: string, value: string) => void
   submitProfile: (profile: IProfile) => void
 }
 
-const ProfileForm: React.FC<IForm> = ({formValues, isLoading, handleInputChange, submitProfile}) => {
+const ProfileForm: React.FC<IForm> = ({
+  formValues,
+  isLoading,
+  previewFiles,
+  handleFiles,
+  handleInputChange,
+  submitProfile
+}) => {
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -31,7 +40,7 @@ const ProfileForm: React.FC<IForm> = ({formValues, isLoading, handleInputChange,
       />
 
       <div>
-        <Avatar src="https://i.pravatar.cc/150?u=a04258114e29026708c" className="w-24 h-24 mx-auto text-large" />
+        <Avatar src={previewFiles.length > 0 ? previewFiles[0] : ''} className="w-24 h-24 mx-auto text-large" />
         <label htmlFor="avatar" className='block text-center my-4 text-primary underline cursor-pointer'>
           Selecionar foto de perfil
         </label>
@@ -42,7 +51,7 @@ const ProfileForm: React.FC<IForm> = ({formValues, isLoading, handleInputChange,
         name="avatar"
         id="avatar"
         className='hidden'
-        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        onChange={(e) => handleFiles(e.target.files)}
       />
 
       <Input
@@ -68,7 +77,7 @@ const ProfileForm: React.FC<IForm> = ({formValues, isLoading, handleInputChange,
         />
       <Select
         isRequired
-        name='bio'
+        name='tattoo_styles'
         label='Estilos de tatuagem'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         selectionMode="multiple"

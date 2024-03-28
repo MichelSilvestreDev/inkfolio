@@ -3,10 +3,12 @@ import { Modal, ModalBody, ModalContent, ModalHeader, Skeleton, Tooltip, User, u
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/auth/useAuth'
 import PostContainer from '../presentation/containers/post/Posts.container'
+import useProfile from '../hooks/profile/useProfile'
 
 const SidebarMenu: React.FC = () => {
   // Hooks
   const { user, isLoading } = useAuth()
+  const {profile} = useProfile()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   const closeModal = () => {
@@ -74,10 +76,9 @@ const SidebarMenu: React.FC = () => {
           { !isLoading && (
             <Link to='/perfil'>
               <User
-                name={user.email}
-                description='InkFolio'
+                name={profile.name || user.email}
                 avatarProps={{
-                  src: user.photoUrl || ''
+                  src: profile?.avatar || ''
                 }}
               />
             </Link>
