@@ -12,6 +12,8 @@ const Profile: React.FC = () => {
 
   return (
     <div className="w-full">
+      <ProfileContainer />
+
       <div className="shadow-lg w-1/4 min-w-96 flex flex-col gap-10 p-8 rounded-sm">
         {
           isLoading ? (
@@ -32,8 +34,6 @@ const Profile: React.FC = () => {
           )
         }
       </div>
-
-      <ProfileContainer />
     </div>
   )
 }

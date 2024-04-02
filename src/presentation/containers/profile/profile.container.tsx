@@ -3,6 +3,8 @@ import { getUserPosts } from "../../../services/profileService"
 import { IPost } from "../../../types/posts.types"
 import PostCard from "../../components/feed/PostCard"
 import { useAuth } from "../../../hooks/auth/useAuth"
+import ProfileHeader from "../../components/profile/ProfileHeader"
+import ProfileCover from "../../components/profile/ProfileCover"
 
 const ProfileContainer:React.FC  = () => {
   // Hooks
@@ -18,7 +20,9 @@ const ProfileContainer:React.FC  = () => {
   },[user.uid])
 
   return (
-    <div>
+    <div className='w-full'>
+      <ProfileCover />
+      <ProfileHeader />
       {
         userPosts.map(post => {
           return (

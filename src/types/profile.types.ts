@@ -3,7 +3,7 @@ export interface IProfile {
   name: string
   phone: string
   bio: string
-  tattoo_styles: string[]
+  tattoo_styles: string
   avatar: string
   address: string
   profile_cover?: string

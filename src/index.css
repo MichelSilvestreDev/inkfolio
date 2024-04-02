@@ -6,6 +6,28 @@
   background-color: #e03f5c;
 }
 
+.bg-secondary {
+  background-color: #0284c8;
+}
+
+.bg-tertiary {
+  background-color: #a15563;
+}
+
 .text-primary {
   color: #e03f5c;
+}
+
+.text-secondary {
+  color: #0284c8;
+}
+
+.text-tertiary {
+  color: #a15563;
+}
+
+.container {
+  width: 90%;
+  max-width: 90%;
+  margin: auto;
 }
