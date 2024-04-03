@@ -28,7 +28,7 @@ const ProfileHeader: React.FC = () => {
 
       <div>
         {
-          profile.tattoo_styles.split(',').map(style => 
+          profile?.tattoo_styles?.split(',').map(style => 
             <Chip key={style} className='bg-tertiary text-white mr-4'>{style}</Chip>
           )
         }

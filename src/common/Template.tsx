@@ -8,7 +8,7 @@ const Template: React.FC = () => {
         <div className="hidden md:block col-start-1 col-end-4">
           <SidebarMenu />
         </div>
-        <div className="min-h-screen overflow-y-scroll sm:col-start-4 sm:col-end-13">
+        <div className="min-h-screen overflow-y-scroll sm:col-start-4 sm:col-end-13 relative">
           <div className="container lg">
             <Outlet />
           </div>
