@@ -4,6 +4,7 @@ const Template = lazy(() => import('../../common/Template'));
 const Feed = lazy(() => import('../../presentation/pages/Feed'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
+const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: '/completar-cadastro',
     element: <RegisterProfile />,
+  },
+  {
+    path: '/editar-perfil',
+    element: <EditProfile />,
   },
   // {
   //   path: '*',

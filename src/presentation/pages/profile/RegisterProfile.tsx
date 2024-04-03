@@ -1,9 +1,17 @@
-import RegisterProfileContainer from "../../containers/profile/registerProfile.container";
+import Header from '../../../common/Header';
+import RegisterProfileContainer from '../../containers/profile/registerProfile.container';
 
 const RegisterProfile = () => {
   return (
-    <div className="w-full min-h-screen p-4 bg-slate-500">
-      <RegisterProfileContainer />
+    <div className='w-full min-h-screen'>
+      <Header
+        title='Completar cadastro'
+        subtitle='Complete seu cadastro para disponibilizar o seu perfil ao público.'
+      />
+
+      <div className="container">
+        <RegisterProfileContainer />
+      </div>
     </div>
   )
 }

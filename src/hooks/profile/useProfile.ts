@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { changeProfile, selectProfile } from '../../store/profile/profileSlice'
-import { getProfile, postProfile } from '../../services/profileService'
+import { getProfile, postProfile, putProfile } from '../../services/profileService'
 import { IProfile } from '../../types/profile.types'
 import { useState } from 'react'
 import { useAuth } from '../auth/useAuth'
@@ -43,11 +43,24 @@ const useProfile = () => {
     }
   }
 
+  const editProfile = async (profile: IProfile) => {
+    setIsLoading(true)
+    try {
+      const profileData = await putProfile(profile)
+      dispatch(changeProfile(profileData))
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     isLoading,
     profile,
     getUserProfile,
     registerProfile,
+    editProfile,
   }
 }
 

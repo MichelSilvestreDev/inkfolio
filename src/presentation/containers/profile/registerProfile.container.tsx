@@ -23,7 +23,7 @@ const initialValues: IProfile = {
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
-  const { registerProfile, isLoading: PostinProfile, profile } = useProfile()
+  const { registerProfile, editProfile, isLoading: PostinProfile, profile } = useProfile()
   const {uploadFiles, isLoading: Uploading} = useUploadFile()
   const { user } = useAuth()
   // States
@@ -43,8 +43,12 @@ const RegisterProfileContainer: React.FC = () => {
     });
   };
 
-  const submitProfile = async (profile: IProfile) => {
-    const profileData:IProfile = {...profile, user_id: user.uid}
+  const submitProfile = async (profile: IProfile, isEditing?: boolean) => {
+    const profileData:IProfile = {
+      ...profile,
+      user_id: user.uid,
+      profile_cover: profile.profile_cover || ''
+    }
 
     try {
       if(selectedFiles) {
@@ -52,7 +56,11 @@ const RegisterProfileContainer: React.FC = () => {
         profileData.avatar = uploadedUrls[0];
       }
 
-      await registerProfile(profileData);
+      if(isEditing){
+        await editProfile(profileData)
+        console.log('aquiiiii')
+      }
+      else await registerProfile(profileData)
 
       successMessage('Perfil cadastrado com sucesso!')
       setTimeout(() => {

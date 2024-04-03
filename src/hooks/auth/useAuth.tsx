@@ -36,7 +36,6 @@ export const useAuth = () => {
           const profileData = await getProfile(userData.uid)
           if(profileData) {
             dispatch(changeProfile(profileData))
-            navigate('/')
           }
           else {
             setTimeout(() => {
@@ -52,7 +51,7 @@ export const useAuth = () => {
         setIsLoading(false)
       })
     }
-  }, [dispatch, token, user])
+  }, [dispatch, token, user.uid])
 
   useEffect(() => {
     fetchUserData()

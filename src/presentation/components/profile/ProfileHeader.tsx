@@ -37,7 +37,7 @@ const ProfileHeader: React.FC = () => {
       </div>
 
       <div className='w-full pb-8 flex justify-end'>
-        <Link to='/completar-cadastro' className='absolute'>
+        <Link to='/editar-perfil' className='absolute'>
           <Button className='bg-secondary text-white rounded-full z-20' size='sm'>
             Editar perfil
             <Pencil theme="outline" size="16" fill="#fff" strokeWidth={3}/>
