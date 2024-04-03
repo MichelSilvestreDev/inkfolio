@@ -6,11 +6,11 @@ const initialState: IProfile = {
   name: '',
   phone: '',
   bio: '',
-  tattoo_styles: [],
+  tattoo_styles: '',
   avatar: '',
   address: '',
   profile_cover: '',
-  redes: [],
+  redes: '',
 }
 
 export const slice = createSlice({

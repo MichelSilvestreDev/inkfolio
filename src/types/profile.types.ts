@@ -7,5 +7,5 @@ export interface IProfile {
   avatar: string
   address: string
   profile_cover?: string
-  redes?: string[]
+  redes?: string
 }

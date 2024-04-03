@@ -17,7 +17,7 @@ const initialValues: IProfile = {
   tattoo_styles: '',
   avatar: '',
   address: '',
-  redes: [],
+  redes: '',
 }
 
 const RegisterProfileContainer: React.FC = () => {
@@ -56,16 +56,13 @@ const RegisterProfileContainer: React.FC = () => {
         profileData.avatar = uploadedUrls[0];
       }
 
-      if(isEditing){
-        await editProfile(profileData)
-        console.log('aquiiiii')
-      }
+      if(isEditing) await editProfile(profileData)
       else await registerProfile(profileData)
 
-      successMessage('Perfil cadastrado com sucesso!')
+      successMessage('Perfil salvo com sucesso!')
       setTimeout(() => {
         navigate('/perfil')
-      }, 1500)
+      }, 3000)
     } catch(err) {
       console.error('Erro ao cadastrar o perfil', err)
       errorMessage('Ocorreu um erro inesperado ao cadastrar o perfil')

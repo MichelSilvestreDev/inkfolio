@@ -46,8 +46,8 @@ const useProfile = () => {
   const editProfile = async (profile: IProfile) => {
     setIsLoading(true)
     try {
-      const profileData = await putProfile(profile)
-      dispatch(changeProfile(profileData))
+      await putProfile(profile)
+      await getUserProfile(profile.user_id)
     } catch (err) {
       console.error(err)
     } finally {
