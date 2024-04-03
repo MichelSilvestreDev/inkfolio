@@ -14,7 +14,7 @@ const initialValues: IProfile = {
   name: '',
   phone: '',
   bio: '',
-  tattoo_styles: [],
+  tattoo_styles: '',
   avatar: '',
   address: '',
   redes: [],
@@ -23,7 +23,7 @@ const initialValues: IProfile = {
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
-  const { registerProfile, isLoading: PostinProfile } = useProfile()
+  const { registerProfile, isLoading: PostinProfile, profile } = useProfile()
   const {uploadFiles, isLoading: Uploading} = useUploadFile()
   const { user } = useAuth()
   // States
@@ -95,6 +95,10 @@ const RegisterProfileContainer: React.FC = () => {
         });
     }
   }, [errorMessage, selectedFiles]);
+
+  useEffect(() => {
+    setFormData(profile)
+  }, [profile])
 
   return (
     <div>

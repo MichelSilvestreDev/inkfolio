@@ -31,3 +31,15 @@
   max-width: 90%;
   margin: auto;
 }
+
+.container-center {
+  margin: auto;
+}
+
+.sm:container-center {
+  margin: auto;
+}
+
+.container-left {
+  margin: 0 auto 0 0;
+}
