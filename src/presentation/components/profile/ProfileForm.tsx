@@ -89,7 +89,7 @@ const ProfileForm: React.FC<IForm> = ({
         label='Estilos de tatuagem'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         selectionMode="multiple"
-        selectedKeys={formValues?.tattoo_styles?.split(',') || []}
+        selectedKeys={formValues?.tattoo_styles?.split(',')}
       >
         {['Old School', 'Minimalista', 'Tribal'].map((style) => (
           <SelectItem key={style} value={style}>

@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import ProfileForm from "../../components/profile/ProfileForm";
-import { IProfile } from "../../../types/profile.types";
-import useProfile from "../../../hooks/profile/useProfile";
-import { useAuth } from "../../../hooks/auth/useAuth";
-import useUploadFile from "../../../hooks/posts/useUploadFile";
-import useNotification from "../../../hooks/common/useNotification";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { useEffect, useState } from 'react';
+import ProfileForm from '../../components/profile/ProfileForm';
+import { IProfile } from '../../../types/profile.types';
+import useProfile from '../../../hooks/profile/useProfile';
+import { useAuth } from '../../../hooks/auth/useAuth';
+import useUploadFile from '../../../hooks/posts/useUploadFile';
+import useNotification from '../../../hooks/common/useNotification';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Skeleton } from '@nextui-org/react';
 
 const initialValues: IProfile = {
   user_id: '',
@@ -31,6 +32,7 @@ const RegisterProfileContainer: React.FC = () => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
   const {successMessage, errorMessage} = useNotification()
+  const [isLoadingProfile, setIsLoaginProfile] = useState(true)
 
   const handleFiles = (files: FileList | null) => {
     if(files) setSelectedFiles(files)
@@ -102,8 +104,33 @@ const RegisterProfileContainer: React.FC = () => {
   }, [errorMessage, selectedFiles]);
 
   useEffect(() => {
-    setFormData(profile)
+    if(profile){
+      setFormData(profile)
+      setTimeout(() => {
+        setIsLoaginProfile(false)
+      }, 1000)
+    }
   }, [profile])
+
+  if(isLoadingProfile) return (
+    <div className='bg-white rounded-lg flex flex-col gap-4 p-4 w-full max-w-[500px] shadow-lg mx-auto'>
+      <Skeleton className='rounded-lg'>
+        <div className='h-16 rounded-lg bg-default-300'></div>
+      </Skeleton>
+      <Skeleton className='rounded-lg'>
+        <div className='h-16 rounded-lg bg-default-300'></div>
+      </Skeleton>
+      <Skeleton className='rounded-lg'>
+        <div className='h-16 rounded-lg bg-default-300'></div>
+      </Skeleton>
+      <Skeleton className='rounded-lg'>
+        <div className='h-16 rounded-lg bg-default-300'></div>
+      </Skeleton>
+      <Skeleton className='rounded-lg'>
+        <div className='h-16 rounded-lg bg-default-300'></div>
+      </Skeleton>
+    </div>
+  )
 
   return (
     <div>
