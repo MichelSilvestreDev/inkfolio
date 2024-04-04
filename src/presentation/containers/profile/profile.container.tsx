@@ -4,7 +4,7 @@ import { IPost } from "../../../types/posts.types"
 import PostCard from "../../components/feed/PostCard"
 import { useAuth } from "../../../hooks/auth/useAuth"
 import ProfileHeader from "../../components/profile/ProfileHeader"
-import ProfileCover from "../../components/profile/ProfileCover"
+import ProfileCoverContainer from "./profileCover.container"
 
 const ProfileContainer:React.FC  = () => {
   // Hooks
@@ -21,7 +21,7 @@ const ProfileContainer:React.FC  = () => {
 
   return (
     <div className='w-full'>
-      <ProfileCover />
+      <ProfileCoverContainer />
       <ProfileHeader />
       {
         userPosts.map(post => {

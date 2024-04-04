@@ -55,12 +55,27 @@ const useProfile = () => {
     }
   }
 
+  const editProfileCover = async (profileCover: string) => {
+    setIsLoading(true)
+    const profileData: IProfile = { ...profile, profile_cover: profileCover }
+
+    try {
+      await putProfile(profileData)
+      await getUserProfile(profile.user_id)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return {
     isLoading,
     profile,
     getUserProfile,
     registerProfile,
     editProfile,
+    editProfileCover,
   }
 }
 
