@@ -8,7 +8,7 @@ on:
     branches: ['main']
 
 jobs:
-  test:
+  building:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,9 +25,6 @@ jobs:
       - name: Run Tests
         run: yarn test
 
-  building:
-    runs-on: ubuntu-latest
-    steps:
       - name: Run Build
         run: yarn build
 
