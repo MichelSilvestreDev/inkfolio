@@ -1,4 +1,4 @@
-export type PostFormValues = {
+export interface IPostFormValues {
   title: string
   description: string
   styles: string[]
@@ -11,9 +11,9 @@ export type PostFormValues = {
   deleted_at?: string
 }
 
-export type Post = {
+export interface IPost {
   id: string
-  user: PostUser
+  user: IPostUser
   title: string
   description: string
   price?: number
@@ -24,7 +24,7 @@ export type Post = {
   deleted_at?: string
 }
 
-export type PostUser = {
+export interface IPostUser {
   id: string
   email: string
   name: string

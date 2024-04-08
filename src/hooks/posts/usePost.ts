@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Post, PostFormValues } from '../../types/posts.types'
+import { IPost, IPostFormValues } from '../../types/posts.types'
 import { NewPostService, GetPostsService } from '../../services/postsService'
 
 const usePost = () => {
   // States
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<IPost[]>([])
 
   useEffect(() => {
     if (posts.length < 1) getPosts()
@@ -25,7 +25,7 @@ const usePost = () => {
       })
   }
 
-  const newPost = async (post: PostFormValues) => {
+  const newPost = async (post: IPostFormValues) => {
     setIsLoading(true)
     const created: string = new Date().toISOString()
 

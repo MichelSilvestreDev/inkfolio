@@ -1,12 +1,12 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip, User } from '@nextui-org/react'
-import { Post } from '../../../types/posts.types'
+import { IPost } from '../../../types/posts.types'
 import { formatDate } from '../../../utils/formatDate'
 import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 
 type Card = {
-  post: Post
+  post: IPost
 }
 
 const PostCard: React.FC<Card> = ({ post }: Card) => {

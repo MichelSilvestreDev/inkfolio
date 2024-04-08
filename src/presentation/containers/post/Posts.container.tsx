@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PostFormValues, PostUser } from '../../../types/posts.types'
+import { IPostFormValues, IPostUser } from '../../../types/posts.types'
 import usePost from '../../../hooks/posts/usePost'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
 
-const initialValues: PostFormValues = {
+const initialValues:IPostFormValues = {
   title: '',
   avaliable_negociation: false,
   discount: 0,
@@ -52,8 +52,8 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
   // Hooks
   const { user } = useAuth()
   const { isLoading: posting, newPost } = usePost()
-  const { isLoading: uploading, upload } = useUploadFile()
-  const { successMessage, errorMessage } = useNotification()
+  const { isLoading: uploading, uploadFiles } = useUploadFile()
+  const {successMessage, errorMessage} = useNotification()
   // States
   const [formData, setFormData] = useState(initialValues)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
@@ -127,17 +127,17 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
     event.preventDefault();
 
     try {
-      const uploadedFiles = await handleUploadFiles();
-
-      if (uploadedFiles.length > 0) {
-        const postUser: PostUser = {
+      const urls = selectedFiles ? await uploadFiles(selectedFiles) : [];
+      
+      if (urls.length > 0) {
+        const postUser: IPostUser = {
           id: user.uid,
           email: user.email || '',
           name: user.displayName || '',
           avatar: user.photoUrl || ''
         }
-
-        const post = Object.assign(formData, { user: postUser, urls: uploadedFiles })
+        
+        const post = Object.assign(formData, {user: postUser, urls: urls})
 
         // Submit the post
         await submitPost(post);
@@ -150,27 +150,8 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
     }
   };
 
-  const handleUploadFiles = async () => {
-    if (!selectedFiles || selectedFiles.length === 0) {
-      return [];
-    }
+  const submitPost = async (post: IPostFormValues) => {
 
-    const uploadedFiles: string[] = [];
-
-    for (const file of selectedFiles) {
-      try {
-        const url = await upload(file);
-        if (typeof (url) === 'string') uploadedFiles.push(url);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        errorMessage('Ocorreu um erro inesperado, tente novamente mais tarde');
-      }
-    }
-
-    return uploadedFiles;
-  };
-
-  const submitPost = async (post: PostFormValues) => {
     try {
       await newPost(post);
       successMessage('Post publicado com sucesso!');

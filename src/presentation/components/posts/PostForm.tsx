@@ -42,6 +42,7 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
         placeholder='Selecione ao menos um estilo'
         isRequired
         onChange={(e) => handleInputChange('styles', e.target.value)}
+        multiple
       >
         {styles.map((style) => (
           <SelectItem key={style.value} value={style.value}>
