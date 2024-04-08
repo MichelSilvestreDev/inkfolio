@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 const Template = lazy(() => import('../../common/Template'));
 const Feed = lazy(() => import('../../presentation/pages/Feed'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
@@ -29,10 +29,10 @@ const router = createBrowserRouter([
     path: '/editar-perfil',
     element: <EditProfile />,
   },
-  // {
-  //   path: '*',
-  //   element: <LoaderPage />,
-  // },
+  {
+    path: '*',
+    element: <Navigate to='/' />,
+  },
 ])
 
 const MainRoutes: React.FC = () => {

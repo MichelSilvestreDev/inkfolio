@@ -5,13 +5,15 @@ import { UserData, UserCredentials, UserFormValues } from "../../types/auth.type
 import { GetUserService, SigInService, SigUpService, SignOutService } from "../../services/authService"
 import Cookies from 'js-cookie';
 import { getProfile } from "../../services/profileService"
-import { changeProfile } from "../../store/profile/profileSlice"
+import { changeProfile, removeProfile } from "../../store/profile/profileSlice"
 import { useNavigate } from "react-router-dom"
+import useProfile from "../profile/useProfile"
 
 export const useAuth = () => {
   // Hooks
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {getUserProfile} = useProfile()
   // States
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const user = useSelector(selectUser)
@@ -32,15 +34,14 @@ export const useAuth = () => {
             photoUrl: res.photoURL,
             isLogged: true,
           }
-          dispatch(changeUser(userData))
           const profileData = await getProfile(userData.uid)
           if(profileData) {
             dispatch(changeProfile(profileData))
+            dispatch(changeUser(userData))
           }
           else {
-            setTimeout(() => {
-              navigate('/completar-cadastro')
-            }, 1000)
+            navigate('/completar-cadastro')
+            dispatch(changeUser(userData))
           }
         } else {
           console.log('Usuário não autenticado.');
@@ -51,7 +52,7 @@ export const useAuth = () => {
         setIsLoading(false)
       })
     }
-  }, [dispatch, token, user.uid])
+  }, [user.uid])
 
   useEffect(() => {
     fetchUserData()
@@ -60,7 +61,7 @@ export const useAuth = () => {
   const sigIn = async (userCreds: UserCredentials) => {
     setIsLoading(true)
 
-    await SigInService(userCreds).then((result) => {
+    await SigInService(userCreds).then( async (result) => {
       if(typeof(result) === 'object') {
         const user: UserData = {
           uid: result.user.uid,
@@ -71,6 +72,7 @@ export const useAuth = () => {
           photoUrl: result.user.photoURL,
           isLogged: true,
         }
+        await getUserProfile(result.user.uid)
         const token = result.token
         Cookies.set('token', token, { expires: 7 })
         dispatch(changeUser(user))
@@ -115,7 +117,9 @@ export const useAuth = () => {
     await SignOutService().then((result) => {
       if(result) {
         dispatch(logout())
+        dispatch(removeProfile())
         Cookies.remove('token')
+        navigate('/')
       } else {
         window.alert('Erro ao deslogar')
       }

@@ -3,22 +3,32 @@ import { changeProfile, selectProfile } from '../../store/profile/profileSlice'
 import { getProfile, postProfile, putProfile } from '../../services/profileService'
 import { IProfile } from '../../types/profile.types'
 import { useState } from 'react'
-import { useAuth } from '../auth/useAuth'
 
 const useProfile = () => {
   // Hooks
-  const { user } = useAuth()
   const profile = useSelector(selectProfile)
   const dispatch = useDispatch()
   // States
   const [isLoading, setIsLoading] = useState(false)
+
+  const initialState: IProfile = {
+    user_id: '',
+    name: '',
+    phone: '',
+    bio: '',
+    tattoo_styles: '',
+    avatar: '',
+    address: '',
+    profile_cover: '',
+    redes: '',
+  }
 
   const registerProfile = async (profile: IProfile) => {
     setIsLoading(true)
     try {
       await postProfile(profile)
         .then(async () => {
-          const profileData = await getProfile(user.uid)
+          const profileData = await getProfile(profile.user_id)
           dispatch(changeProfile(profileData))
         })
         .catch(() => {
@@ -31,13 +41,15 @@ const useProfile = () => {
     }
   }
 
-  const getUserProfile = async (userID: string) => {
+  const getUserProfile = async (userID: string): Promise<IProfile> => {
     setIsLoading(true)
     try {
       const profileData = await getProfile(userID)
       dispatch(changeProfile(profileData))
+      return profile as IProfile
     } catch (err) {
       console.error(err)
+      return initialState
     } finally {
       setIsLoading(false)
     }

@@ -71,7 +71,8 @@ const ProfileForm: React.FC<IForm> = ({
         isRequired
         type='text'
         name='phone'
-        label='Telefone'
+        label='Celular (whastsapp - somente números)'
+        maxLength={11}
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         value={formValues.phone}
       />
