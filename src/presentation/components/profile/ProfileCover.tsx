@@ -33,8 +33,8 @@ const ProfileCover: React.FC<IProfileCover> = ({
           size='sm'
           onPress={openModal}
         >
-          Editar capa
           <Pencil theme='outline' size='16' fill='#fff' strokeWidth={3}/>
+          Editar capa
         </Button>
       </div>
       <div className='w-screen h-[150px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>

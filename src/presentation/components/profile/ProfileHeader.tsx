@@ -12,7 +12,6 @@ const ProfileHeader: React.FC = () => {
       <div className='w-full flex justify-between items-center'>
         <User
           name={profile.name}
-          // description='Product Designer'
           avatarProps={{
             src: profile.avatar
           }}
@@ -39,8 +38,8 @@ const ProfileHeader: React.FC = () => {
       <div className='w-full pb-8 flex justify-end'>
         <Link to='/editar-perfil' className='absolute'>
           <Button className='bg-secondary text-white rounded-full z-20' size='sm'>
-            Editar perfil
             <Pencil theme="outline" size="16" fill="#fff" strokeWidth={3}/>
+            Editar perfil
           </Button>
         </Link>
       </div>

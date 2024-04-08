@@ -3,10 +3,8 @@ import { getUserPosts } from "../../../services/profileService"
 import { IPost } from "../../../types/posts.types"
 import PostCard from "../../components/feed/PostCard"
 import { useAuth } from "../../../hooks/auth/useAuth"
-import ProfileHeader from "../../components/profile/ProfileHeader"
-import ProfileCoverContainer from "./profileCover.container"
 
-const ProfileContainer:React.FC  = () => {
+const ProfilePostsContainer:React.FC  = () => {
   // Hooks
   const { user } = useAuth()
   // States
@@ -21,8 +19,6 @@ const ProfileContainer:React.FC  = () => {
 
   return (
     <div className='w-full'>
-      <ProfileCoverContainer />
-      <ProfileHeader />
       {
         userPosts.map(post => {
           return (
@@ -38,4 +34,4 @@ const ProfileContainer:React.FC  = () => {
   )
 }
 
-export default ProfileContainer
+export default ProfilePostsContainer
