@@ -8,16 +8,12 @@ on:
     branches: ['main']
 
 jobs:
-  checkout:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-  test:
-    runs-on: ubuntu-latest
-    needs: checkout
-    steps:
       - name: Using Node.js
         uses: actions/setup-node@v2
         with:
@@ -31,7 +27,6 @@ jobs:
 
   building:
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Run Build
         run: yarn build
