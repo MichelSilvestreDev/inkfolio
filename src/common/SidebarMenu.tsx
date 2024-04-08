@@ -28,8 +28,8 @@ const SidebarMenu: React.FC = () => {
               Página incial
             </li>
           </Link>
-          <Link to='/'>
-            <Tooltip content='Em breve' color='primary' placement={'right-end'}>
+          <Link to='/configuracao-de-mensagens'>
+            <Tooltip content='Gerenciar Mensagens' color='primary' placement={'right-end'}>
               <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
                 <Message theme='outline' size='24' fill='#333' strokeWidth={3}/>
                   Mensagens
@@ -95,7 +95,7 @@ const SidebarMenu: React.FC = () => {
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>Criar nova publicação</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>Adicionar Tatuagem</ModalHeader>
               <ModalBody>
                 <PostContainer closeModal={closeModal}/>
               </ModalBody>
