@@ -17,7 +17,7 @@ const Feed: React.FC = () => {
         onClick={onOpen}
       >
         <Picture theme='outline' size='24' fill='#e03f5c' strokeWidth={3}/>
-        <p>Criar nova publicação</p>
+        <p>Adicionar Tatuagem</p>
       </div>
 
       <FeedContainer />
@@ -31,7 +31,7 @@ const Feed: React.FC = () => {
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>Criar nova publicação</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>Adicionar Tatuagem</ModalHeader>
               <ModalBody>
                 <PostContainer closeModal={closeModal}/>
               </ModalBody>

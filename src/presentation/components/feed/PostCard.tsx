@@ -1,15 +1,26 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip, User } from '@nextui-org/react'
-import { Post } from '../../../types/posts.types'
+import { IPost } from '../../../types/posts.types'
 import { formatDate } from '../../../utils/formatDate'
 import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 
 type Card = {
-  post: Post
+  post: IPost
 }
 
-const PostCard:React.FC<Card> = ({post}: Card) => {
+const PostCard: React.FC<Card> = ({ post }: Card) => {
+
+  const shareOnWhatsApp = () => {
+    const phoneNumber = '(11)953335781'; // Adicione aqui o número de telefone específico
+    const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio. É a ${post.title} com o valor de ${post.price}. Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
+
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
+  }
+
   return (
     <Card className='py-4 max-w-[700px] min-h-[500px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
       <CardHeader className='pb-0 pt-2 px-0 justify-between mb-4'>
@@ -21,7 +32,7 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
           }}
         />
         <p className='text-xs'>
-          { formatDate(post.created_at, 'short') }
+          {formatDate(post.created_at, 'short')}
         </p>
       </CardHeader>
       <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
@@ -31,41 +42,42 @@ const PostCard:React.FC<Card> = ({post}: Card) => {
         >
           <div className="w-full flex flex-grow gap-2 items-center">
             <div className="flex flex-col">
-              <p className="text-tiny text-white/60">{ post.description }</p>
+              <h3 className="text-white/60"><strong>{post.title}</strong></h3>
+              <p className="text-tiny text-white/60">{post.description}</p>
               {
                 post.price && (
-                  <p className="text-tiny text-white/60 text-primary">{ convertToBRACurrency(post.price) }</p>
+                  <p className="text-tiny text-white/60 text-primary">{convertToBRACurrency(post.price)}</p>
                 )
               }
             </div>
           </div>
           <Tooltip content='Em breve'>
-            <Button radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
+            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
           </Tooltip>
         </div>
       </CardBody>
-      <CardFooter className="flex gap-4 pt-8 px-0 relative z-20">
+      <CardFooter className="flex gap-4 pt-8 px-0 relative z-20 hidden">
         <Tooltip content='Em breve'>
           <div>
-            <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+            <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
           </div>
         </Tooltip>
 
         <Tooltip content='Em breve'>
           <div>
-            <Message theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+            <Message theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
           </div>
         </Tooltip>
 
         <Tooltip content='Em breve'>
           <div>
-            <ShareTwo theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+            <ShareTwo theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
           </div>
         </Tooltip>
 
         <Tooltip content='Em breve'>
           <div>
-            <SaveOne theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer'/>
+            <SaveOne theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
           </div>
         </Tooltip>
       </CardFooter>

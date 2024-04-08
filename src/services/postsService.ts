@@ -1,8 +1,8 @@
 import { addDoc, collection, getDocs } from 'firebase/firestore'
 import { db } from '../config/firebase/baseConfig'
-import { Post, PostFormValues } from '../types/posts.types'
+import { IPost, IPostFormValues } from '../types/posts.types'
 
-export const NewPostService = async (newPost: PostFormValues): Promise<Post | boolean> => {
+export const NewPostService = async (newPost: IPostFormValues): Promise<IPost | boolean> => {
   try {
     await addDoc(collection(db, 'posts'), newPost)
     return true
@@ -13,13 +13,13 @@ export const NewPostService = async (newPost: PostFormValues): Promise<Post | bo
 }
 
 export const GetPostsService = async () => {
-  const posts: Post[] = []
+  const posts: IPost[] = []
 
   try {
     const querySnapshot = await getDocs(collection(db, 'posts'))
 
     querySnapshot.forEach((doc) => {
-      const post = doc.data() as Post
+      const post = doc.data() as IPost
       posts.push(post)
     })
     return posts

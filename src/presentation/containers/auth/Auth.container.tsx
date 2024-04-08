@@ -8,7 +8,6 @@ const AuthContainer: React.FC = () => {
   // Hooks
   const { isLoading, sigIn, sigUp } = useAuth()
   // States
-  const [userName, setUserName] = useState<string>('')
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
 
@@ -26,7 +25,6 @@ const AuthContainer: React.FC = () => {
       email: userEmail,
       password: userPassword
     }
-    console.log(userName)
     event.preventDefault()
     await sigUp(userCreds)
   }
@@ -122,13 +120,6 @@ const AuthContainer: React.FC = () => {
               ) : (
                 <form onSubmit={handleCreateAccount}>
                   <div className="flex flex-col gap-4">
-                    <Input
-                      type="text"
-                      label="Nome"
-                      radius="sm"
-                      onChange={(event) => setUserName(event.target.value)}
-                      required
-                      />
                     <Input
                       type="email"
                       label="E-mail"

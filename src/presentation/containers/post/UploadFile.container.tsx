@@ -45,7 +45,7 @@ const UploadFileContainer: React.FC = () => {
 
   return(
     <form className='flex flex-col gap-4 p-8 rounded-lg border' onSubmit={handleSubmit}>
-      <h1 className='font-bold text-2xl'>Criar nova publicação</h1>
+      <h1 className='font-bold text-2xl'>Adicionar Tatuagem</h1>
 
       <Input
         name='urls'
