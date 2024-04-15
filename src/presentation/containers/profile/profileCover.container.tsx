@@ -5,8 +5,14 @@ import useUploadFile from '../../../hooks/posts/useUploadFile'
 import { ToastContainer } from 'react-toastify'
 import useNotification from '../../../hooks/common/useNotification'
 import 'react-toastify/dist/ReactToastify.css';
+import { IProfile } from '../../../types/profile.types'
 
-const ProfileCoverContainer: React.FC = () => {
+interface IProfileCover {
+  profile: IProfile
+  canEdit?: boolean
+}
+
+const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
   // Hooks
   const { editProfileCover, isLoading } = useProfile()
   const { uploadFiles } = useUploadFile()
@@ -91,6 +97,8 @@ const ProfileCoverContainer: React.FC = () => {
         isModalOpen={isMoadalOpen}
         openModal={openModal}
         closeModal={closeModal}
+        profile={profile}
+        canEdit={canEdit}
       />
     </div>
   )

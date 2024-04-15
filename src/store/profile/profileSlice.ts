@@ -10,6 +10,7 @@ const initialState: IProfile = {
   avatar: '',
   address: '',
   profile_cover: '',
+  profile_url: '',
   redes: '',
 }
 
@@ -28,6 +29,7 @@ export const slice = createSlice({
         avatar: payload.avatar,
         address: payload.address,
         profile_cover: payload.profile_cover,
+        profile_url: payload.profile_url,
         redes: payload.redes,
       }
     },

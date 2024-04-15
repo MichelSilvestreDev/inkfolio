@@ -3,11 +3,12 @@ import { useAuth } from '../../../hooks/auth/useAuth'
 import ProfilePostsContainer from '../../containers/profile/profilePosts.container'
 import ProfileCoverContainer from '../../containers/profile/profileCover.container'
 import ProfileHeader from '../../components/profile/ProfileHeader'
-import { Calendar } from '@icon-park/react'
+import useProfile from '../../../hooks/profile/useProfile'
 
 const Profile: React.FC = () => {
   // Hooks
   const { user, isLoading, signOut } = useAuth()
+  const {profile} = useProfile()
 
   const handleLogout = async () => {
     await signOut()
@@ -15,15 +16,10 @@ const Profile: React.FC = () => {
 
   return (
     <div className='w-full'>
-      <ProfileCoverContainer />
-      <ProfileHeader />
+      <ProfileCoverContainer profile={profile} canEdit/>
+      <ProfileHeader profile={profile} canEdit/>
 
-      <Button color='primary' className='mx-auto mt-8 w-full'>
-        <Calendar theme="outline" size="24" fill="#fff" strokeWidth={3}/>
-        Pedir orçamento
-      </Button>
-
-      <ProfilePostsContainer />
+      <ProfilePostsContainer userID={user.uid} />
 
 
       <div className='shadow-lg w-1/4 min-w-96 flex flex-col gap-10 p-8 rounded-sm'>

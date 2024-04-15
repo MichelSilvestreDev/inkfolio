@@ -6,6 +6,7 @@ export interface IProfile {
   tattoo_styles: string
   avatar: string
   address: string
+  profile_url: string
   profile_cover?: string
   redes?: string
 }

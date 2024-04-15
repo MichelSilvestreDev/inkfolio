@@ -6,6 +6,7 @@ const Feed = lazy(() => import('../../presentation/pages/Feed'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
+const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: '/editar-perfil',
     element: <EditProfile />,
+  },
+  {
+    path: '/perfil/:profile_url',
+    element: <PublicProfile />,
   },
   {
     path: '*',

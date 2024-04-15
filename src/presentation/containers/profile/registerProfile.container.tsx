@@ -19,6 +19,7 @@ const initialValues: IProfile = {
   avatar: '',
   address: '',
   redes: '',
+  profile_url: ''
 }
 
 const RegisterProfileContainer: React.FC = () => {
