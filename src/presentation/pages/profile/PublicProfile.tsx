@@ -22,18 +22,19 @@ import { IProfile } from '../../../types/profile.types'
   }
 
 const PublicProfile: React.FC = () => {
-  const [profile, setProfile] = useState<IProfile>(initialState)
   // Hooks
   const {profile_url} = useParams()
   const { getUserPublicProfile, isLoading, isError } = useProfile()
+  // States
+  const [profile, setProfile] = useState<IProfile>(initialState)
 
   useEffect(() => {
     if(profile_url) {
-      const teste = async () => {
+      const getProfile = async () => {
         const profileData = await getUserPublicProfile(profile_url)
         if(profileData) setProfile(profileData)
       }
-      teste()
+      getProfile()
     }
   }, [profile_url])
 
@@ -59,7 +60,7 @@ const PublicProfile: React.FC = () => {
         Pedir orçamento
       </Button>
 
-      <ProfilePostsContainer />
+      <ProfilePostsContainer userID={profile.user_id} />
     </div>
   )
 }

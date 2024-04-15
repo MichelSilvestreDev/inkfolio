@@ -2,20 +2,21 @@ import { useEffect, useState } from "react"
 import { getUserPosts } from "../../../services/profileService"
 import { IPost } from "../../../types/posts.types"
 import PostCard from "../../components/feed/PostCard"
-import { useAuth } from "../../../hooks/auth/useAuth"
 
-const ProfilePostsContainer:React.FC  = () => {
-  // Hooks
-  const { user } = useAuth()
+interface IProfilePosts {
+  userID: string
+}
+
+const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
   // States
   const [userPosts, setUserPosts] = useState<IPost[]>([])
 
   useEffect(() => {
     (async () => {
-      const posts = await getUserPosts(user.uid)
+      const posts = await getUserPosts(userID)
       setUserPosts(posts)
     })()
-  },[user.uid])
+  },[userID])
 
   return (
     <div className='w-full'>
@@ -25,7 +26,6 @@ const ProfilePostsContainer:React.FC  = () => {
             <PostCard
               post={post}
               key={post.id}
-  
             />
           )
         })

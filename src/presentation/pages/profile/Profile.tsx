@@ -19,7 +19,7 @@ const Profile: React.FC = () => {
       <ProfileCoverContainer profile={profile} canEdit/>
       <ProfileHeader profile={profile} canEdit/>
 
-      <ProfilePostsContainer />
+      <ProfilePostsContainer userID={user.uid} />
 
 
       <div className='shadow-lg w-1/4 min-w-96 flex flex-col gap-10 p-8 rounded-sm'>

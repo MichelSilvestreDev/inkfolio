@@ -1,5 +1,5 @@
 import { Button, Chip, User } from '@nextui-org/react'
-import { Pencil } from '@icon-park/react'
+import { Eyes, Pencil } from '@icon-park/react'
 import { Link } from 'react-router-dom'
 import { IProfile } from '../../../types/profile.types'
 
@@ -39,9 +39,15 @@ const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
 
       {
         canEdit && (
-          <div className='w-full pb-8 flex justify-end'>
-            <Link to='/editar-perfil' className='absolute'>
-              <Button className='bg-secondary text-white rounded-full z-20' size='sm'>
+          <div className='w-full pb-8 flex justify-end gap-4'>
+            <Link to={`/perfil/${profile.profile_url}`} target='_blank'>
+              <Button className='bg-primary text-white rounded-full z-20' variant='shadow' size='sm'>
+                <Eyes theme="outline" size="24" fill="#fff" strokeWidth={3}/>
+                Visualizar perfil
+              </Button>
+            </Link>
+            <Link to='/editar-perfil'>
+              <Button className='bg-secondary text-white rounded-full z-20' variant='shadow' size='sm'>
                 <Pencil theme="outline" size="16" fill="#fff" strokeWidth={3}/>
                 Editar perfil
               </Button>
