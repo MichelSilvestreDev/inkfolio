@@ -1,7 +1,7 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 import coverDefault from '/img/auth-bg-1.jpeg'
 import { Pencil } from '@icon-park/react'
-import useProfile from '../../../hooks/profile/useProfile'
+import { IProfile } from '../../../types/profile.types'
 
 interface IProfileCover {
   handleFiles: (files: FileList | null) => void
@@ -11,6 +11,8 @@ interface IProfileCover {
   isModalOpen: boolean
   openModal: () => void
   closeModal: () => void
+  profile: IProfile
+  canEdit?: boolean
 }
 
 const ProfileCover: React.FC<IProfileCover> = ({
@@ -20,23 +22,27 @@ const ProfileCover: React.FC<IProfileCover> = ({
   isLoading,
   isModalOpen,
   openModal,
-  closeModal
+  closeModal,
+  profile,
+  canEdit
 }) => {
-  // Hooks
-  const {profile} = useProfile()
 
   return (
     <div className='w-full h-[100px]'>
-      <div className='container container-left pt-4'>
-        <Button
-          className='bg-secondary text-white rounded-full absolute z-20'
-          size='sm'
-          onPress={openModal}
-        >
-          <Pencil theme='outline' size='16' fill='#fff' strokeWidth={3}/>
-          Editar capa
-        </Button>
-      </div>
+      {
+        canEdit && (
+          <div className='container container-left pt-4'>
+            <Button
+              className='bg-secondary text-white rounded-full absolute z-20'
+              size='sm'
+              onPress={openModal}
+            >
+              <Pencil theme='outline' size='16' fill='#fff' strokeWidth={3}/>
+              Editar capa
+            </Button>
+          </div>
+        )
+      }
       <div className='w-screen h-[150px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>
         <img src={ profile.profile_cover || coverDefault} alt='' />
       </div>

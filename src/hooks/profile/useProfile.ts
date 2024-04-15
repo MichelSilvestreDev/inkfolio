@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { changeProfile, selectProfile } from '../../store/profile/profileSlice'
-import { getProfile, postProfile, putProfile } from '../../services/profileService'
+import {
+  getProfile,
+  getPublicProfile,
+  postProfile,
+  putProfile,
+} from '../../services/profileService'
 import { IProfile } from '../../types/profile.types'
 import { useState } from 'react'
 
@@ -10,6 +15,7 @@ const useProfile = () => {
   const dispatch = useDispatch()
   // States
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const initialState: IProfile = {
     user_id: '',
@@ -20,6 +26,7 @@ const useProfile = () => {
     avatar: '',
     address: '',
     profile_cover: '',
+    profile_url: '',
     redes: '',
   }
 
@@ -55,6 +62,20 @@ const useProfile = () => {
     }
   }
 
+  const getUserPublicProfile = async (profileURL: string): Promise<IProfile> => {
+    setIsLoading(true)
+    try {
+      const profileData = await getPublicProfile(profileURL)
+      return profileData
+    } catch (err) {
+      console.log('err')
+      setIsError(true)
+      return initialState
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const editProfile = async (profile: IProfile) => {
     setIsLoading(true)
     try {
@@ -83,8 +104,10 @@ const useProfile = () => {
 
   return {
     isLoading,
+    isError,
     profile,
     getUserProfile,
+    getUserPublicProfile,
     registerProfile,
     editProfile,
     editProfileCover,

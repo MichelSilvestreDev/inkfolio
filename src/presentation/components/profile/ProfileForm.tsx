@@ -100,6 +100,14 @@ const ProfileForm: React.FC<IForm> = ({
       </Select>
       <Input
         type='text'
+        name='profile_url'
+        label='Escreva o endereço URL que terá seu perfil'
+        isRequired
+        onChange={(e) => handleInputChange(e.target.name, e.target.value.split(' ').join('-'))}
+        value={formValues.profile_url}
+      />
+      <Input
+        type='text'
         name='address'
         label='Endereço do estúdio'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
