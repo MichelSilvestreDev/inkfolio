@@ -32,14 +32,14 @@ const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
       <div>
         {
           profile?.tattoo_styles?.split(',').map(style => 
-            <Chip key={style} className='bg-tertiary text-white mr-4'>{style}</Chip>
+            <Chip key={style} size='sm' className='bg-tertiary text-white mr-4'>{style}</Chip>
           )
         }
       </div>
 
       {
         canEdit && (
-          <div className='w-full pb-8 flex justify-end gap-4'>
+          <div className='w-full pb-8 flex justify-center sm:justify-end gap-4'>
             <Link to={`/perfil/${profile.profile_url}`} target='_blank'>
               <Button className='bg-primary text-white rounded-full z-20' variant='shadow' size='sm'>
                 <Eyes theme="outline" size="24" fill="#fff" strokeWidth={3}/>
