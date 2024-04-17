@@ -27,7 +27,7 @@ const HomeHeader: React.FC = () => {
           />
         </div>
       </div>
-      <div className='bg-black absolute h-64 w-full top-0 left-0 -z-10'></div>
+      <div className='bg-black absolute h-72 w-full top-0 left-0 -z-10'></div>
     </div>
   )
 }
