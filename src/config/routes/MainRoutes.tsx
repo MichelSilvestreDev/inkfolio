@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Messages from '../../presentation/pages/Messages';
 const Template = lazy(() => import('../../common/Template'));
-const Feed = lazy(() => import('../../presentation/pages/Feed'));
+const Home = lazy(() => import('../../presentation/pages/Home'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Feed />,
+        element: <Home />,
       },
       {
         path: '/perfil',
