@@ -4,6 +4,7 @@ import Messages from '../../presentation/pages/Messages';
 const Template = lazy(() => import('../../common/Template'));
 const Home = lazy(() => import('../../presentation/pages/Home'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
+const Login = lazy(() => import('../../presentation/pages/login/Login'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
 const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
         element: <Messages />,
       },
     ]
+  },
+  {
+    path: '/login',
+    element: <Login />,
   },
   {
     path: '/completar-cadastro',

@@ -30,3 +30,11 @@ export interface IPostUser {
   name: string
   avatar: string
 }
+
+export interface ITattooStyles {
+  name: string
+  description?: string
+  img: string
+  value: string
+  url: string
+}

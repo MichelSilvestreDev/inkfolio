@@ -1,33 +1,43 @@
-import { ScrollShadow } from "@nextui-org/react"
+import { Image, ScrollShadow } from '@nextui-org/react'
+import tattooStyles from '../../../assets/data/tattooStyles'
+import { ITattooStyles } from '../../../types/posts.types'
+import { Link } from 'react-router-dom'
 
 
 interface IStyleButton {
-  style: string
+  style: ITattooStyles
 }
 
 const Style: React.FC<IStyleButton> = ({style}) => {
   return (
-    <div className='flex flex-col items-center gap-4 cursor-pointer'>
-      <div className="w-24 h-24 bg-gray-400 rounded-full"></div>
-      <p>{style}</p>
+    <div className=''>
+      <Link to={style.url} className='flex flex-col items-center gap-4'>
+        <div className='w-24 h-24 rounded-full shadow-lg'>
+          <Image
+            src={style.img}
+            className='rounded-full'
+            alt={style.name}
+          />
+        </div>
+        <p>{style.name}</p>
+      </Link>
     </div>
   )
 }
 
 const TattooStyles: React.FC = () => {
-  const styles = ['Old School', 'Realista', 'Tribal', 'Minimalista']
 
   return (
     <div className='w-full'>
-      <div className="container">
+      <div className='container'>
         <ScrollShadow 
           hideScrollBar 
-          offset={100}
-          orientation="horizontal" 
+          size={80}
+          orientation='horizontal' 
         >
-          <div className="flex gap-8">
+          <div className='flex gap-8'>
             {
-              styles.map((style, index) => {
+              tattooStyles.map((style, index) => {
                 return (
                   <Style key={index} style={style} />
                 )
