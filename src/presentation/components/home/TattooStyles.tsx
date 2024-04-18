@@ -1,3 +1,4 @@
+import { ScrollShadow } from "@nextui-org/react"
 
 
 interface IStyleButton {
@@ -19,15 +20,21 @@ const TattooStyles: React.FC = () => {
   return (
     <div className='w-full'>
       <div className="container">
-        <div className="flex gap-8 overflow-x-scroll">
-          {
-            styles.map((style, index) => {
-              return (
-                <Style key={index} style={style} />
-              )
-            })
-          }
-        </div>
+        <ScrollShadow 
+          hideScrollBar 
+          offset={100}
+          orientation="horizontal" 
+        >
+          <div className="flex gap-8">
+            {
+              styles.map((style, index) => {
+                return (
+                  <Style key={index} style={style} />
+                )
+              })
+            }
+          </div>
+        </ScrollShadow>
       </div>
     </div>
   )
