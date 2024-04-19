@@ -3,6 +3,7 @@ import usePost from '../../../hooks/posts/usePost'
 import { IPost } from '../../../types/posts.types'
 import PostCard from '../../components/feed/PostCard'
 import tattooStyles from '../../../assets/data/tattooStyles'
+import CardSkeleton from '../../components/feed/CardSkeleton'
 
 interface IFeed {
   tattooStyle: string
@@ -10,18 +11,26 @@ interface IFeed {
 
 const FeedByStyleContainer: React.FC<IFeed> = ({tattooStyle}) => {
   // Hooks
-  const { getPostsByStyle } = usePost()
+  const { getPostsByStyle, isLoading } = usePost()
   // States
   const [posts, setPosts] = useState<IPost[]>()
 
   const style = tattooStyles.find(e => e.url === tattooStyle)
 
   useEffect(() => {
-    (async () => {
-      const postsData = await getPostsByStyle(tattooStyle)
-      setPosts(postsData)
-    })()
-  },[])
+    if(style) {
+      (async () => {
+        const postsData = await getPostsByStyle(style.value)
+        setPosts(postsData)
+      })()
+    }
+  },[style])
+
+  if(isLoading) {
+    return (
+      <CardSkeleton />
+    )
+  }
 
   return (
     <div>
