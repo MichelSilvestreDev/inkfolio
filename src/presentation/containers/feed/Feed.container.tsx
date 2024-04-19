@@ -1,5 +1,5 @@
-import usePost from "../../../hooks/posts/usePost";
-import PostCard from "../../components/feed/PostCard";
+import usePost from '../../../hooks/posts/usePost';
+import PostCard from '../../components/feed/PostCard';
 
 const FeedContainer: React.FC = () => {
   // Hooks

@@ -11,7 +11,7 @@ interface IStyleButton {
 const Style: React.FC<IStyleButton> = ({style}) => {
   return (
     <div className=''>
-      <Link to={style.url} className='flex flex-col items-center gap-4'>
+      <Link to={`/tattoos/${style.url}`} className='flex flex-col items-center gap-4'>
         <div className='w-24 h-24 rounded-full shadow-lg'>
           <Image
             src={style.img}

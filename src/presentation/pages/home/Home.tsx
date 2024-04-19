@@ -1,7 +1,7 @@
-import Footer from "../../common/Footer"
-import HomeHeader from "../components/home/HomeHeader"
-import TattooStyles from "../components/home/TattooStyles"
-import FeedContainer from "../containers/feed/Feed.container"
+import Footer from "../../../common/Footer"
+import HomeHeader from "../../components/home/HomeHeader"
+import TattooStyles from "../../components/home/TattooStyles"
+import FeedContainer from "../../containers/feed/Feed.container"
 
 
 const Home: React.FC = () => {

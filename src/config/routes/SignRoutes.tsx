@@ -1,8 +1,9 @@
 import { lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-const Home = lazy(() => import('../../presentation/pages/Home'));
+const Home = lazy(() => import('../../presentation/pages/home/Home'));
 const Login = lazy(() => import('../../presentation/pages/login/Login'));
 const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
+const FeedByStyle = lazy(() => import('../../presentation/pages/home/FeedByStyle'));
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: '/perfil/:profile_url',
     element: <PublicProfile />,
+  },
+  {
+    path: '/tattoos/:tattoo_style',
+    element: <FeedByStyle />,
   },
   {
     path: '*',
