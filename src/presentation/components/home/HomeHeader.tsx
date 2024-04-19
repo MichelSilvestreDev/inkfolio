@@ -12,7 +12,7 @@ const HomeHeader: React.FC = () => {
             <img
               src={InkFolioLogo} 
               alt='InkFolio'
-              className='w-40 pb-8'
+              className='w-40'
             />
           </Link>
 
@@ -30,7 +30,7 @@ const HomeHeader: React.FC = () => {
           />
         </div>
       </div>
-      <div className='bg-black absolute h-56 w-full top-0 left-0 -z-10'></div>
+      <div className='bg-black absolute h-48 w-full top-0 left-0 -z-10'></div>
     </div>
   )
 }
