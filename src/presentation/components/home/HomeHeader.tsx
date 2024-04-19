@@ -18,7 +18,7 @@ const HomeHeader: React.FC = () => {
 
           <Input
             label='Pesquisar'
-            className=''
+            className='hidden'
             endContent={
               <Search
                 theme='outline'
@@ -30,7 +30,7 @@ const HomeHeader: React.FC = () => {
           />
         </div>
       </div>
-      <div className='bg-black absolute h-72 w-full top-0 left-0 -z-10'></div>
+      <div className='bg-black absolute h-56 w-full top-0 left-0 -z-10'></div>
     </div>
   )
 }

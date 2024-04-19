@@ -12,22 +12,22 @@ const FeedByStyle = lazy(() => import('../../presentation/pages/home/FeedByStyle
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/perfil',
     element: <Template />,
     children: [
-      {
-        path: '/',
-        element: <Home />,
-      },
       {
         path: '/perfil',
         element: <Profile />,
       },
       {
-        path: '/configuracao-de-mensagens',
+        path: '/perfil/configuracao-de-mensagens',
         element: <Messages />,
       },
     ]
+  },
+  {
+    path: '/',
+    element: <Home />,
   },
   {
     path: '/login',
