@@ -24,30 +24,6 @@ type Post = {
   closeModal: () => void
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const styles = [
-  {
-    label: 'Old School',
-    value: 'old-school'
-  },
-  {
-    label: 'New School',
-    value: 'new-school'
-  },
-  {
-    label: 'Tribal',
-    value: 'tribal'
-  },
-  {
-    label: 'Minimalista',
-    value: 'minimalista'
-  },
-  {
-    label: 'Realista',
-    value: 'realista'
-  },
-]
-
 const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
   // Hooks
   const { user } = useAuth()

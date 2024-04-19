@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import InkFolioLogo from '/logos/InkFolio-white.png'
 import { FacebookOne, Instagram } from '@icon-park/react'
+import tattooStyles from '../assets/data/tattooStyles'
 
 const Footer: React.FC = () => {
   return (
@@ -30,18 +31,15 @@ const Footer: React.FC = () => {
             <Link to='/'>
               <li> Destaques </li>
             </Link>
-            <Link to='/'>
-              <li> Old School </li>
-            </Link>
-            <Link to='/'>
-              <li> Realista </li>
-            </Link>
-            <Link to='/'>
-              <li> Minimalista </li>
-            </Link>
-            <Link to='/'>
-              <li> Tribal </li>
-            </Link>
+            {
+              tattooStyles.map( (style, index) => {
+                return (
+                  <Link to={`/tattoos/${style.url}`} key={index}>
+                    <li>{ style.name }</li>
+                  </Link>
+                )
+              })
+            }
           </ul>
 
           <ul className='my-8 flex flex-col gap-2'>
