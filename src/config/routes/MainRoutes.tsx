@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Messages from '../../presentation/pages/Messages';
 const Template = lazy(() => import('../../common/Template'));
+const CommonTemplate = lazy(() => import('../../common/CommonTemplate'));
 const Home = lazy(() => import('../../presentation/pages/home/Home'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
 const Login = lazy(() => import('../../presentation/pages/login/Login'));
@@ -11,6 +12,9 @@ const PublicProfile = lazy(() => import('../../presentation/pages/profile/Public
 const FeedByStyle = lazy(() => import('../../presentation/pages/home/FeedByStyle'));
 
 const router = createBrowserRouter([
+  /*
+  * Profile routes template
+  */
   {
     path: '/perfil',
     element: <Template />,
@@ -25,9 +29,30 @@ const router = createBrowserRouter([
       },
     ]
   },
+  /*
+  * Common routes template
+  */
   {
     path: '/',
-    element: <Home />,
+    element: <CommonTemplate />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/home',
+        element: <Home />,
+      },
+      {
+        path: '/perfil/:profile_url',
+        element: <PublicProfile />,
+      },
+      {
+        path: '/tattoos/:tattoo_style',
+        element: <FeedByStyle />,
+      },
+    ]
   },
   {
     path: '/login',
@@ -40,14 +65,6 @@ const router = createBrowserRouter([
   {
     path: '/editar-perfil',
     element: <EditProfile />,
-  },
-  {
-    path: '/perfil/:profile_url',
-    element: <PublicProfile />,
-  },
-  {
-    path: '/tattoos/:tattoo_style',
-    element: <FeedByStyle />,
   },
   {
     path: '*',

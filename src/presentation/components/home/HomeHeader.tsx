@@ -3,18 +3,25 @@ import InkFolioLogo from '/logos/InkFolio-white.png'
 import { Search } from '@icon-park/react'
 import { Link } from 'react-router-dom'
 
-const HomeHeader: React.FC = () => {
+interface IHeader {
+  displayLogo?: boolean
+}
+
+const HomeHeader: React.FC<IHeader> = ({displayLogo}) => {
   return (
     <div className='w-full pt-8 pb-16 relative'>
-      <div className='container'>
         <div className='flex flex-col justify-center items-center'>
-          <Link to='/'>
-            <img
-              src={InkFolioLogo} 
-              alt='InkFolio'
-              className='w-40'
-            />
-          </Link>
+          {
+            displayLogo && (
+              <Link to='/'>
+                <img
+                  src={InkFolioLogo} 
+                  alt='InkFolio'
+                  className='w-40'
+                />
+              </Link>
+            )
+          }
 
           <Input
             label='Pesquisar'
@@ -29,8 +36,7 @@ const HomeHeader: React.FC = () => {
             }
           />
         </div>
-      </div>
-      <div className='bg-black absolute h-48 w-full top-0 left-0 -z-10'></div>
+      <div className={`${displayLogo ? 'h-48 ' : 'h-36 '} bg-black absolute w-full top-0 left-0 -z-10`}></div>
     </div>
   )
 }
