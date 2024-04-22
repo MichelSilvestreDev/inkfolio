@@ -5,7 +5,8 @@ const Template = lazy(() => import('../../common/Template'));
 const CommonTemplate = lazy(() => import('../../common/CommonTemplate'));
 const Home = lazy(() => import('../../presentation/pages/home/Home'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
-const Login = lazy(() => import('../../presentation/pages/login/Login'));
+const Login = lazy(() => import('../../presentation/pages/auth/Login'));
+const Register = lazy(() => import('../../presentation/pages/auth/Register'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
 const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/cadastro',
+    element: <Register />,
   },
   {
     path: '/completar-cadastro',

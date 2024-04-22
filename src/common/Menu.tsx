@@ -2,9 +2,17 @@ import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, Nav
 import InkFolioLogo from '/logos/InkFolio-white.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
+import { useAuth } from '../hooks/auth/useAuth';
 
 const Menu: React.FC = () => {
+  // Hooks
+  const {user, signOut} = useAuth()
+  // States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut()
+  }
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} className='bg-black text-white'>
@@ -53,9 +61,28 @@ const Menu: React.FC = () => {
       <NavbarMenu>
         <NavbarItem >
           <Link to='/'> Home </Link>
-          <Link to='/'> Perfil </Link>
-          <Link to='/'> Sair </Link>
         </NavbarItem>
+          {
+            user.isLogged ? (
+              <>
+                <NavbarItem >
+                  <Link to='/'> Perfil </Link>
+                </NavbarItem>
+                <NavbarItem onClick={handleLogout}>
+                  <Button variant='light'> Sair </Button>
+                </NavbarItem>
+              </>
+            ) : (
+              <>
+                <NavbarItem >
+                  <Link to='/login'> Entrar </Link>
+                </NavbarItem>
+                <NavbarItem >
+                  <Link to='/cadastro'> Criar conta </Link>
+                </NavbarItem>
+              </>
+            )
+          }
       </NavbarMenu>
     </Navbar> 
   )

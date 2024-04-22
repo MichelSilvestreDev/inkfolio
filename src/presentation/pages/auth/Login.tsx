@@ -34,7 +34,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={`w-full h-screen flex justify-center items-center auth-bg login-page`}>
-      <AuthContainer />
+      <AuthContainer isLogin/>
     </div>
   )
 }

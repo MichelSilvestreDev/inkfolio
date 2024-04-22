@@ -1,7 +1,8 @@
 import { lazy } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 const Home = lazy(() => import('../../presentation/pages/home/Home'));
-const Login = lazy(() => import('../../presentation/pages/login/Login'));
+const Login = lazy(() => import('../../presentation/pages/auth/Login'));
+const Register = lazy(() => import('../../presentation/pages/auth/Register'));
 const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
 const FeedByStyle = lazy(() => import('../../presentation/pages/home/FeedByStyle'));
 const CommonTemplate = lazy(() => import('../../common/CommonTemplate'));
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/cadastro',
+    element: <Register />,
   },
   {
     path: '*',
