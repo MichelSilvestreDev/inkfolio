@@ -29,6 +29,7 @@ export interface IPostUser {
   email: string
   name: string
   avatar: string
+  profileUrl: string
 }
 
 export interface ITattooStyles {

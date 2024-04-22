@@ -116,10 +116,10 @@ export const useAuth = () => {
 
     await SignOutService().then((result) => {
       if(result) {
+        navigate('/')
         dispatch(logout())
         dispatch(removeProfile())
         Cookies.remove('token')
-        navigate('/')
       } else {
         window.alert('Erro ao deslogar')
       }

@@ -38,7 +38,7 @@ const FeedByStyleContainer: React.FC<IFeed> = ({tattooStyle}) => {
     return (
       <div className='py-16 flex flex-col justify-center items-center'>
         <h1 className='text-center text-2xl font-bold mb-2'>Parece que ainda não temos publicações nesse estilo</h1>
-        <p className='mb-8'>Não se preocupe, navegue na plataforma e descubra novos estilos</p>
+        <p className='mb-8'>Não se preocupe, navegue pela plataforma e descubra novos estilos</p>
         <Link to='/'>
           <Button color='primary' size='lg'>
             Voltar para a home

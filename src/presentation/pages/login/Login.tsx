@@ -1,7 +1,32 @@
-import AuthContainer from "../../containers/auth/Auth.container"
+import { useNavigate } from 'react-router-dom'
+import AuthContainer from '../../containers/auth/Auth.container'
 import './login.styles.css'
+import { useAuth } from '../../../hooks/auth/useAuth'
+import useProfile from '../../../hooks/profile/useProfile'
+import { useEffect } from 'react'
 
 const Login: React.FC = () => {
+  // Hooks
+  const navigate = useNavigate()
+  const {user} = useAuth()
+  const {profile, getUserProfile} = useProfile()
+
+  useEffect(() => {
+    if(user.uid && profile.name === '') {
+      (async () => {
+        console.log(user.uid);
+        const profileData = await getUserProfile(user.uid)
+        if(profileData.name === ''){
+          navigate('/completar-cadastro')
+        } else {
+          navigate('/perfil')
+        }
+      })()
+    } else {
+      navigate('/perfil')
+    }
+  }, [profile, user.uid])
+
   return (
     <div className={`w-full h-screen flex justify-center items-center auth-bg login-page`}>
       <AuthContainer />

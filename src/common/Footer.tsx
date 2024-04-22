@@ -6,12 +6,12 @@ import tattooStyles from '../assets/data/tattooStyles'
 const Footer: React.FC = () => {
   return (
     <footer className='w-full bg-black text-white py-8'>
-      <div className="container">
+      <div className="container mx-auto">
         <Link to='/'>
           <img src={InkFolioLogo} alt='InkFolio' className='w-40' />
         </Link>
 
-        <nav >
+        <nav className='flex flex-col sm:grid sm:grid-cols-3'>
           <ul className='my-8 flex flex-col gap-2'>
             <Link to='/'>
               <li> Home </li>
@@ -28,9 +28,6 @@ const Footer: React.FC = () => {
           </ul>
 
           <ul className='my-8 flex flex-col gap-2'>
-            <Link to='/'>
-              <li> Destaques </li>
-            </Link>
             {
               tattooStyles.map( (style, index) => {
                 return (
@@ -45,14 +42,14 @@ const Footer: React.FC = () => {
           <ul className='my-8 flex flex-col gap-2'>
             <li>contato@inkfolio.com.br</li>
             <li >
-              <div className='fex gap-4'>
-                <Link to='/' className='w-fit'>
-                  <FacebookOne theme="outline" size="24" fill="#fff" strokeWidth={3}/>
-                </Link>
-                <Link to='/' className='w-fit'>
-                  <Instagram theme="outline" size="24" fill="#fff" strokeWidth={3}/>
-                </Link>
-              </div>
+              <Link to='/' className='w-fit'>
+                <FacebookOne theme="outline" size="24" fill="#fff" strokeWidth={3}/>
+              </Link>
+            </li>
+            <li>
+              <Link to='/' className='w-fit'>
+                <Instagram theme="outline" size="24" fill="#fff" strokeWidth={3}/>
+              </Link>
             </li>
           </ul>
         </nav>

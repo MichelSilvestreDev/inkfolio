@@ -6,6 +6,7 @@ import { Avatar } from '@nextui-org/avatar'
 import { IProfile } from '../../../types/profile.types'
 import { FormEvent } from 'react'
 import { useLocation } from 'react-router-dom'
+import tattooStyles from '../../../assets/data/tattooStyles'
 
 interface IForm {
   isLoading: boolean
@@ -92,9 +93,9 @@ const ProfileForm: React.FC<IForm> = ({
         selectionMode="multiple"
         selectedKeys={formValues?.tattoo_styles?.split(',')}
       >
-        {['Old School', 'Minimalista', 'Tribal'].map((style) => (
-          <SelectItem key={style} value={style}>
-            {style}
+        {tattooStyles.map((style) => (
+          <SelectItem key={style.value} value={style.value}>
+            {style.name}
           </SelectItem>
         ))}
       </Select>
