@@ -13,6 +13,7 @@ const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
   // States
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
+  const [selected, setSelected] = useState<string>(isLogin ? 'login' : 'sigup');
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
     const userCreds: UserCredentials = {
@@ -42,7 +43,8 @@ const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
       <Tabs
         aria-label='Options'
         className='w-full flex justify-center'
-        selectedKey={isLogin ? 'login' : 'sigup'}
+        selectedKey={selected}
+        onSelectionChange={(e:any)=> setSelected(e)}
       >
           <Tab key='login' title='Login'>
             {
