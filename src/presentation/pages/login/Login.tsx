@@ -12,9 +12,11 @@ const Login: React.FC = () => {
   const {profile, getUserProfile} = useProfile()
 
   useEffect(() => {
+    /*
+    * Redict user to complete your register or to profile page if his profile is complete
+    */
     if(user.uid && profile.name === '') {
       (async () => {
-        console.log(user.uid);
         const profileData = await getUserProfile(user.uid)
         if(profileData.name === ''){
           navigate('/completar-cadastro')
@@ -22,7 +24,10 @@ const Login: React.FC = () => {
           navigate('/perfil')
         }
       })()
-    } else {
+    } else if(user.uid && profile.name !== '') {
+      /*
+      * Redirect user to profile page is his alredy complete regiter
+      */
       navigate('/perfil')
     }
   }, [profile, user.uid])
