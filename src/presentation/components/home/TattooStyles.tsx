@@ -28,14 +28,14 @@ const Style: React.FC<IStyleButton> = ({style}) => {
 const TattooStyles: React.FC = () => {
 
   return (
-    <div className='w-full'>
+    <div className='w-full flex justify-center items-center'>
       <div className='container'>
         <ScrollShadow 
           hideScrollBar 
           size={80}
           orientation='horizontal' 
         >
-          <div className='flex gap-8'>
+          <div className='flex gap-8 justify-center'>
             {
               tattooStyles.map((style, index) => {
                 return (
