@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IPost, IPostFormValues } from '../../types/posts.types'
-import { NewPostService, GetPostsService } from '../../services/postsService'
+import { NewPostService, GetPostsService, GetStylePostsService } from '../../services/postsService'
 
 const usePost = () => {
   // States
@@ -23,6 +23,23 @@ const usePost = () => {
       .finally(() => {
         setIsLoading(false)
       })
+  }
+
+  const getPostsByStyle = async (tattooStyle: string): Promise<IPost[]> => {
+    setIsLoading(true)
+    let posts: IPost[] = []
+    await GetStylePostsService(tattooStyle)
+      .then((res) => {
+        posts = res
+      })
+      .catch((err) => {
+        console.error(err)
+        throw new Error()
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+    return posts
   }
 
   const newPost = async (post: IPostFormValues) => {
@@ -52,6 +69,7 @@ const usePost = () => {
     isLoading,
     newPost,
     getPosts,
+    getPostsByStyle,
   }
 }
 

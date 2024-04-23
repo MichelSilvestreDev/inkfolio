@@ -4,6 +4,7 @@ import { formatDate } from '../../../utils/formatDate'
 import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
+import { Link } from 'react-router-dom'
 
 type Card = {
   post: IPost
@@ -24,16 +25,18 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
   return (
     <Card className='py-4 max-w-[700px] min-h-[500px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
       <CardHeader className='pb-0 pt-2 px-0 justify-between mb-4'>
-        <User
-          name={post.user.email}
-          description='InkFolio'
-          avatarProps={{
-            src: post.user.avatar
-          }}
-        />
-        <p className='text-xs'>
-          {formatDate(post.created_at, 'short')}
-        </p>
+        <Link to={`/perfil/${post.user.profileUrl}`}>
+          <User
+            name={post.user.name}
+            description='InkFolio'
+            avatarProps={{
+              src: post.user.avatar
+            }}
+          />
+          <p className='text-xs'>
+            {formatDate(post.created_at, 'short')}
+          </p>
+        </Link>
       </CardHeader>
       <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
         <PostImgSlide urls={post.urls} />

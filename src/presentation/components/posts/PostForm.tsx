@@ -1,6 +1,6 @@
-import { Button, Input, Select, SelectItem, Switch, Textarea } from "@nextui-org/react"
-import { styles } from "../../containers/post/Posts.container"
-import { useState } from "react"
+import { Button, Input, Select, SelectItem, Switch, Textarea } from '@nextui-org/react'
+import { useState } from 'react'
+import tattooStyles from '../../../assets/data/tattooStyles'
 
 type Form = {
   handleSubmit: (event: { preventDefault: () => void }) => void
@@ -14,8 +14,6 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
   const handleDiscountChange = (isChecked: boolean) => {
     setDiscount(isChecked)
     handleInputChange('avaliable_negociation', isChecked);
-    // Aqui você pode fazer o que quiser com o valor de isChecked,
-    // por exemplo, enviá-lo para uma função de manipulação de estado ou uma chamada de API.
   };
 
   return(
@@ -44,9 +42,9 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
         onChange={(e) => handleInputChange('styles', e.target.value)}
         multiple
       >
-        {styles.map((style) => (
+        {tattooStyles.map((style) => (
           <SelectItem key={style.value} value={style.value}>
-            {style.label}
+            {style.name}
           </SelectItem>
         ))}
       </Select>

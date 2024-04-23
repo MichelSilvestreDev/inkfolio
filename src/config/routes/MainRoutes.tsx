@@ -2,30 +2,66 @@ import { lazy } from 'react';
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Messages from '../../presentation/pages/Messages';
 const Template = lazy(() => import('../../common/Template'));
-const Feed = lazy(() => import('../../presentation/pages/Feed'));
+const CommonTemplate = lazy(() => import('../../common/CommonTemplate'));
+const Home = lazy(() => import('../../presentation/pages/home/Home'));
 const Profile = lazy(() => import('../../presentation/pages/profile/Profile'));
+const Login = lazy(() => import('../../presentation/pages/auth/Login'));
+const Register = lazy(() => import('../../presentation/pages/auth/Register'));
 const RegisterProfile = lazy(() => import('../../presentation/pages/profile/RegisterProfile'));
 const EditProfile = lazy(() => import('../../presentation/pages/profile/EditProfile'));
 const PublicProfile = lazy(() => import('../../presentation/pages/profile/PublicProfile'));
+const FeedByStyle = lazy(() => import('../../presentation/pages/home/FeedByStyle'));
 
 const router = createBrowserRouter([
+  /*
+  * Profile routes template
+  */
   {
-    path: '/',
+    path: '/perfil',
     element: <Template />,
     children: [
-      {
-        path: '/',
-        element: <Feed />,
-      },
       {
         path: '/perfil',
         element: <Profile />,
       },
       {
-        path: '/configuracao-de-mensagens',
+        path: '/perfil/configuracao-de-mensagens',
         element: <Messages />,
       },
     ]
+  },
+  /*
+  * Common routes template
+  */
+  {
+    path: '/',
+    element: <CommonTemplate />,
+    children: [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/home',
+        element: <Home />,
+      },
+      {
+        path: '/perfil/:profile_url',
+        element: <PublicProfile />,
+      },
+      {
+        path: '/tattoos/:tattoo_style',
+        element: <FeedByStyle />,
+      },
+    ]
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/cadastro',
+    element: <Register />,
   },
   {
     path: '/completar-cadastro',
@@ -34,10 +70,6 @@ const router = createBrowserRouter([
   {
     path: '/editar-perfil',
     element: <EditProfile />,
-  },
-  {
-    path: '/perfil/:profile_url',
-    element: <PublicProfile />,
   },
   {
     path: '*',

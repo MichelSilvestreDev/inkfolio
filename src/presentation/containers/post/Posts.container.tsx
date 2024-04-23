@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
+import useProfile from '../../../hooks/profile/useProfile'
 
 const initialValues:IPostFormValues = {
   title: '',
@@ -24,33 +25,10 @@ type Post = {
   closeModal: () => void
 }
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const styles = [
-  {
-    label: 'Old School',
-    value: 'old-school'
-  },
-  {
-    label: 'New School',
-    value: 'new-school'
-  },
-  {
-    label: 'Tribal',
-    value: 'tribal'
-  },
-  {
-    label: 'Minimalista',
-    value: 'minimalista'
-  },
-  {
-    label: 'Realista',
-    value: 'realista'
-  },
-]
-
 const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
   // Hooks
   const { user } = useAuth()
+  const { profile } = useProfile()
   const { isLoading: posting, newPost } = usePost()
   const { isLoading: uploading, uploadFiles } = useUploadFile()
   const {successMessage, errorMessage} = useNotification()
@@ -134,7 +112,8 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
           id: user.uid,
           email: user.email || '',
           name: user.displayName || '',
-          avatar: user.photoUrl || ''
+          avatar: user.photoUrl || '',
+          profileUrl: profile.profile_url
         }
         
         const post = Object.assign(formData, {user: postUser, urls: urls})
