@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { selectUser } from "../../store/auth/authSlice"
 import MainRoutes from "./MainRoutes"
 import Cookies from 'js-cookie';
+import LoaderPage from "../../presentation/pages/LoaderPage"
 
 const Routes: React.FC = () => {
   // Hooks
@@ -11,7 +12,7 @@ const Routes: React.FC = () => {
   const token = Cookies.get('token')
 
   return(
-    <Suspense fallback={<h1>Carregando...</h1>}>
+    <Suspense fallback={<LoaderPage />}>
       {
         token || isLogged ? <MainRoutes /> : <SignRoutes />
       }

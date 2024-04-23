@@ -14,6 +14,10 @@
   background-color: #a15563;
 }
 
+.bg-black {
+  background-color: #0f192c;
+}
+
 .text-primary {
   color: #e03f5c;
 }
@@ -24,6 +28,10 @@
 
 .text-tertiary {
   color: #a15563;
+}
+
+.text-black {
+  color: #0f192c;
 }
 
 .container {

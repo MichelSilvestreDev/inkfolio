@@ -1,26 +1,7 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import SidebarMenu from "./SidebarMenu"
-import { useEffect } from "react"
-import useProfile from "../hooks/profile/useProfile"
-import { useAuth } from "../hooks/auth/useAuth"
 
 const Template: React.FC = () => {
-  // Hooks
-  const navigate = useNavigate()
-  const {user} = useAuth()
-  const {profile, getUserProfile} = useProfile()
-
-  useEffect(() => {
-    if(user.uid && profile.name === '') {
-      (async () => {
-        console.log( user.uid);
-        const profileData = await getUserProfile(user.uid)
-        if(profileData.name === ''){
-          navigate('/completar-cadastro')
-        }
-      })()
-    }
-  }, [profile, user.uid])
 
   return(
     <div className="w-screen h-screen flex flex-col justify-center items-center bg-gray-50">

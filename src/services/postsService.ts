@@ -1,8 +1,8 @@
-import { addDoc, collection, getDocs } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../config/firebase/baseConfig'
 import { IPost, IPostFormValues } from '../types/posts.types'
 
-export const NewPostService = async (newPost: IPostFormValues): Promise<IPost | boolean> => {
+const NewPostService = async (newPost: IPostFormValues): Promise<IPost | boolean> => {
   try {
     await addDoc(collection(db, 'posts'), newPost)
     return true
@@ -12,7 +12,7 @@ export const NewPostService = async (newPost: IPostFormValues): Promise<IPost | 
   }
 }
 
-export const GetPostsService = async () => {
+const GetPostsService = async () => {
   const posts: IPost[] = []
 
   try {
@@ -28,3 +28,24 @@ export const GetPostsService = async () => {
     throw err
   }
 }
+
+const GetStylePostsService = async (tattooStyle: string): Promise<IPost[]> => {
+  const postsRef = collection(db, 'posts')
+
+  try {
+    const posts: IPost[] = []
+    const res = query(postsRef, where('styles', '==', tattooStyle))
+    const querySnapshot = await getDocs(res)
+    querySnapshot.forEach((doc) => {
+      const postData = doc.data()
+      console.log('aquii', posts)
+      posts.push(postData as IPost)
+    })
+    return posts
+  } catch (err) {
+    console.error(err)
+    throw new Error()
+  }
+}
+
+export { NewPostService, GetPostsService, GetStylePostsService }
