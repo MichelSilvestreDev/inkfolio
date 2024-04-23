@@ -8,7 +8,7 @@ const Home: React.FC = () => {
     <div className='w-full'>
       <HomeHeader />
       <TattooStyles />
-      {/* <FeedContainer /> */}
+      <FeedContainer />
     </div>
   )
 }
