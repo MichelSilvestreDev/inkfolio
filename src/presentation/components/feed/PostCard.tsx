@@ -28,14 +28,11 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
         <Link to={`/perfil/${post.user.profileUrl}`}>
           <User
             name={post.user.name}
-            description='InkFolio'
+            description={formatDate(post.created_at, 'short')}
             avatarProps={{
               src: post.user.avatar
             }}
           />
-          <p className='text-xs'>
-            {formatDate(post.created_at, 'short')}
-          </p>
         </Link>
       </CardHeader>
       <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
