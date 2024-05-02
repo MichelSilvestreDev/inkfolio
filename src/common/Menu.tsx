@@ -59,9 +59,9 @@ const Menu: React.FC = () => {
               <Link to='/perfil'>
                 <Button color='primary' variant='flat' size='lg'>
                   <User   
-                    name={profile.name}
+                    name={profile.name ?? 'Completar cadastro'}
                     avatarProps={{
-                      src: profile.avatar || ""
+                      src: profile.avatar ?? ""
                     }}
                   />
                 </Button>

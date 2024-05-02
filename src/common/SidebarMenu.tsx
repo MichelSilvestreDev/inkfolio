@@ -1,9 +1,10 @@
-import { AddFour, Calendar, Home, Message, Search, TipsOne } from '@icon-park/react'
+import { AddFour, Calendar, Home, Logout, Message, Search, TipsOne } from '@icon-park/react'
 import { Modal, ModalBody, ModalContent, ModalHeader, Skeleton, Tooltip, User, useDisclosure } from '@nextui-org/react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/auth/useAuth'
 import PostContainer from '../presentation/containers/post/Posts.container'
 import useProfile from '../hooks/profile/useProfile'
+import InkFolioLogo from '/logos/InkFolio-black.png'
 
 const SidebarMenu: React.FC = () => {
   // Hooks
@@ -15,13 +16,40 @@ const SidebarMenu: React.FC = () => {
     onOpenChange()
   }
 
+  if(isLoading) {
+    return (
+      <div className='w-full h-screen border-r border-gray-50 shadow-xl bg-white pt-8'>
+        <ul className='px-4 flex flex-col gap-8'>
+          <div className='flex gap-3'>
+            <Skeleton className='h-10 w-10 rounded-full'/>
+            <Skeleton className='h-10 w-44 rounded'/>
+          </div>
+          <Skeleton className='h-10 w-44 rounded'/>
+          <Skeleton className='h-10 w-44 rounded'/>
+          <Skeleton className='h-10 w-44 rounded'/>
+          <Skeleton className='h-10 w-44 rounded'/>
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <>
       <nav className='w-full h-screen border-r border-gray-50 shadow-xl bg-white'>
-        <Link to='/' >
-          <h1 className='text-2xl text-center font-bold pt-10 mb-12'>InkFolio</h1>
-        </Link>
+        <div className='w-full py-8 flex justify-center'>
+          <Link to='/' >
+            <img src={InkFolioLogo} alt="InkFolio" className='w-36'/>
+          </Link>
+        </div>
         <ul className='px-4 flex flex-col gap-4'>
+          <Link to='/perfil' className='pl-4'>
+            <User
+              name={profile.name || user.email}
+              avatarProps={{
+                src: profile?.avatar || ''
+              }}
+            />
+          </Link>
           <Link to='/'>
             <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
               <Home theme='outline' size='24' fill='#333' strokeWidth={3}/>
@@ -67,22 +95,12 @@ const SidebarMenu: React.FC = () => {
               </li>
             </Tooltip>
           </Link>
-          { isLoading && (
-            <div className='flex gap-3'>
-              <Skeleton className='h-10 w-10 rounded-full'/>
-              <Skeleton className='h-10 w-44 rounded'/>
-            </div>
-          )}
-          { !isLoading && (
-            <Link to='/perfil'>
-              <User
-                name={profile.name || user.email}
-                avatarProps={{
-                  src: profile?.avatar || ''
-                }}
-              />
-            </Link>
-          ) }
+          <Link to='/'>
+            <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
+              <Logout theme="outline" size="24" fill="#333" strokeWidth={3}/>
+                Sair
+            </li>
+          </Link>
         </ul>
       </nav>
 
