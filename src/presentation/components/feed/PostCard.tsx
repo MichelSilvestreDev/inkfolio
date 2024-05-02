@@ -38,7 +38,7 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
       <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
         <PostImgSlide urls={post.urls} />
         <div
-          className="w-full h-16 z-50 px-4 rounded-b-xl flex absolute bottom-0 bg-black/40 border-t-1 border-default-600 dark:border-default-100"
+          className="w-full h-16 z-20 px-4 rounded-b-xl flex absolute bottom-0 bg-black/40 border-t-1 border-default-600 dark:border-default-100"
         >
           <div className="w-full flex flex-grow gap-2 items-center">
             <div className="flex flex-col">
