@@ -12,9 +12,10 @@ const Profile: React.FC = () => {
   return (
     <div className='w-full'>
       <ProfileCoverContainer profile={profile} canEdit/>
-      <ProfileHeader profile={profile} canEdit/>
-
-      <ProfilePostsContainer userID={user.uid} />
+      <div className="container">
+        <ProfileHeader profile={profile} canEdit/>
+        <ProfilePostsContainer userID={user.uid} />
+      </div>
     </div>
   )
 }

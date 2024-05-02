@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { IPost, IPostFormValues } from '../../types/posts.types'
 import { NewPostService, GetPostsService, GetStylePostsService } from '../../services/postsService'
 
@@ -7,11 +7,8 @@ const usePost = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [posts, setPosts] = useState<IPost[]>([])
 
-  useEffect(() => {
-    if (posts.length < 1) getPosts()
-  }, [posts])
-
-  const getPosts = async () => {
+  const handleGetPosts = useCallback(async () => {
+    console.log('aqui')
     setIsLoading(true)
     await GetPostsService()
       .then((res) => {
@@ -23,7 +20,11 @@ const usePost = () => {
       .finally(() => {
         setIsLoading(false)
       })
-  }
+  }, [])
+
+  useEffect(() => {
+    handleGetPosts()
+  }, [handleGetPosts])
 
   const getPostsByStyle = async (tattooStyle: string): Promise<IPost[]> => {
     setIsLoading(true)
@@ -68,7 +69,7 @@ const usePost = () => {
     posts,
     isLoading,
     newPost,
-    getPosts,
+    getPosts: handleGetPosts,
     getPostsByStyle,
   }
 }

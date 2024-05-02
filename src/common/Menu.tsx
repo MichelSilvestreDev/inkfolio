@@ -15,7 +15,7 @@ const Menu: React.FC = () => {
   }
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className='bg-black text-white'>
+    <Navbar onMenuOpenChange={setIsMenuOpen} className='bg-black text-white' >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}

@@ -28,7 +28,7 @@ const ProfileCover: React.FC<IProfileCover> = ({
 }) => {
 
   return (
-    <div className='w-full h-[100px]'>
+    <div className='w-full h-[100px] md:h-[100px] relative'>
       {
         canEdit && (
           <div className='container container-left pt-4'>
@@ -43,7 +43,7 @@ const ProfileCover: React.FC<IProfileCover> = ({
           </div>
         )
       }
-      <div className='w-screen h-[150px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>
+      <div className='w-screen h-[150px] md:h-[250px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>
         <img src={ profile.profile_cover || coverDefault} alt='' />
       </div>
 
