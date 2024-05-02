@@ -8,7 +8,7 @@ import InkFolioLogo from '/logos/InkFolio-black.png'
 
 const SidebarMenu: React.FC = () => {
   // Hooks
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, signOut } = useAuth()
   const {profile} = useProfile()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -95,12 +95,12 @@ const SidebarMenu: React.FC = () => {
               </li>
             </Tooltip>
           </Link>
-          <Link to='/'>
+          <div onClick={signOut} className='cursor-pointer'>
             <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
               <Logout theme="outline" size="24" fill="#333" strokeWidth={3}/>
                 Sair
             </li>
-          </Link>
+          </div>
         </ul>
       </nav>
 
