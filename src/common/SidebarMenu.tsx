@@ -64,7 +64,7 @@ const SidebarMenu: React.FC = () => {
               </li>
             </Tooltip>
           </Link>
-          <Link to='/'>
+          <Link to='/' className='hidden'>
             <Tooltip content='Em breve' color='primary' placement={'right-end'}>
               <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
                 <Calendar theme='outline' size='24' fill='#333' strokeWidth={3}/>
@@ -79,7 +79,7 @@ const SidebarMenu: React.FC = () => {
             <AddFour theme='outline' size='24' fill='#333' strokeWidth={3}/>
             Criar
           </li>
-          <Link to='/'>
+          <Link to='/' className='hidden'>
             <Tooltip content='Em breve' color='primary' placement={'right-end'}>
               <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
                 <TipsOne theme='outline' size='24' fill='#333' strokeWidth={3}/>
@@ -87,7 +87,7 @@ const SidebarMenu: React.FC = () => {
               </li>
             </Tooltip>
           </Link>
-          <Link to='/'>
+          <Link to='/' className='hidden'>
             <Tooltip content='Em breve' color='primary' placement={'right-end'}>
               <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
                 <Search theme='outline' size='24' fill='#333' strokeWidth={3}/>
