@@ -80,6 +80,8 @@ const putProfile = async (profile: IProfile) => {
 }
 
 const deleteUserPost = async (postId: string) => {
+  console.log(postId);
+  
   const postRef = doc(db, 'posts', postId);
 
   try {
