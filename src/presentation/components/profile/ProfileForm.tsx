@@ -31,7 +31,6 @@ const ProfileForm: React.FC<IForm> = ({
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
-    console.log(formValues)
     submitProfile(formValues, Boolean(location.pathname.includes('edit')))
   }
 

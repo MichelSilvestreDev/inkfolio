@@ -28,11 +28,11 @@ const RegisterProfileContainer: React.FC = () => {
   const { registerProfile, editProfile, isLoading: PostinProfile, profile } = useProfile()
   const {uploadFiles, isLoading: Uploading} = useUploadFile()
   const { user } = useAuth()
+  const {successMessage, errorMessage} = useNotification()
   // States
   const [formData, setFormData] = useState(initialValues)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
-  const {successMessage, errorMessage} = useNotification()
   const [isLoadingProfile, setIsLoaginProfile] = useState(true)
 
   const handleFiles = (files: FileList | null) => {
@@ -40,9 +40,13 @@ const RegisterProfileContainer: React.FC = () => {
   }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
+    let fieldValue = value
+
+    if(fieldName === 'tattoo_styles' && typeof(value) === 'string') fieldValue = value?.replace(",", "")
+      
     setFormData({
       ...formData,
-      [fieldName]: value,
+      [fieldName]: fieldValue,
     });
   };
 
