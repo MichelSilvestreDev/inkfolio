@@ -1,7 +1,8 @@
 import { Button, Chip, User } from '@nextui-org/react'
-import { Eyes, Pencil } from '@icon-park/react'
+import { Eyes, Local, Pencil } from '@icon-park/react'
 import { Link } from 'react-router-dom'
 import { IProfile } from '../../../types/profile.types'
+import SocialMidiaButtons from './SocialMidiaButtons'
 
 interface IHeader {
   profile: IProfile
@@ -9,6 +10,8 @@ interface IHeader {
 }
 
 const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
+  const address = `${profile.address.street}, ${profile.address.number} - ${profile.address.city} - ${profile.address.state}`
+
   return (
     <div className='w-full rounded-lg bg-white p-8 flex flex-col gap-8 relative z-10 shadow-lg'>
       <div className='w-full flex justify-between items-center'>
@@ -18,14 +21,15 @@ const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
             src: profile.avatar
           }}
         />
-
-        <a href='' className='text-sm text-primary'>
-          @{profile?.redes?.instagram}
-        </a>
       </div>
 
+      <SocialMidiaButtons />
+
       <div>
-        <h6 className='mb-4 text-bold'>{profile.address.street}</h6>
+        <h6 className='flex gap-4 mb-4 text-bold'>
+          <Local theme="outline" size="24" fill="#333" strokeWidth={3}/>
+          {address}
+        </h6>
         <p>{ profile.bio }</p>
       </div>
 
