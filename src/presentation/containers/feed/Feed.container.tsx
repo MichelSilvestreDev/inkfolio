@@ -13,7 +13,7 @@ const FeedContainer: React.FC = () => {
   }
 
   return (
-    <>
+    <div  className='container'>
       {
         posts?.map(post => {
           return (
@@ -21,7 +21,7 @@ const FeedContainer: React.FC = () => {
           )
         })
       }
-    </>
+    </div>
   )
 }
 
