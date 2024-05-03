@@ -1,12 +1,14 @@
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle, Tooltip } from '@nextui-org/react'
+import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle, Tooltip, User } from '@nextui-org/react'
 import InkFolioLogo from '/logos/InkFolio-white.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { useAuth } from '../hooks/auth/useAuth';
+import useProfile from '../hooks/profile/useProfile';
 
 const Menu: React.FC = () => {
   // Hooks
   const {user, signOut} = useAuth()
+  const {profile} = useProfile()
   // States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -28,7 +30,7 @@ const Menu: React.FC = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+      <NavbarContent className='hidden sm:hidden gap-4' justify='center'>
         <NavbarItem>
           <Link to='/'>
             Home
@@ -55,8 +57,13 @@ const Menu: React.FC = () => {
           user?.isLogged ? (
             <NavbarItem>
               <Link to='/perfil'>
-                <Button color='primary' variant='flat'>
-                  Acessar conta
+                <Button color='primary' variant='flat' size='lg'>
+                  <User   
+                    name={profile.name ?? 'Completar cadastro'}
+                    avatarProps={{
+                      src: profile.avatar ?? ""
+                    }}
+                  />
                 </Button>
               </Link>
             </NavbarItem>

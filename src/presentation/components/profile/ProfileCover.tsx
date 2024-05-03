@@ -33,7 +33,7 @@ const ProfileCover: React.FC<IProfileCover> = ({
         canEdit && (
           <div className='container container-left pt-4'>
             <Button
-              className='bg-secondary text-white rounded-full absolute z-20'
+              className='bg-secondary text-white rounded-full absolute left-12 z-20'
               size='sm'
               onPress={openModal}
             >
@@ -43,7 +43,7 @@ const ProfileCover: React.FC<IProfileCover> = ({
           </div>
         )
       }
-      <div className='w-screen h-[150px] md:h-[250px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>
+      <div className='w-full h-[150px] md:h-[250px] bg-slate-500 text-white absolute top-0 left-0 overflow-hidden'>
         <img src={ profile.profile_cover || coverDefault} alt='' />
       </div>
 
