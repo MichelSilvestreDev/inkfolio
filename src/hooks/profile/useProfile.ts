@@ -6,7 +6,7 @@ import {
   postProfile,
   putProfile,
 } from '../../services/profileService'
-import { IProfile } from '../../types/profile.types'
+import { IProfile, initialState } from '../../types/profile.types'
 import { useState } from 'react'
 
 const useProfile = () => {
@@ -16,19 +16,6 @@ const useProfile = () => {
   // States
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-
-  const initialState: IProfile = {
-    user_id: '',
-    name: '',
-    phone: '',
-    bio: '',
-    tattoo_styles: '',
-    avatar: '',
-    address: '',
-    profile_cover: '',
-    profile_url: '',
-    redes: '',
-  }
 
   const registerProfile = async (profile: IProfile) => {
     setIsLoading(true)

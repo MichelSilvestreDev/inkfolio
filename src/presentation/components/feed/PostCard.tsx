@@ -5,19 +5,46 @@ import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { IProfile } from '../../../types/profile.types'
+import useProfile from '../../../hooks/profile/useProfile'
 
 type Card = {
   post: IPost
 }
 
-const PostCard: React.FC<Card> = ({ post }: Card) => {
+const initialState: IProfile = {
+  user_id: '',
+  name: '',
+  phone: '',
+  bio: '',
+  tattoo_styles: '',
+  avatar: '',
+  address: '',
+  profile_cover: '',
+  profile_url: '',
+  redes: '',
+}
 
+const PostCard: React.FC<Card> = ({ post }: Card) => {
+  const [profile, setProfile] = useState<IProfile>(initialState)
+  const { getUserPublicProfile } = useProfile()
+
+  useEffect(() => {
+    if(post.user.profileUrl) {
+      const getProfile = async () => {
+        const profileData = await getUserPublicProfile(post.user.profileUrl)
+        if(profileData) setProfile(profileData)
+      }
+      getProfile()
+    }
+  }, [post.user.profileUrl])
+  
   const shareOnWhatsApp = () => {
-    const phoneNumber = '(11)953335781'; // Adicione aqui o número de telefone específico
     const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio. É a ${post.title} com o valor de ${post.price}. Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
 
 
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
 
   }

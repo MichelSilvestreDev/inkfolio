@@ -8,7 +8,6 @@ const usePost = () => {
   const [posts, setPosts] = useState<IPost[]>([])
 
   const handleGetPosts = useCallback(async () => {
-    console.log('aqui')
     setIsLoading(true)
     await GetPostsService()
       .then((res) => {
