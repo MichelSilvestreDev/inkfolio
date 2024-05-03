@@ -6,27 +6,28 @@ type Slide = {
   urls: string[]
 }
 
-const PostImgSlide: React.FC<Slide> = memo(({urls}: Slide) => {
+const PostImgSlide: React.FC<Slide> = memo(({ urls }: Slide) => {
   const [currentUrl, setCurrentUrl] = useState<number>(0)
 
   const nextUrl = () => {
     const index = currentUrl + 1
-    if(urls.length -1 >= index) {
+    if (urls.length - 1 >= index) {
       setCurrentUrl(index)
     }
   }
-  
+
   const prevUrl = () => {
-    if(currentUrl > 0) setCurrentUrl(currentUrl -1)
+    if (currentUrl > 0) setCurrentUrl(currentUrl - 1)
   }
 
   return (
     <>
       <Image
         alt='Card background'
-        className='object-cover rounded-xl mb-0'
+        className='object-cover rounded-xl mb-0 max-w-[700px] min-h-[500px]' 
         src={urls[currentUrl]}
         isBlurred
+        isZoomed
       />
       <div className='w-full h-full flex justify-between items-center absolute z-20'>
         <Button
@@ -36,17 +37,17 @@ const PostImgSlide: React.FC<Slide> = memo(({urls}: Slide) => {
           onPress={prevUrl}
           disabled={currentUrl === 0}
         >
-          <LeftC theme="outline" size="20" fill="#333" strokeWidth={3}/>
+          <LeftC theme="outline" size="20" fill="#333" strokeWidth={3} />
         </Button>
 
         <Button
           isIconOnly
           size='sm'
-          className={`${urls.length -1 < currentUrl + 1 && 'opacity-30 '} -mr-4`}
+          className={`${urls.length - 1 < currentUrl + 1 && 'opacity-30 '} -mr-4`}
           onPress={nextUrl}
-          disabled={urls.length -1 < currentUrl + 1}
+          disabled={urls.length - 1 < currentUrl + 1}
         >
-          <RightC theme="outline" size="20" fill="#333" strokeWidth={3}/>
+          <RightC theme="outline" size="20" fill="#333" strokeWidth={3} />
         </Button>
       </div>
     </>
