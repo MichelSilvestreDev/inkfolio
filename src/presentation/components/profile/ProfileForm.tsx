@@ -117,7 +117,7 @@ const ProfileForm: React.FC<IForm> = ({
         isRequired
         type='text'
         name='address.number'
-        label='Endereço do estúdio'
+        label='Número'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         value={formValues.address.number}
       />
@@ -125,23 +125,58 @@ const ProfileForm: React.FC<IForm> = ({
         isRequired
         type='text'
         name='address.city'
-        label='Endereço do estúdio'
+        label='Cidade'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         value={formValues.address.city}
       />
       <Input
         type='text'
         name='address.state'
-        label='Endereço do estúdio'
+        label='Estado'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         value={formValues.address.state}
       />
       <Input
         type='text'
         name='redes.instagram'
-        label='Link de redes sociais'
+        label='Instagram'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
         value={formValues.redes?.instagram}
+      />
+      <Input
+        type='text'
+        name='redes.facebook'
+        label='Facebook'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.facebook}
+      />
+      <Input
+        type='text'
+        name='redes.pinterest'
+        label='Pinterest'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.pinterest}
+      />
+      <Input
+        type='text'
+        name='redes.youtube'
+        label='Youtube'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.youtube}
+      />
+      <Input
+        type='text'
+        name='redes.linkedin'
+        label='Linkedin'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.linkedin}
+      />
+      <Input
+        type='text'
+        name='redes.behance'
+        label='Behance'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.behance}
       />
       <Button color='primary' size='lg' type='submit' isLoading={isLoading}>
         Salvar
