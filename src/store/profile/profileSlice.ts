@@ -1,18 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IProfile } from '../../types/profile.types'
-
-const initialState: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: '',
-  profile_cover: '',
-  profile_url: '',
-  redes: '',
-}
+import { IProfile, initialState } from '../../types/profile.types'
 
 export const slice = createSlice({
   name: 'profile',

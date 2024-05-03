@@ -20,7 +20,10 @@ const PreviewFiles: React.FC<Preview> = ({previewFiles, removeFile}: Preview) =>
           Remover
         </Button>
       </div>
-      <ScrollShadow hideScrollBar className='grid grid-cols-3 gap-4 overflow-y-scroll h-[180px] pb-8'>
+      <ScrollShadow
+        hideScrollBar
+        className='grid grid-cols-3 gap-4 overflow-y-scroll h-[180px] pb-8'
+      >
         {
           previewFiles.map((preview, index) => {
             return (

@@ -8,9 +8,11 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { IProfile } from '../../../types/profile.types'
 import useProfile from '../../../hooks/profile/useProfile'
+import { deleteUserPost } from '../../../services/profileService'
 
 type Card = {
-  post: IPost
+  post: IPost,
+  deletePost: boolean
 }
 
 const initialState: IProfile = {
@@ -26,7 +28,8 @@ const initialState: IProfile = {
   redes: '',
 }
 
-const PostCard: React.FC<Card> = ({ post }: Card) => {
+const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
+  
   const [profile, setProfile] = useState<IProfile>(initialState)
   const { getUserPublicProfile } = useProfile()
 
@@ -49,8 +52,14 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
 
   }
 
+  const handleDeletePost = (postId: string) => {
+    deleteUserPost(postId)
+  }
+
+  
+
   return (
-    <Card className='py-4 max-w-[700px] min-h-[500px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
+    <Card className='py-4 max-w-[500px] min-h-[650px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
       <CardHeader className='pb-0 pt-2 px-0 justify-between mb-4'>
         <Link to={`/perfil/${post.user.profileUrl}`}>
           <User
@@ -62,25 +71,26 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
           />
         </Link>
       </CardHeader>
-      <CardBody className='relative overflow-visible px-0 pb-0 mb-0'>
+      <CardBody className='relative overflow-visible px-0 '>
         <PostImgSlide urls={post.urls} />
         <div
-          className="w-full h-16 z-20 px-4 rounded-b-xl flex absolute bottom-0 bg-black/40 border-t-1 border-default-600 dark:border-default-100"
+          className="w-full h-18 z-20 px-4 py-3 rounded-b-lg flex absolute bottom-5 bg-white	  "
         >
           <div className="w-full flex flex-grow gap-2 items-center">
             <div className="flex flex-col">
-              <h3 className="text-white/60"><strong>{post.title}</strong></h3>
-              <p className="text-tiny text-white/60">{post.description}</p>
+              <h3 ><strong>{post.title}</strong></h3>
+              <p className="text-tiny ">{post.description}</p>
               {
                 post.price && (
-                  <p className="text-tiny text-white/60 text-primary">{convertToBRACurrency(post.price)}</p>
+                  <p className="text-tiny  text-primary">{convertToBRACurrency(post.price)}</p>
                 )
               }
             </div>
           </div>
-          <Tooltip content='Em breve'>
-            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-4 min-w-16'>Pedir orçamento</Button>
-          </Tooltip>
+         <div>
+            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button>
+            {/* {deletePost ?? <Button onClick={() => handleDeletePost(post.id)} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>} */}
+         </div>
         </div>
       </CardBody>
       <CardFooter className="flex gap-4 pt-8 px-0 relative z-20 hidden">

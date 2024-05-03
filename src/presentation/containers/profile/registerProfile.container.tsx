@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ProfileForm from '../../components/profile/ProfileForm';
-import { IProfile } from '../../../types/profile.types';
+import { IProfile, initialState } from '../../../types/profile.types';
 import useProfile from '../../../hooks/profile/useProfile';
 import { useAuth } from '../../../hooks/auth/useAuth';
 import useUploadFile from '../../../hooks/posts/useUploadFile';
@@ -10,29 +10,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Skeleton } from '@nextui-org/react';
 
-const initialValues: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: '',
-  redes: '',
-  profile_url: ''
-}
-
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
   const { registerProfile, editProfile, isLoading: PostinProfile, profile } = useProfile()
   const {uploadFiles, isLoading: Uploading} = useUploadFile()
   const { user } = useAuth()
+  const {successMessage, errorMessage} = useNotification()
   // States
-  const [formData, setFormData] = useState(initialValues)
+  const [formData, setFormData] = useState(initialState)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
-  const {successMessage, errorMessage} = useNotification()
   const [isLoadingProfile, setIsLoaginProfile] = useState(true)
 
   const handleFiles = (files: FileList | null) => {
@@ -40,9 +28,13 @@ const RegisterProfileContainer: React.FC = () => {
   }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
+    let fieldValue = value
+
+    if(fieldName === 'tattoo_styles' && typeof(value) === 'string') fieldValue = value?.replace(",", "")
+      
     setFormData({
       ...formData,
-      [fieldName]: value,
+      [fieldName]: fieldValue,
     });
   };
 

@@ -13,15 +13,15 @@ const FeedContainer: React.FC = () => {
   }
 
   return (
-    <>
+    <div  className='container'>
       {
         posts?.map(post => {
           return (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} deletePost={false} post={post} />
           )
         })
       }
-    </>
+    </div>
   )
 }
 

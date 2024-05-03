@@ -124,12 +124,12 @@ const SidebarMenu: React.FC = () => {
         backdrop='blur' 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
-        size='4xl'
+        // size='xl'
       >
         <ModalContent>
           {() => (
             <>
-              <ModalHeader className='flex flex-col gap-1'>Adicionar Tatuagem</ModalHeader>
+              <ModalHeader className='flex flex-col gap-1'>Criar nova postagem</ModalHeader>
               <ModalBody>
                 <PostContainer closeModal={closeModal}/>
               </ModalBody>

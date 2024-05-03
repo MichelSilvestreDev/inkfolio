@@ -31,7 +31,6 @@ const ProfileForm: React.FC<IForm> = ({
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
-    console.log(formValues)
     submitProfile(formValues, Boolean(location.pathname.includes('edit')))
   }
 
@@ -103,23 +102,81 @@ const ProfileForm: React.FC<IForm> = ({
         type='text'
         name='profile_url'
         label='Escreva o endereço URL que terá seu perfil'
-        isRequired
         onChange={(e) => handleInputChange(e.target.name, e.target.value.split(' ').join('-'))}
         value={formValues.profile_url}
       />
       <Input
+        isRequired
         type='text'
-        name='address'
+        name='address.street'
         label='Endereço do estúdio'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.address}
+        value={formValues.address.street}
+      />
+      <Input
+        isRequired
+        type='text'
+        name='address.number'
+        label='Número'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.address.number}
+      />
+      <Input
+        isRequired
+        type='text'
+        name='address.city'
+        label='Cidade'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.address.city}
       />
       <Input
         type='text'
-        name='redes'
-        label='Link de redes sociais'
+        name='address.state'
+        label='Estado'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.redes || ''}
+        value={formValues.address.state}
+      />
+      <Input
+        type='text'
+        name='redes.instagram'
+        label='Instagram'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.instagram}
+      />
+      <Input
+        type='text'
+        name='redes.facebook'
+        label='Facebook'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.facebook}
+      />
+      <Input
+        type='text'
+        name='redes.pinterest'
+        label='Pinterest'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.pinterest}
+      />
+      <Input
+        type='text'
+        name='redes.youtube'
+        label='Youtube'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.youtube}
+      />
+      <Input
+        type='text'
+        name='redes.linkedin'
+        label='Linkedin'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.linkedin}
+      />
+      <Input
+        type='text'
+        name='redes.behance'
+        label='Behance'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.redes?.behance}
       />
       <Button color='primary' size='lg' type='submit' isLoading={isLoading}>
         Salvar
