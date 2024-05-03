@@ -111,8 +111,8 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
         const postUser: IPostUser = {
           id: user.uid,
           email: user.email || '',
-          name: user.displayName || '',
-          avatar: user.photoUrl || '',
+          name: profile.name || '',
+          avatar: profile.avatar || '',
           profileUrl: profile.profile_url
         }
         

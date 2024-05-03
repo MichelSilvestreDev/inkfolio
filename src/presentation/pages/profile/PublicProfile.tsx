@@ -53,14 +53,16 @@ const PublicProfile: React.FC = () => {
   return (
     <div className='w-full'>
       <ProfileCoverContainer profile={profile} />
-      <ProfileHeader profile={profile}/>
+      <div className="container">
+        <ProfileHeader profile={profile}/>
 
-      <Button color='primary' className='mx-auto mt-8 w-full'>
-        <Calendar theme="outline" size="24" fill="#fff" strokeWidth={3}/>
-        Pedir orçamento
-      </Button>
+        <Button color='primary' className='mx-auto mt-8 max-w-[350px] w-full'>
+          <Calendar theme="outline" size="24" fill="#fff" strokeWidth={3}/>
+          Pedir orçamento
+        </Button>
 
-      <ProfilePostsContainer userID={profile.user_id} />
+        <ProfilePostsContainer userID={profile.user_id} />
+      </div>
     </div>
   )
 }

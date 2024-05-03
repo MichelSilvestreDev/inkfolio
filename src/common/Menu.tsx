@@ -1,12 +1,14 @@
-import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle } from '@nextui-org/react'
+import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle, Tooltip, User } from '@nextui-org/react'
 import InkFolioLogo from '/logos/InkFolio-white.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
 import { useAuth } from '../hooks/auth/useAuth';
+import useProfile from '../hooks/profile/useProfile';
 
 const Menu: React.FC = () => {
   // Hooks
   const {user, signOut} = useAuth()
+  const {profile} = useProfile()
   // States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -15,7 +17,7 @@ const Menu: React.FC = () => {
   }
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className='bg-black text-white'>
+    <Navbar onMenuOpenChange={setIsMenuOpen} className='bg-black text-white' >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
@@ -28,35 +30,58 @@ const Menu: React.FC = () => {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className='hidden sm:flex gap-4' justify='center'>
+      <NavbarContent className='hidden sm:hidden gap-4' justify='center'>
         <NavbarItem>
           <Link to='/'>
             Home
           </Link>
         </NavbarItem>
         <NavbarItem >
-          <Link to='/'>
-            O que é o InkFolio
-          </Link>
+          <Tooltip content='Em breve' color='danger'>
+            <Link to='/'>
+              O que é o InkFolio
+            </Link>
+          </Tooltip>
         </NavbarItem>
         <NavbarItem>
-          <Link to='/'>
-            Equipe
-          </Link>
+          <Tooltip content='Em breve' color='danger'>
+            <Link to='/'>
+              Equipe
+            </Link>
+          </Tooltip>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <Link to='/login'>Entrar</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link to='/cadastro'>
-            <Button color='primary' variant='flat'>
-              Cadastrar-se
-            </Button>
-          </Link>
-        </NavbarItem>
+        {
+          user?.isLogged ? (
+            <NavbarItem>
+              <Link to='/perfil'>
+                <Button color='primary' variant='flat' size='lg'>
+                  <User   
+                    name={profile.name ?? 'Completar cadastro'}
+                    avatarProps={{
+                      src: profile.avatar ?? ""
+                    }}
+                  />
+                </Button>
+              </Link>
+            </NavbarItem>
+          ) : (
+            <>
+              <NavbarItem className='hidden lg:flex'>
+                <Link to='/login'>Entrar</Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link to='/cadastro'>
+                  <Button color='primary' variant='flat'>
+                    Cadastrar-se
+                  </Button>
+                </Link>
+              </NavbarItem>
+            </>
+          )
+        }
       </NavbarContent>
       <NavbarMenu>
         <NavbarItem >

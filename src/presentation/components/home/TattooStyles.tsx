@@ -35,7 +35,7 @@ const TattooStyles: React.FC = () => {
           size={80}
           orientation='horizontal' 
         >
-          <div className='flex gap-8 justify-center'>
+          <div className='flex gap-8 2xl:justify-center'>
             {
               tattooStyles.map((style, index) => {
                 return (

@@ -10,7 +10,7 @@ interface IHeader {
 
 const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
   return (
-    <div className='w-full rounded-lg bg-white p-8 flex flex-col gap-8 relative z-10'>
+    <div className='w-full rounded-lg bg-white p-8 flex flex-col gap-8 relative z-10 shadow-lg'>
       <div className='w-full flex justify-between items-center'>
         <User
           name={profile.name}
