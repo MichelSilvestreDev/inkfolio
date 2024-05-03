@@ -90,4 +90,4 @@ const deleteUserPost = async (postId: string) => {
   }
 }
 
-export { getUserPosts, getProfile, getPublicProfile, postProfile, putProfile }
+export { getUserPosts, getProfile, getPublicProfile, postProfile, putProfile, deleteUserPost }
