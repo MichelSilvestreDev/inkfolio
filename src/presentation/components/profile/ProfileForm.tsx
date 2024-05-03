@@ -102,23 +102,46 @@ const ProfileForm: React.FC<IForm> = ({
         type='text'
         name='profile_url'
         label='Escreva o endereço URL que terá seu perfil'
-        isRequired
         onChange={(e) => handleInputChange(e.target.name, e.target.value.split(' ').join('-'))}
         value={formValues.profile_url}
       />
       <Input
+        isRequired
         type='text'
-        name='address'
+        name='address.street'
         label='Endereço do estúdio'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.address}
+        value={formValues.address.street}
+      />
+      <Input
+        isRequired
+        type='text'
+        name='address.number'
+        label='Endereço do estúdio'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.address.number}
+      />
+      <Input
+        isRequired
+        type='text'
+        name='address.city'
+        label='Endereço do estúdio'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.address.city}
       />
       <Input
         type='text'
-        name='redes'
+        name='address.state'
+        label='Endereço do estúdio'
+        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+        value={formValues.address.state}
+      />
+      <Input
+        type='text'
+        name='redes.instagram'
         label='Link de redes sociais'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.redes || ''}
+        value={formValues.redes?.instagram}
       />
       <Button color='primary' size='lg' type='submit' isLoading={isLoading}>
         Salvar

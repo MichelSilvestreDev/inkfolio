@@ -20,12 +20,12 @@ const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
         />
 
         <a href='' className='text-sm text-primary'>
-          @{profile?.redes}
+          @{profile?.redes?.instagram}
         </a>
       </div>
 
       <div>
-        <h6 className='mb-4 text-bold'>{profile.address}</h6>
+        <h6 className='mb-4 text-bold'>{profile.address.street}</h6>
         <p>{ profile.bio }</p>
       </div>
 

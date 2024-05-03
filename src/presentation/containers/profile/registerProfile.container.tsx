@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ProfileForm from '../../components/profile/ProfileForm';
-import { IProfile } from '../../../types/profile.types';
+import { IProfile, initialState } from '../../../types/profile.types';
 import useProfile from '../../../hooks/profile/useProfile';
 import { useAuth } from '../../../hooks/auth/useAuth';
 import useUploadFile from '../../../hooks/posts/useUploadFile';
@@ -10,18 +10,6 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Skeleton } from '@nextui-org/react';
 
-const initialValues: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: '',
-  redes: '',
-  profile_url: ''
-}
-
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
@@ -30,7 +18,7 @@ const RegisterProfileContainer: React.FC = () => {
   const { user } = useAuth()
   const {successMessage, errorMessage} = useNotification()
   // States
-  const [formData, setFormData] = useState(initialValues)
+  const [formData, setFormData] = useState(initialState)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
   const [isLoadingProfile, setIsLoaginProfile] = useState(true)
