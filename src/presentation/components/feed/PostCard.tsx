@@ -16,6 +16,7 @@ type Card = {
 }
 
 const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
+  
   const [profile, setProfile] = useState<IProfile>(initialState)
   const { getUserPublicProfile } = useProfile()
   
