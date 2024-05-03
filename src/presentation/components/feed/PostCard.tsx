@@ -6,30 +6,20 @@ import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { IProfile } from '../../../types/profile.types'
+import { initialState, IProfile } from '../../../types/profile.types'
 import useProfile from '../../../hooks/profile/useProfile'
+// import { deleteUserPost } from '../../../services/profileService'
 
 type Card = {
-  post: IPost
+  post: IPost,
+  deletePost: boolean
 }
 
-const initialState: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: '',
-  profile_cover: '',
-  profile_url: '',
-  redes: '',
-}
-
-const PostCard: React.FC<Card> = ({ post }: Card) => {
+const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
+  
   const [profile, setProfile] = useState<IProfile>(initialState)
   const { getUserPublicProfile } = useProfile()
-
+  
   useEffect(() => {
     if(post.user.profileUrl) {
       const getProfile = async () => {
@@ -38,6 +28,8 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
       }
       getProfile()
     }
+    console.log(deletePost);
+    
   }, [post.user.profileUrl])
   
   const shareOnWhatsApp = () => {
@@ -48,6 +40,12 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
     window.open(whatsappUrl, '_blank');
 
   }
+
+  // const handleDeletePost = (postId: string) => {
+  //   deleteUserPost(postId)
+  // }
+
+  
 
   return (
     <Card className='py-4 max-w-[500px] min-h-[650px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
@@ -79,9 +77,8 @@ const PostCard: React.FC<Card> = ({ post }: Card) => {
             </div>
           </div>
          <div>
-         <Tooltip content='Em breve' >
-            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8'>Pedir orçamento</Button>
-          </Tooltip>
+            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button>
+            {/* {deletePost ?? <Button onClick={() => handleDeletePost(post.id)} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>} */}
          </div>
         </div>
       </CardBody>

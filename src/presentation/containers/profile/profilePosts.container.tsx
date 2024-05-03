@@ -24,6 +24,7 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
         userPosts.map(post => {
           return (
             <PostCard
+              deletePost={true}
               post={post}
               key={post.id}
             />

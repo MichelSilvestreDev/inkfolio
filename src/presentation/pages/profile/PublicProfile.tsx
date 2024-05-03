@@ -6,20 +6,7 @@ import { Calendar } from '@icon-park/react'
 import useProfile from '../../../hooks/profile/useProfile'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { IProfile } from '../../../types/profile.types'
-
-  const initialState: IProfile = {
-    user_id: '',
-    name: '',
-    phone: '',
-    bio: '',
-    tattoo_styles: '',
-    avatar: '',
-    address: '',
-    profile_cover: '',
-    profile_url: '',
-    redes: '',
-  }
+import { initialState, IProfile } from '../../../types/profile.types'
 
 const PublicProfile: React.FC = () => {
   // Hooks
