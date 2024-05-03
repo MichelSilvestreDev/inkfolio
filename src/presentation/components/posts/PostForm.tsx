@@ -24,6 +24,7 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
         label='Titulo do trabalho'
         type='text'
         onChange={(e) => handleInputChange('title', e.target.value)}
+        isRequired
       />
 
       <Textarea
@@ -60,10 +61,11 @@ const PostForm: React.FC<Form> = ({handleSubmit, handleInputChange, posting}: Fo
         name='discount'
         label='Desconto'
         type='number'
+        className='hidden'
         onChange={(e) => handleInputChange('discount', e.target.value)}
       />
 
-      <label>
+      <label className='hidden'>
         Disponibilidade para negociação? <br/>
         <Switch
           checked={discount}

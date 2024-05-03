@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
 import useProfile from '../../../hooks/profile/useProfile'
+import { Button } from '@nextui-org/react'
 
 const initialValues:IPostFormValues = {
   title: '',
@@ -21,11 +22,16 @@ const initialValues:IPostFormValues = {
   created_at: '',
 }
 
-type Post = {
+interface IContainer {
   closeModal: () => void
 }
 
-const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
+enum NewPostSteps {
+  STEP1 = 'image',
+  STEP2 = 'form'
+}
+
+const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
   // Hooks
   const { user } = useAuth()
   const { profile } = useProfile()
@@ -36,6 +42,7 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
   const [formData, setFormData] = useState(initialValues)
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
+  const [formStep, setFormStep] = useState<NewPostSteps.STEP1 | NewPostSteps.STEP2>(NewPostSteps.STEP1)
 
   useEffect(() => {
     if (selectedFiles) {
@@ -143,22 +150,60 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
     }
   };
 
+  const handleStep = (step: string) => {
+    if(step === 'form') {
+      selectedFiles && selectedFiles.length > 0 &&
+      setFormStep(NewPostSteps.STEP2)
+    }
+    
+    if(step === 'image') {
+      setFormStep(NewPostSteps.STEP1)
+    }
+  }
+
   return (
-    <>
+    <div>
       <ToastContainer />
       {
         selectedFiles && selectedFiles?.length > 0 ? (
-          <div className='grid grid-cols-2 gap-4'>
-            <PreviewFiles
-              previewFiles={previewFiles}
-              removeFile={removeFile}
-            />
-            <PostForm
-              handleSubmit={handleSubmit}
-              handleInputChange={handleInputChange}
-              setSelectedFiles={setSelectedFiles}
-              posting={uploading || posting}
-            />
+          <div className='flex flex-col gap-4'>
+            {
+              formStep === 'image' && (
+                <>
+                  <PreviewFiles
+                    previewFiles={previewFiles}
+                    removeFile={removeFile}
+                  />
+                  <Button
+                    onClick={() => handleStep(NewPostSteps.STEP2)}
+                    color='secondary'
+                    className='w-fit'
+                  >
+                    Continuar
+                  </Button>
+                </>
+              )
+            }
+            {
+              formStep === 'form' && (
+                <>
+                  <PostForm
+                    handleSubmit={handleSubmit}
+                    handleInputChange={handleInputChange}
+                    setSelectedFiles={setSelectedFiles}
+                    posting={uploading || posting}
+                  />
+
+                  <Button
+                    onClick={() => handleStep(NewPostSteps.STEP1)}
+                    color='secondary'
+                    className='w-fit'
+                  >
+                    Voltar
+                  </Button>
+                </>
+              )
+            }
           </div>
         ) : (
           <PostFilesForm
@@ -166,7 +211,7 @@ const PostContainer: React.FC<Post> = ({ closeModal }: Post) => {
           />
         )
       }
-    </>
+    </div>
   )
 }
 
