@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth'
 import { UserCredentials, UserFormValues } from '../types/auth.types'
 import { firebaseAuth } from '../config/firebase/baseConfig'
+import { handleSendMail } from './mailService'
 
 type UserResponse = {
   user: User
@@ -57,6 +58,10 @@ export const SigUpService = async ({
 }: UserFormValues): Promise<User | boolean> => {
   try {
     const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
+    if(result){
+      handleSendMail('lead_new_user', 'template_vflyum6', email);
+      handleSendMail('wellcome_user', 'template_ggdcup6', email);
+    }
     return result.user
   } catch (err) {
     console.error(err)
