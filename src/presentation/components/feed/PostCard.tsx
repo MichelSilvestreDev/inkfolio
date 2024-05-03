@@ -6,33 +6,20 @@ import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { IProfile } from '../../../types/profile.types'
+import { initialState, IProfile } from '../../../types/profile.types'
 import useProfile from '../../../hooks/profile/useProfile'
-import { deleteUserPost } from '../../../services/profileService'
+// import { deleteUserPost } from '../../../services/profileService'
 
 type Card = {
   post: IPost,
   deletePost: boolean
 }
 
-const initialState: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: '',
-  profile_cover: '',
-  profile_url: '',
-  redes: '',
-}
-
 const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
   
   const [profile, setProfile] = useState<IProfile>(initialState)
   const { getUserPublicProfile } = useProfile()
-
+  
   useEffect(() => {
     if(post.user.profileUrl) {
       const getProfile = async () => {
@@ -41,6 +28,8 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
       }
       getProfile()
     }
+    console.log(deletePost);
+    
   }, [post.user.profileUrl])
   
   const shareOnWhatsApp = () => {
@@ -52,9 +41,9 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
 
   }
 
-  const handleDeletePost = (postId: string) => {
-    deleteUserPost(postId)
-  }
+  // const handleDeletePost = (postId: string) => {
+  //   deleteUserPost(postId)
+  // }
 
   
 
