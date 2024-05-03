@@ -38,6 +38,15 @@ const PublicProfile: React.FC = () => {
     }
   }, [profile_url])
 
+  const shareOnWhatsApp = () => {
+    const message = `Olá! Acabei de encontrar seu perfil no Inkfolio. Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
+
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
+  }
+
   if(isLoading) {
     return (
       <p>Carregando.........</p>
@@ -56,7 +65,7 @@ const PublicProfile: React.FC = () => {
       <div className="container">
         <ProfileHeader profile={profile}/>
 
-        <Button color='primary' className='mx-auto mt-8 max-w-[350px] w-full'>
+        <Button color='primary' onClick={shareOnWhatsApp} className='mx-auto mt-8 max-w-[350px] w-full'>
           <Calendar theme="outline" size="24" fill="#fff" strokeWidth={3}/>
           Pedir orçamento
         </Button>
