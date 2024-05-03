@@ -24,10 +24,10 @@ const PostImgSlide: React.FC<Slide> = memo(({ urls }: Slide) => {
     <>
       <Image
         alt='Card background'
-        className='object-cover rounded-xl mb-0 max-w-[700px] min-h-[500px]' 
+        className='object-cover rounded-t-lg  min-h-[500px]' 
         src={urls[currentUrl]}
         isBlurred
-        isZoomed
+      
       />
       <div className='w-full h-full flex justify-between items-center absolute z-20'>
         <Button
