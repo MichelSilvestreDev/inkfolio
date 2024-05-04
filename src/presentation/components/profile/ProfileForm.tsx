@@ -115,7 +115,7 @@ const ProfileForm: React.FC<IForm> = ({
       />
       <Input
         isRequired
-        type='text'
+        type='number'
         name='address.number'
         label='Número'
         onChange={(e) => handleInputChange(e.target.name, e.target.value)}

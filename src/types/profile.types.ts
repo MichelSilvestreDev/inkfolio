@@ -12,10 +12,10 @@ export interface IProfile {
 }
 
 export interface IProfileAddress {
-  street: string
-  number: string
-  city: string
-  state: string
+  street?: string
+  number?: string
+  city?: string
+  state?: string
   cep?: string
 }
 
@@ -35,12 +35,7 @@ export const initialState: IProfile = {
   bio: '',
   tattoo_styles: '',
   avatar: '',
-  address: {
-    street: '',
-    number: '',
-    city: '',
-    state: '',
-  },
+  address: {},
   profile_cover: '',
   profile_url: '',
   redes: {},
