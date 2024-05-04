@@ -4,6 +4,7 @@ import reactRefresh from '@vitejs/plugin-react-refresh';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
+  base: '/',
   build: {
     outDir: 'build', // Diretório de saída do build
     assetsDir: 'assets', // Diretório de assets
