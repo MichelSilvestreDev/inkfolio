@@ -9,6 +9,7 @@ export interface IProfile {
   profile_url: string
   profile_cover?: string
   redes?: IProfileRedes
+  [key: string]: any // FIXME: remove any
 }
 
 export interface IProfileAddress {
@@ -35,8 +36,22 @@ export const initialState: IProfile = {
   bio: '',
   tattoo_styles: '',
   avatar: '',
-  address: {},
+  address: {
+    street: '',
+    number: '',
+    city: '',
+    state: '',
+    cep: '',
+  },
   profile_cover: '',
   profile_url: '',
-  redes: {},
-}
+  redes: {
+    instagram: '',
+    facebook: '',
+    pinterest: '',
+    youtube: '',
+    behance: '',
+    linkedin: '',
+  },
+};
+

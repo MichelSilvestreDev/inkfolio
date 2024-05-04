@@ -28,18 +28,30 @@ const RegisterProfileContainer: React.FC = () => {
   }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
-    let fieldValue = value
-    console.log(fieldName);
-    console.log(value);
-
+    let updatedFormData = { ...formData };
+  
+    // Verifica se o nome do campo contém um ponto para determinar se é um campo aninhado
+    if (fieldName.includes('.')) {
+      const [parentFieldName, nestedFieldName] = fieldName.split('.');
+      updatedFormData = {
+        ...updatedFormData,
+        [parentFieldName]: {
+          ...updatedFormData[parentFieldName],
+          [nestedFieldName]: value,
+        },
+      };
+    } else {
+      updatedFormData = {
+        ...updatedFormData,
+        [fieldName]: value,
+      };
+    }
+  
+    setFormData(updatedFormData);
+    console.log(updatedFormData);
     
-    if(fieldName === 'tattoo_styles' && typeof(value) === 'string') fieldValue = value?.replace(/^,/, "");
-
-    setFormData({
-      ...formData,
-      [fieldName]: fieldValue,
-    });
   };
+  
 
   const submitProfile = async (profile: IProfile, isEditing?: boolean) => {
     const profileData:IProfile = {
