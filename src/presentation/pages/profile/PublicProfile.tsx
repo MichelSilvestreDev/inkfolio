@@ -49,7 +49,7 @@ const PublicProfile: React.FC = () => {
   return (
     <div className='w-full'>
       <ProfileCoverContainer profile={profile} />
-      <div className="container">
+      <div className="container" style={{paddingBottom: '24px'}}>
         <ProfileHeader profile={profile}/>
 
         <Button color='primary' onClick={shareOnWhatsApp} className='mx-auto mt-8 max-w-[350px] w-full'>

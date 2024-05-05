@@ -28,6 +28,8 @@ const RegisterProfileContainer: React.FC = () => {
   }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
+    console.log(value);
+    
     let updatedFormData = { ...formData };
     let fieldValue = value;
     if(fieldName === 'tattoo_styles' && typeof(value) === 'string') fieldValue = value?.replace(/^,/, "");

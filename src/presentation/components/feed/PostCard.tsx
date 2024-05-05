@@ -33,7 +33,7 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
   }, [post.user.profileUrl])
   
   const shareOnWhatsApp = () => {
-    const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio. É a ${post.title} com o valor de ${post.price}. Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
+    const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
 
 
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
