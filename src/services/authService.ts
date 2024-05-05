@@ -60,7 +60,7 @@ export const SigUpService = async ({
     const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
     if(result){
       handleSendMail('lead_new_user', 'template_vflyum6', '', email);
-      handleSendMail('wellcome_user', 'template_ggdcup6', '', email);
+      handleSendMail('wellcome_user', 'template_ggdcup6', email, '');
     }
     return result.user
   } catch (err) {
