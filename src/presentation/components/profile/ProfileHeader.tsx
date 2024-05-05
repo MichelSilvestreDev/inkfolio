@@ -26,17 +26,17 @@ const ProfileHeader: React.FC<IHeader> = ({profile, canEdit}) => {
       <SocialMidiaButtons />
 
       <div>
-        <h6 className='flex gap-4 mb-4 text-bold'>
+        <p className='flex gap-4 mb-4 text-bold' style={{fontSize: '15px'}}>
           <Local theme="outline" size="24" fill="#333" strokeWidth={3}/>
           {address}
-        </h6>
-        <p>{ profile.bio }</p>
+        </p>
+        <p style={{fontSize: '13px'}}>{ profile.bio }</p>
       </div>
 
       <div>
         {
           profile?.tattoo_styles?.split(',').map(style => 
-            <Chip key={style} size='sm' className='bg-tertiary text-white mr-4'>{style}</Chip>
+            <Chip key={style} size='sm' className='bg-tertiary text-white mr-4 mb-1'>{style}</Chip>
           )
         }
       </div>
