@@ -63,7 +63,7 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
       <CardBody className='relative overflow-visible px-0 '>
         <PostImgSlide urls={post.urls} />
         <div
-          className="w-full h-18 z-20 px-4 py-3 rounded-b-lg flex absolute bottom-5 bg-white	  "
+          className="w-full h-18 z-20 px-4 py-3 rounded-b-lg absolute bottom-5 bg-white	  "
         >
           <div className="w-full flex flex-grow gap-2 items-center">
             <div className="flex flex-col">
@@ -76,7 +76,7 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
               }
             </div>
           </div>
-         <div>
+         <div style={{textAlign: 'end'}}>
             <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button>
             {/* {deletePost ?? <Button onClick={() => handleDeletePost(post.id)} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>} */}
          </div>
