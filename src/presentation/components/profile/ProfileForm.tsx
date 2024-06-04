@@ -3,10 +3,13 @@ import InkFolio from '/img/InkFolio.png'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Button } from '@nextui-org/button'
 import { Avatar } from '@nextui-org/avatar'
-import { IProfile } from '../../../types/profile.types'
-import { FormEvent } from 'react'
+import { IProfile } from '../../../types/profile/profile.types'
 import { useLocation } from 'react-router-dom'
+import { useForm } from "react-hook-form"
+import {yupResolver} from '@hookform/resolvers/yup'
 import tattooStyles from '../../../assets/data/tattooStyles'
+import { profileSchema } from '../../../types/profile/profileSchema'
+import ErrorMessage from '../../../common/ErrorMessage'
 
 interface IForm {
   isLoading: boolean
@@ -23,21 +26,24 @@ const ProfileForm: React.FC<IForm> = ({
   previewFiles,
   handleFiles,
   handleInputChange,
-  submitProfile
 }) => {
   // Hooks
   const location = useLocation()
   const image = previewFiles.length > 0 ? previewFiles[0] : formValues.avatar || ''
 
-  const onSubmit = (event: FormEvent) => {
-    event.preventDefault()
-    submitProfile(formValues, Boolean(location.pathname.includes('edit')))
+  const {handleSubmit, formState: {errors}, register} = useForm({
+    resolver: yupResolver(profileSchema),
+  })
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+    // submitProfile(formValues, Boolean(location.pathname.includes('edit')))
   }
 
   return(
     <form
       className='w-full max-w-[500px] mx-auto p-4 rounded-lg shadow-lg bg-white flex flex-col gap-4'
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <img
         src={InkFolio}
@@ -59,45 +65,47 @@ const ProfileForm: React.FC<IForm> = ({
         onChange={(e) => handleFiles(e.target.files)}
         />
 
+      <div>
+        <Input
+          type='text'
+          label='Nome'
+          {...register('name')}
+        />
+        <ErrorMessage errorMessage={errors?.name?.message} />
+      </div>
+
       <Input
-        isRequired
         type='text'
-        name='name'
-        label='Nome'
-        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.name}
-      />
-      <Input
-        isRequired
-        type='text'
-        name='phone'
         label='Celular (whastsapp - somente números)'
         maxLength={11}
-        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.phone}
+        {...register('phone')}
       />
+      {errors?.phone?.message}
+
       <Textarea
-        isRequired
         type='text'
-        name='bio'
         label='Bio'
-        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        value={formValues.bio}
+        {...register('bio')}
         />
-      <Select
-        isRequired
-        name='tattoo_styles'
-        label='Estilos de tatuagem'
-        onChange={(e) => handleInputChange(e.target.name, e.target.value)}
-        selectionMode="multiple"
-        selectedKeys={formValues?.tattoo_styles?.split(',')}
-      >
-        {tattooStyles.map((style) => (
-          <SelectItem key={style.value} value={style.value}>
-            {style.name}
-          </SelectItem>
-        ))}
-      </Select>
+        {errors?.bio?.message}
+
+      <div>
+        <Select
+          isRequired
+          label='Estilos de tatuagem'
+          selectionMode="multiple"
+          selectedKeys={formValues?.tattoo_styles?.split(',')}
+          {...register('tattooStyles')}
+        >
+          {tattooStyles.map((style) => (
+            <SelectItem key={style.value} value={style.value}>
+              {style.name}
+            </SelectItem>
+          ))}
+        </Select>
+        <ErrorMessage errorMessage={errors?.tattooStyles?.message} />
+      </div>
+
       <Input
         type='text'
         name='profile_url'

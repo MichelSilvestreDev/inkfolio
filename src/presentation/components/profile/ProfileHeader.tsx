@@ -1,7 +1,7 @@
 import { Button, Chip, User } from '@nextui-org/react'
 import { Eyes, Local, Pencil } from '@icon-park/react'
 import { Link } from 'react-router-dom'
-import { IProfile } from '../../../types/profile.types'
+import { IProfile } from '../../../types/profile/profile.types'
 import SocialMidiaButtons from './SocialMidiaButtons'
 
 interface IHeader {

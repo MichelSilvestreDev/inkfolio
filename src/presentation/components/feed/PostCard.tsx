@@ -6,8 +6,9 @@ import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { initialState, IProfile } from '../../../types/profile.types'
+import { IProfile } from '../../../types/profile/profile.types'
 import useProfile from '../../../hooks/profile/useProfile'
+import { profileInitialState } from '../../../types/profile/profileSchema'
 // import { deleteUserPost } from '../../../services/profileService'
 
 type Card = {
@@ -17,7 +18,7 @@ type Card = {
 
 const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
   
-  const [profile, setProfile] = useState<IProfile>(initialState)
+  const [profile, setProfile] = useState<IProfile>(profileInitialState)
   const { getUserPublicProfile } = useProfile()
   
   useEffect(() => {

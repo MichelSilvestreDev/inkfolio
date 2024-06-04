@@ -5,7 +5,7 @@ import useUploadFile from '../../../hooks/posts/useUploadFile'
 import { ToastContainer } from 'react-toastify'
 import useNotification from '../../../hooks/common/useNotification'
 import 'react-toastify/dist/ReactToastify.css';
-import { IProfile } from '../../../types/profile.types'
+import { IProfile } from '../../../types/profile/profile.types'
 
 interface IProfileCover {
   profile: IProfile

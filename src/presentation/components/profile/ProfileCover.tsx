@@ -1,7 +1,7 @@
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 import coverDefault from '/img/auth-bg-1.jpeg'
 import { Pencil } from '@icon-park/react'
-import { IProfile } from '../../../types/profile.types'
+import { IProfile } from '../../../types/profile/profile.types'
 
 interface IProfileCover {
   handleFiles: (files: FileList | null) => void

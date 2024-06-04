@@ -6,14 +6,15 @@ import { Calendar } from '@icon-park/react'
 import useProfile from '../../../hooks/profile/useProfile'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { initialState, IProfile } from '../../../types/profile.types'
+import { IProfile } from '../../../types/profile/profile.types'
+import { profileInitialState } from '../../../types/profile/profileSchema'
 
 const PublicProfile: React.FC = () => {
   // Hooks
   const {profile_url} = useParams()
   const { getUserPublicProfile, isLoading, isError } = useProfile()
   // States
-  const [profile, setProfile] = useState<IProfile>(initialState)
+  const [profile, setProfile] = useState<IProfile>(profileInitialState)
 
   useEffect(() => {
     if(profile_url) {

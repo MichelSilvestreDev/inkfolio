@@ -6,8 +6,9 @@ import {
   postProfile,
   putProfile,
 } from '../../services/profileService'
-import { IProfile, initialState } from '../../types/profile.types'
+import { IProfile } from '../../types/profile/profile.types'
 import { useState } from 'react'
+import { profileInitialState } from '../../types/profile/profileSchema'
 
 const useProfile = () => {
   // Hooks
@@ -43,7 +44,7 @@ const useProfile = () => {
       return profile as IProfile
     } catch (err) {
       console.error(err)
-      return initialState
+      return profileInitialState
     } finally {
       setIsLoading(false)
     }
@@ -57,7 +58,7 @@ const useProfile = () => {
     } catch (err) {
       console.log('err')
       setIsError(true)
-      return initialState
+      return profileInitialState
     } finally {
       setIsLoading(false)
     }

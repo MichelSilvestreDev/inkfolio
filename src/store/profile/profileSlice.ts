@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IProfile, initialState } from '../../types/profile.types'
+import { IProfile } from '../../types/profile/profile.types'
+import { profileInitialState } from '../../types/profile/profileSchema'
 
 export const slice = createSlice({
   name: 'profile',
-  initialState: initialState,
+  initialState: profileInitialState,
   reducers: {
     changeProfile(state, { payload }) {
       return {
@@ -22,7 +23,7 @@ export const slice = createSlice({
     },
     removeProfile() {
       return {
-        ...initialState,
+        ...profileInitialState,
       }
     },
   },

@@ -1,7 +1,16 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { IPost } from '../types/posts.types'
 import { db } from '../config/firebase/baseConfig'
-import { IProfile } from '../types/profile.types'
+import { IProfile } from '../types/profile/profile.types'
 
 const getUserPosts = async (userID: string): Promise<IPost[]> => {
   const postsRef = collection(db, 'posts')
@@ -80,15 +89,15 @@ const putProfile = async (profile: IProfile) => {
 }
 
 const deleteUserPost = async (postId: string) => {
-  console.log(postId);
-  
-  const postRef = doc(db, 'posts', postId);
+  console.log(postId)
+
+  const postRef = doc(db, 'posts', postId)
 
   try {
-    await deleteDoc(postRef);
-    console.log("Post deletado com sucesso!");
+    await deleteDoc(postRef)
+    console.log('Post deletado com sucesso!')
   } catch (err) {
-    console.error("Erro ao deletar o post:", err);
+    console.error('Erro ao deletar o post:', err)
   }
 }
 

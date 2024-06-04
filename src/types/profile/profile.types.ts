@@ -29,29 +29,14 @@ export interface IProfileRedes {
   linkedin?: string
 }
 
-export const initialState: IProfile = {
-  user_id: '',
-  name: '',
-  phone: '',
-  bio: '',
-  tattoo_styles: '',
-  avatar: '',
-  address: {
-    street: '',
-    number: '',
-    city: '',
-    state: '',
-    cep: '',
-  },
-  profile_cover: '',
-  profile_url: '',
-  redes: {
-    instagram: '',
-    facebook: '',
-    pinterest: '',
-    youtube: '',
-    behance: '',
-    linkedin: '',
-  },
-};
-
+export interface IProfielInput {
+  name: string
+  phone: string
+  bio: string
+  tattoo_styles: string
+  avatar: string
+  address: IProfileAddress
+  profile_url: string
+  profile_cover?: string
+  redes?: IProfileRedes
+}
