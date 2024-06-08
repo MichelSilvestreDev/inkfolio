@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getUserPosts } from "../../../services/profileService"
+import { deleteUserPost, getUserPosts } from "../../../services/profileService"
 import { IPost } from "../../../types/posts.types"
 import PostCard from "../../components/feed/PostCard"
 
@@ -18,13 +18,17 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
     })()
   },[userID])
 
+  const onDelete = async (postId: string) => {
+    await deleteUserPost(postId)
+  }
+
   return (
     <div className='w-full'>
       {
         userPosts.map(post => {
           return (
             <PostCard
-              deletePost={true}
+              onDelete={onDelete}
               post={post}
               key={post.id}
             />

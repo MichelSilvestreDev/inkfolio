@@ -5,47 +5,39 @@ import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { initialState, IProfile } from '../../../types/profile.types'
-import useProfile from '../../../hooks/profile/useProfile'
-// import { deleteUserPost } from '../../../services/profileService'
+import { useState } from 'react'
+import ConfirmModal from '../../../common/ConfirmModal'
 
 type Card = {
   post: IPost,
-  deletePost: boolean
+  onDelete?: (postId: string) => Promise<void>
 }
 
-const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
+const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
+  // States
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   
-  const [profile, setProfile] = useState<IProfile>(initialState)
-  const { getUserPublicProfile } = useProfile()
-  
-  useEffect(() => {
-    if(post.user.profileUrl) {
-      const getProfile = async () => {
-        const profileData = await getUserPublicProfile(post.user.profileUrl)
-        if(profileData) setProfile(profileData)
-      }
-      getProfile()
-    }
-    console.log(deletePost);
-    
-  }, [post.user.profileUrl])
-  
-  const shareOnWhatsApp = () => {
-    const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
+  // const shareOnWhatsApp = () => {
+  //   const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
 
-
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-
-  }
-
-  // const handleDeletePost = (postId: string) => {
-  //   deleteUserPost(postId)
+  //   const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
+  //   window.open(whatsappUrl, '_blank');
   // }
 
-  
+  const handleDeletePost = async () => {
+    if(onDelete && typeof(onDelete) === 'function') await onDelete(post.id)
+    else console.error("The 'onDelete' should be a function")
+  }
+
+  // const query = useQuery("delete-post", handleDeletePost)
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <Card className='py-4 max-w-[500px] min-h-[650px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
@@ -77,12 +69,12 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
             </div>
           </div>
          <div style={{textAlign: 'end'}}>
-            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button>
-            {/* {deletePost ?? <Button onClick={() => handleDeletePost(post.id)} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>} */}
+            {/* <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button> */}
+            <Button onClick={handleOpenModal} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>
          </div>
         </div>
       </CardBody>
-      <CardFooter className="flex gap-4 pt-8 px-0 relative z-20 hidden">
+      <CardFooter className="gap-4 pt-8 px-0 relative z-20 hidden">
         <Tooltip content='Em breve'>
           <div>
             <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
@@ -107,6 +99,16 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
           </div>
         </Tooltip>
       </CardFooter>
+
+      <ConfirmModal
+        title='Deseja apagar a postagem?'
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleDeletePost}
+        isDismissable
+      >
+        <p>Após apagar a postagem não será possível recuperá-la</p>
+      </ConfirmModal>
     </Card>
   )
 }
