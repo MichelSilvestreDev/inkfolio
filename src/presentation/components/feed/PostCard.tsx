@@ -1,51 +1,39 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip, User } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, CardHeader, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip, User } from '@nextui-org/react'
 import { IPost } from '../../../types/posts.types'
 import { formatDate } from '../../../utils/formatDate'
-import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
+import { Like, Message, More, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { initialState, IProfile } from '../../../types/profile.types'
+import { Key } from 'react'
+import PostContactBtn from './PostContactBtn'
 import useProfile from '../../../hooks/profile/useProfile'
-// import { deleteUserPost } from '../../../services/profileService'
+import { DiallingCodes } from '../../../types/enums/diallingCode.enum'
 
-type Card = {
+interface ICard {
   post: IPost,
-  deletePost: boolean
+  actions?: IAction
 }
 
-const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
-  
-  const [profile, setProfile] = useState<IProfile>(initialState)
-  const { getUserPublicProfile } = useProfile()
-  
-  useEffect(() => {
-    if(post.user.profileUrl) {
-      const getProfile = async () => {
-        const profileData = await getUserPublicProfile(post.user.profileUrl)
-        if(profileData) setProfile(profileData)
-      }
-      getProfile()
-    }
-    console.log(deletePost);
-    
-  }, [post.user.profileUrl])
-  
-  const shareOnWhatsApp = () => {
-    const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
+export interface IAction {
+  label?: string
+  options: IActionOption[]
+}
 
+export interface IActionOption {
+  key: string
+  label: string
+  action: (params?: string) => Promise<void>
+  color?: string
+}
 
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+const PostCard: React.FC<ICard> = ({ post, actions }) => {
+  const { profile } = useProfile()
 
+  const handleAction = async (key: Key) => {
+    const option = actions?.options.find(option => option.key === key)
+    if(option && typeof(option.action) === 'function') await option.action(post.id)
   }
-
-  // const handleDeletePost = (postId: string) => {
-  //   deleteUserPost(postId)
-  // }
-
-  
 
   return (
     <Card className='py-4 max-w-[500px] min-h-[650px] shadow-none mx-auto my-12 bg-transparent overflow-visible'>
@@ -59,6 +47,27 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
             }}
           />
         </Link>
+
+        {
+          actions && (
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant='light' isIconOnly aria-label={actions.label || 'Mais'}>
+                  <More theme='outline' size='24' fill='#333'/>
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions" onAction={handleAction}>
+                {
+                  actions.options.map((option) => (
+                    <DropdownItem key={option.key} >
+                      { option.label }
+                    </DropdownItem>
+                  ))
+                }
+              </DropdownMenu>
+            </Dropdown>
+          )
+        }
       </CardHeader>
       <CardBody className='relative overflow-visible px-0 '>
         <PostImgSlide urls={post.urls} />
@@ -77,12 +86,14 @@ const PostCard: React.FC<Card> = ({ post, deletePost }: Card) => {
             </div>
           </div>
          <div style={{textAlign: 'end'}}>
-            <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button>
-            {/* {deletePost ?? <Button onClick={() => handleDeletePost(post.id)} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>} */}
+            <PostContactBtn
+              title={post.title}
+              phone={`${DiallingCodes.Brazil}${profile?.phone}`}
+            />
          </div>
         </div>
       </CardBody>
-      <CardFooter className="flex gap-4 pt-8 px-0 relative z-20 hidden">
+      <CardFooter className="gap-4 pt-8 px-0 relative z-20 hidden">
         <Tooltip content='Em breve'>
           <div>
             <Like theme="outline" size="24" fill="#333" strokeWidth={3} className='cursor-pointer' />
