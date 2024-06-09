@@ -6,9 +6,10 @@ import ConfirmModal from "../../../common/ConfirmModal"
 
 interface IProfilePosts {
   userID: string
+  canEdit?: boolean
 }
 
-const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
+const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   // States
   const [userPosts, setUserPosts] = useState<IPost[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -59,7 +60,7 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
           return (
             <PostCard
               post={post}
-              actions={actions}
+              actions={canEdit ? actions : undefined}
               key={post.id}
             />
           )
