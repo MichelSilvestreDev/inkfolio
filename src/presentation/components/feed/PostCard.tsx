@@ -1,22 +1,30 @@
-import { Button, Card, CardBody, CardFooter, CardHeader, Tooltip, User } from '@nextui-org/react'
+import { Button, Card, CardBody, CardFooter, CardHeader, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Tooltip, User } from '@nextui-org/react'
 import { IPost } from '../../../types/posts.types'
 import { formatDate } from '../../../utils/formatDate'
-import { Like, Message, SaveOne, ShareTwo } from '@icon-park/react'
+import { Like, Message, More, SaveOne, ShareTwo } from '@icon-park/react'
 import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import ConfirmModal from '../../../common/ConfirmModal'
+import { Key } from 'react'
 
-type Card = {
+interface ICard {
   post: IPost,
-  onDelete?: (postId: string) => Promise<void>
+  actions?: IAction
 }
 
-const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
-  // States
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  
+export interface IAction {
+  label?: string
+  options: IActionOption[]
+}
+
+export interface IActionOption {
+  key: string
+  label: string
+  action: (params?: string) => Promise<void>
+  color?: string
+}
+
+const PostCard: React.FC<ICard> = ({ post, actions }) => {  
   // const shareOnWhatsApp = () => {
   //   const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
 
@@ -24,19 +32,11 @@ const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
   //   window.open(whatsappUrl, '_blank');
   // }
 
-  const handleDeletePost = async () => {
-    if(onDelete && typeof(onDelete) === 'function') await onDelete(post.id)
-    else console.error("The 'onDelete' should be a function")
-  }
-
   // const query = useQuery("delete-post", handleDeletePost)
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
+  const handleAction = async (key: Key) => {
+    const option = actions?.options.find(option => option.key === key)
+    if(option && typeof(option.action) === 'function') await option.action(post.id)
   }
 
   return (
@@ -51,6 +51,27 @@ const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
             }}
           />
         </Link>
+
+        {
+          actions && (
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant='light' isIconOnly aria-label={actions.label || 'Mais'}>
+                  <More theme='outline' size='24' fill='#333'/>
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions" onAction={handleAction}>
+                {
+                  actions.options.map((option) => (
+                    <DropdownItem key={option.key} >
+                      { option.label }
+                    </DropdownItem>
+                  ))
+                }
+              </DropdownMenu>
+            </Dropdown>
+          )
+        }
       </CardHeader>
       <CardBody className='relative overflow-visible px-0 '>
         <PostImgSlide urls={post.urls} />
@@ -70,7 +91,6 @@ const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
           </div>
          <div style={{textAlign: 'end'}}>
             {/* <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button> */}
-            <Button onClick={handleOpenModal} radius='full' size='sm' className='mt-2 min-w-16 px-8'>Deletar</Button>
          </div>
         </div>
       </CardBody>
@@ -99,16 +119,6 @@ const PostCard: React.FC<Card> = ({ post, onDelete }: Card) => {
           </div>
         </Tooltip>
       </CardFooter>
-
-      <ConfirmModal
-        title='Deseja apagar a postagem?'
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleDeletePost}
-        isDismissable
-      >
-        <p>Após apagar a postagem não será possível recuperá-la</p>
-      </ConfirmModal>
     </Card>
   )
 }
