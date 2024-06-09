@@ -14,7 +14,7 @@ const Profile: React.FC = () => {
       <ProfileCoverContainer profile={profile} canEdit/>
       <div className="container">
         <ProfileHeader profile={profile} canEdit/>
-        <ProfilePostsContainer userID={user.uid} />
+        <ProfilePostsContainer userID={user.uid} canEdit/>
       </div>
     </div>
   )

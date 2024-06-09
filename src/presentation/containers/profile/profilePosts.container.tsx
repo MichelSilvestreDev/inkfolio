@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react"
-import { getUserPosts } from "../../../services/profileService"
+import { deleteUserPost, getUserPosts } from "../../../services/profileService"
 import { IPost } from "../../../types/posts.types"
-import PostCard from "../../components/feed/PostCard"
+import PostCard, { IAction } from "../../components/feed/PostCard"
+import ConfirmModal from "../../../common/ConfirmModal"
 
 interface IProfilePosts {
   userID: string
+  canEdit?: boolean
 }
 
-const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
+const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   // States
   const [userPosts, setUserPosts] = useState<IPost[]>([])
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [postId, setPostId] = useState<string | null>(null)
 
   useEffect(() => {
     (async () => {
@@ -18,19 +22,60 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID}) => {
     })()
   },[userID])
 
+  const actions: IAction = {
+    options: [
+      {
+        key: 'delete',
+        label: 'Apagar',
+        action: async (postId?: string) => handleOpenModal(postId)
+      },
+    ]
+  }
+
+  const onDelete = async (postId: string) => {
+    await deleteUserPost(postId)
+  }
+
+  const handleDeletePost = async () => {
+    if(postId) await onDelete(postId)
+    else console.error("The 'onDelete' should be a function")
+  }
+
+  const handleOpenModal = async (postId?: string) => {
+    if(postId) {
+      setPostId(postId)
+      setIsModalOpen(true)
+    }
+  }
+  
+  const handleCloseModal = () => {
+    setPostId(null)
+    setIsModalOpen(false)
+  }
+
   return (
     <div className='w-full'>
       {
         userPosts.map(post => {
           return (
             <PostCard
-              deletePost={true}
               post={post}
+              actions={canEdit ? actions : undefined}
               key={post.id}
             />
           )
         })
       }
+
+      <ConfirmModal
+        title='Deseja apagar a postagem?'
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleDeletePost}
+        isDismissable
+      >
+        <p>Após apagar a postagem não será possível recuperá-la</p>
+      </ConfirmModal>
     </div>
   )
 }
