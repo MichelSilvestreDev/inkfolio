@@ -6,6 +6,7 @@ import { convertToBRACurrency } from '../../../utils/convertToBRACurrency'
 import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { Key } from 'react'
+import PostContactBtn from './PostContactBtn'
 
 interface ICard {
   post: IPost,
@@ -24,14 +25,7 @@ export interface IActionOption {
   color?: string
 }
 
-const PostCard: React.FC<ICard> = ({ post, actions }) => {  
-  // const shareOnWhatsApp = () => {
-  //   const message = `Olá! Acabei de encontrar uma tatuagem que me interessou muito no Inkfolio, chamada ${post.title}, Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
-
-  //   const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
-  //   window.open(whatsappUrl, '_blank');
-  // }
-
+const PostCard: React.FC<ICard> = ({ post, actions }) => {
   // const query = useQuery("delete-post", handleDeletePost)
 
   const handleAction = async (key: Key) => {
@@ -90,7 +84,10 @@ const PostCard: React.FC<ICard> = ({ post, actions }) => {
             </div>
           </div>
          <div style={{textAlign: 'end'}}>
-            {/* <Button onClick={shareOnWhatsApp} radius="full" size="sm" className='mt-2 min-w-16 px-8' color='primary'>Pedir orçamento</Button> */}
+            <PostContactBtn
+              title={post.title}
+              phone='551145017730'
+            />
          </div>
         </div>
       </CardBody>
