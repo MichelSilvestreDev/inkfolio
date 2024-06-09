@@ -7,6 +7,8 @@ import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { Key } from 'react'
 import PostContactBtn from './PostContactBtn'
+import useProfile from '../../../hooks/profile/useProfile'
+import { DiallingCodes } from '../../../types/enums/diallingCode.enum'
 
 interface ICard {
   post: IPost,
@@ -26,7 +28,7 @@ export interface IActionOption {
 }
 
 const PostCard: React.FC<ICard> = ({ post, actions }) => {
-  // const query = useQuery("delete-post", handleDeletePost)
+  const { profile } = useProfile()
 
   const handleAction = async (key: Key) => {
     const option = actions?.options.find(option => option.key === key)
@@ -86,7 +88,7 @@ const PostCard: React.FC<ICard> = ({ post, actions }) => {
          <div style={{textAlign: 'end'}}>
             <PostContactBtn
               title={post.title}
-              phone='551145017730'
+              phone={`${DiallingCodes.Brazil}${profile?.phone}`}
             />
          </div>
         </div>
