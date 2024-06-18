@@ -25,7 +25,7 @@ const GetPostsService = async () => {
     return posts
   } catch (err) {
     console.error('Erro ao obter posts:', err)
-    throw err
+    throw new Error()
   }
 }
 
