@@ -1,4 +1,4 @@
-export interface IPostFormValues {
+interface IPostFormValues {
   title: string
   description: string
   styles: string[]
@@ -11,7 +11,7 @@ export interface IPostFormValues {
   deleted_at?: string
 }
 
-export interface IPost {
+interface IPost {
   id: string
   user: IPostUser
   title: string
@@ -24,7 +24,7 @@ export interface IPost {
   deleted_at?: string
 }
 
-export interface IPostUser {
+interface IPostUser {
   id: string
   email: string
   name: string
@@ -32,10 +32,12 @@ export interface IPostUser {
   profileUrl: string
 }
 
-export interface ITattooStyles {
+interface ITattooStyles {
   name: string
   description?: string
   img: string
   value: string
   url: string
 }
+
+export type { IPostFormValues, IPost, IPostUser, ITattooStyles }
