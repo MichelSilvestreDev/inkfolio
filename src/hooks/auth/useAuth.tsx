@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { changeUser, logout, selectUser } from "../../store/auth/authSlice"
-import { UserData, UserCredentials, UserFormValues } from "../../types/auth.types"
+import { IUserData, IUserCredentials, IUserFormValues } from "../../types/auth.types"
 import { GetUserService, SigInService, SigUpService, SignOutService } from "../../services/authService"
 import Cookies from 'js-cookie';
 import { getProfile } from "../../services/profileService"
@@ -25,7 +25,7 @@ export const useAuth = () => {
       setIsLoading(true)
       await GetUserService().then(async (res) => {
         if (token && res) {
-          const userData: UserData = {
+          const userData: IUserData = {
             uid: res.uid,
             displayName: res.displayName,
             email: res.email,
@@ -58,12 +58,12 @@ export const useAuth = () => {
     fetchUserData()
   }, [fetchUserData])
 
-  const sigIn = async (userCreds: UserCredentials) => {
+  const sigIn = async (userCreds: IUserCredentials) => {
     setIsLoading(true)
 
     await SigInService(userCreds).then( async (result) => {
       if(typeof(result) === 'object') {
-        const user: UserData = {
+        const user: IUserData = {
           uid: result.user.uid,
           displayName: result.user.displayName,
           email: result.user.email,
@@ -86,12 +86,12 @@ export const useAuth = () => {
     })
   }
 
-  const sigUp = async (userCreds: UserFormValues) => {
+  const sigUp = async (userCreds: IUserFormValues) => {
     setIsLoading(true)
 
     await SigUpService(userCreds).then((result) => {
       if(typeof(result) === 'object') {
-        const user: UserData = {
+        const user: IUserData = {
           uid: result.uid,
           displayName: result.displayName,
           email: result.email,
