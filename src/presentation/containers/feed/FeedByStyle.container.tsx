@@ -1,4 +1,3 @@
-import usePost from '../../../hooks/posts/usePost'
 import PostCard from '../../components/feed/PostCard'
 import tattooStyles from '../../../assets/data/tattooStyles'
 import CardSkeleton from '../../components/feed/CardSkeleton'
@@ -6,6 +5,8 @@ import { Button } from '@nextui-org/react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import ALertMessage from '../../../common/AlertMessage'
+import usePosts from '../../../services/usePosts'
+import { IQueryParams } from '../../../types/query.types'
 
 interface IFeed {
   tattooStyle: string
@@ -13,13 +14,13 @@ interface IFeed {
 
 const FeedByStyleContainer: React.FC<IFeed> = ({tattooStyle}) => {
   const style = tattooStyles.find(e => e.url === tattooStyle);
-  const queryParam = style ? style.value : "";
+  const queryParam: IQueryParams | undefined = style ? {key: "styles", value: style.value} : undefined;
 
   // Hooks
-  const { getPostsByStyle } = usePost();
+  const { getPosts } = usePosts();
   const { data: posts, isLoading, isError } = useQuery({
     queryKey: ["postsByStyle", style],
-    queryFn: () => getPostsByStyle(queryParam),
+    queryFn: () => getPosts(queryParam),
     enabled: !!style
   });
 

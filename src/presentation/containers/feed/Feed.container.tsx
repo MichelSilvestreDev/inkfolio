@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import usePost from '../../../hooks/posts/usePost';
 import CardSkeleton from '../../components/feed/CardSkeleton';
 import PostCard from '../../components/feed/PostCard';
 import ALertMessage from '../../../common/AlertMessage';
+import usePosts from '../../../services/usePosts';
+import { IPost } from '../../../types/posts.types';
 
 const FeedContainer: React.FC = () => {
   // Hooks
-  const { getPosts } = usePost()
+  const { getPosts } = usePosts()
   const { data: posts, isLoading, isError } = useQuery({
     queryKey: ['posts'],
     queryFn: getPosts
@@ -30,7 +31,7 @@ const FeedContainer: React.FC = () => {
   return (
     <div  className='container'>
       {
-        posts?.map(post => {
+        posts?.map((post: IPost) => {
           return (
             <PostCard key={post.id} post={post} />
           )

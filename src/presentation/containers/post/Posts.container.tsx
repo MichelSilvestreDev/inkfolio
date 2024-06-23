@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { IPostFormValues, IPostUser } from '../../../types/posts.types'
-import usePost from '../../../hooks/posts/usePost'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import PostForm from '../../components/posts/PostForm'
 import PostFilesForm from '../../components/posts/PostFilesForm'
@@ -11,6 +10,8 @@ import useNotification from '../../../hooks/common/useNotification'
 import { useAuth } from '../../../hooks/auth/useAuth'
 import useProfile from '../../../hooks/profile/useProfile'
 import { Button } from '@nextui-org/react'
+import usePosts from '../../../services/usePosts'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const initialValues:IPostFormValues = {
   title: '',
@@ -35,7 +36,7 @@ const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
   // Hooks
   const { user } = useAuth()
   const { profile } = useProfile()
-  const { isLoading: posting, newPost } = usePost()
+  const { createPost } = usePosts()
   const { isLoading: uploading, uploadFiles } = useUploadFile()
   const {successMessage, errorMessage} = useNotification()
   // States
@@ -43,6 +44,10 @@ const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null)
   const [previewFiles, setPreviewFiles] = useState<string[]>([])
   const [formStep, setFormStep] = useState<NewPostSteps.STEP1 | NewPostSteps.STEP2>(NewPostSteps.STEP1)
+  const postMutation = useMutation({
+    mutationFn: (newPost: IPostFormValues) => createPost(newPost)
+  })
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     if (selectedFiles) {
@@ -58,7 +63,6 @@ const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
           };
 
           reader.onerror = reject;
-
           reader.readAsDataURL(file);
         });
 
@@ -139,10 +143,11 @@ const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
   const submitPost = async (post: IPostFormValues) => {
 
     try {
-      await newPost(post);
+      postMutation.mutate(post);
       successMessage('Post publicado com sucesso!');
       setTimeout(() => {
         closeModal();
+        queryClient.invalidateQueries({ queryKey: ['userPosts'] })
       }, 1000);
     } catch (error) {
       console.error('Error submitting post:', error);
@@ -191,7 +196,7 @@ const PostContainer: React.FC<IContainer> = ({ closeModal }: IContainer) => {
                     handleSubmit={handleSubmit}
                     handleInputChange={handleInputChange}
                     setSelectedFiles={setSelectedFiles}
-                    posting={uploading || posting}
+                    posting={uploading || postMutation.isPending}
                   />
 
                   <Button
