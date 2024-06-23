@@ -5,6 +5,7 @@ import {
   collection,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
 } from 'firebase/firestore'
@@ -17,12 +18,13 @@ const usePosts = () => {
     try {
       const postsRef = collection(db, 'posts')
       const posts: IPost[] = []
-      // const queryParams = params ? query(postsRef, where(params?.key, '==', params.value)) : null
-      const querySnapshot = await getDocs(postsRef)
+      const getQuery = params
+        ? query(postsRef, where(params.key, '==', params.value), orderBy('created_at', 'desc'))
+        : query(postsRef, orderBy('created_at', 'desc'))
+      const querySnapshot = await getDocs(getQuery)
 
       querySnapshot.forEach((doc) => {
         const post = doc.data() as IPost
-        console.log(post, 'aaaaaaaaaaaaaaaaaa')
         posts.push(post)
       })
 
@@ -41,10 +43,8 @@ const usePosts = () => {
       const docRef: DocumentReference<DocumentData> = await addDoc(collection(db, 'posts'), newPost)
       const docSnap = await getDoc(docRef)
 
-      // if (docSnap.exists()) {
       const post = docSnap.data() as IPost
       return post
-      // }
     } catch (err) {
       console.error(err)
       throw new Error()

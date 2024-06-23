@@ -4,13 +4,15 @@ import PostCard from '../../components/feed/PostCard';
 import ALertMessage from '../../../common/AlertMessage';
 import usePosts from '../../../services/usePosts';
 import { IPost } from '../../../types/posts.types';
+import calcMilliSeconds from '../../../utils/calcMilliSeconds';
 
 const FeedContainer: React.FC = () => {
   // Hooks
   const { getPosts } = usePosts()
   const { data: posts, isLoading, isError } = useQuery({
     queryKey: ['posts'],
-    queryFn: getPosts
+    queryFn: () => getPosts(),
+    staleTime:  calcMilliSeconds(2)
   })
 
   if(isLoading) {

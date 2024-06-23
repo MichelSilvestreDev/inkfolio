@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 import ALertMessage from '../../../common/AlertMessage'
 import usePosts from '../../../services/usePosts'
 import { IQueryParams } from '../../../types/query.types'
+import calcMilliSeconds from '../../../utils/calcMilliSeconds'
 
 interface IFeed {
   tattooStyle: string
@@ -21,7 +22,8 @@ const FeedByStyleContainer: React.FC<IFeed> = ({tattooStyle}) => {
   const { data: posts, isLoading, isError } = useQuery({
     queryKey: ["postsByStyle", style],
     queryFn: () => getPosts(queryParam),
-    enabled: !!style
+    enabled: !!style,
+    staleTime: calcMilliSeconds(2)
   });
 
   if(isLoading) {

@@ -3,6 +3,7 @@ import { deleteUserPost, getUserPosts } from '../../../services/profileService'
 import PostCard, { IAction } from '../../components/feed/PostCard'
 import ConfirmModal from '../../../common/ConfirmModal'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import calcMilliSeconds from '../../../utils/calcMilliSeconds'
 
 interface IProfilePosts {
   userID: string
@@ -17,7 +18,8 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   const { data: userPosts } = useQuery({
     queryKey: ['userPosts', userID],
     queryFn: () => getUserPosts(userID),
-    enabled: !!userID
+    enabled: !!userID,
+    staleTime: calcMilliSeconds(2)
   })
 
   const actions: IAction = {
