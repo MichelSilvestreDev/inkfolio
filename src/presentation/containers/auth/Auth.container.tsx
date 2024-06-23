@@ -1,7 +1,7 @@
 import { Button, Input, Skeleton, Spinner, Tab, Tabs, Tooltip } from '@nextui-org/react'
 import { useState } from 'react'
 import { useAuth } from '../../../hooks/auth/useAuth'
-import { UserCredentials, UserFormValues } from '../../../types/auth.types'
+import { IUserCredentials, IUserFormValues } from '../../../types/auth.types'
 
 interface IContainer {
   isLogin: boolean
@@ -16,7 +16,7 @@ const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
   const [selected, setSelected] = useState<string>(isLogin ? 'login' : 'sigup');
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
-    const userCreds: UserCredentials = {
+    const userCreds: IUserCredentials = {
       userEmail: userEmail,
       userPassword: userPassword
     }
@@ -25,7 +25,7 @@ const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
   }
 
   const handleCreateAccount = async (event: { preventDefault: () => void }) => {
-    const userCreds: UserFormValues = {
+    const userCreds: IUserFormValues = {
       email: userEmail,
       password: userPassword
     }

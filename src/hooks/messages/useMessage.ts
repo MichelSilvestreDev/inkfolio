@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { PostMessageValues } from '../../types/message.types'
+import { IPostMessageValues } from '../../types/message.types'
 import { NewMessageService } from '../../services/MessageService'
 
 const useMessage = () => {
   // States
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const newMessage = async (message: PostMessageValues) => {
+  const newMessage = async (message: IPostMessageValues) => {
     setIsLoading(true)
     const created: string = new Date().toISOString()
 

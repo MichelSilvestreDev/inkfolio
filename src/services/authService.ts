@@ -8,11 +8,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth'
-import { UserCredentials, UserFormValues } from '../types/auth.types'
+import { IUserCredentials, IUserFormValues } from '../types/auth.types'
 import { firebaseAuth } from '../config/firebase/baseConfig'
 import { handleSendMail } from './mailService'
 
-type UserResponse = {
+interface IUserResponse {
   user: User
   token: string
 }
@@ -36,12 +36,12 @@ export const GetUserService = async (): Promise<User | null> => {
 export const SigInService = async ({
   userEmail,
   userPassword,
-}: UserCredentials): Promise<UserResponse | boolean> => {
+}: IUserCredentials): Promise<IUserResponse | boolean> => {
   try {
     const result = await signInWithEmailAndPassword(firebaseAuth, userEmail, userPassword)
     const token = await result.user.getIdToken()
 
-    const userResponse: UserResponse = {
+    const userResponse: IUserResponse = {
       user: result.user,
       token: token,
     }
@@ -55,12 +55,12 @@ export const SigInService = async ({
 export const SigUpService = async ({
   email,
   password,
-}: UserFormValues): Promise<User | boolean> => {
+}: IUserFormValues): Promise<User | boolean> => {
   try {
     const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
-    if(result){
-      handleSendMail('lead_new_user', 'template_vflyum6', '', email);
-      handleSendMail('wellcome_user', 'template_ggdcup6', email, '');
+    if (result) {
+      handleSendMail('lead_new_user', 'template_vflyum6', '', email)
+      handleSendMail('wellcome_user', 'template_ggdcup6', email, '')
     }
     return result.user
   } catch (err) {
