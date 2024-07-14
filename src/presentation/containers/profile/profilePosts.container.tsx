@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { deleteUserPost, getUserPosts } from '../../../services/profileService'
 import PostCard, { IAction } from '../../components/feed/PostCard'
 import ConfirmModal from '../../../common/ConfirmModal'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import calcMilliSeconds from '../../../utils/calcMilliSeconds'
+import usePosts from '../../../services/usePosts'
 
 interface IProfilePosts {
   userID: string
@@ -11,6 +11,8 @@ interface IProfilePosts {
 }
 
 const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
+  // Hooks
+  const { getUserPosts, deletePost } = usePosts()
   // States
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [postId, setPostId] = useState<string | null>(null)
@@ -33,7 +35,7 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   }
 
   const onDelete = async (postId: string) => {
-    await deleteUserPost(postId)
+    await deletePost(postId)
     queryClient.invalidateQueries({queryKey: ['userPosts']})
     handleCloseModal()
   }

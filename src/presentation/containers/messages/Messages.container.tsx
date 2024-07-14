@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../../../hooks/auth/useAuth';
 import { IPostMessageValues } from '../../../types/message.types';
 import MessageForm from '../../components/messages/MessageForm';
 import { DeleteUserMessage, GetUserMessages, NewMessageService } from '../../../services/MessageService';
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from '@nextui-org/react';
+import useAuth from '../../../services/useAuth';
 
 const initialValues: IPostMessageValues = {
   id: '',

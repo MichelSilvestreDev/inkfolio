@@ -7,11 +7,11 @@ import PreviewFiles from '../../components/posts/PreviewFiles'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import useNotification from '../../../hooks/common/useNotification'
-import { useAuth } from '../../../hooks/auth/useAuth'
-import useProfile from '../../../hooks/profile/useProfile'
 import { Button } from '@nextui-org/react'
 import usePosts from '../../../services/usePosts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import useProfile from '../../../services/useProfile'
+import useAuth from '../../../services/useAuth'
 
 const initialValues:IPostFormValues = {
   title: '',

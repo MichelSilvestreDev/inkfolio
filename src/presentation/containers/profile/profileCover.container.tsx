@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import ProfileCover from '../../components/profile/ProfileCover'
-import useProfile from '../../../hooks/profile/useProfile'
 import useUploadFile from '../../../hooks/posts/useUploadFile'
 import { ToastContainer } from 'react-toastify'
 import useNotification from '../../../hooks/common/useNotification'
 import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../../types/profile.types'
+import useProfile from '../../../services/useProfile'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface IProfileCover {
   profile: IProfile
@@ -14,7 +15,11 @@ interface IProfileCover {
 
 const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
   // Hooks
-  const { editProfileCover, isLoading } = useProfile()
+  const { updateProfileCover } = useProfile()
+  const profileMutate = useMutation({
+    mutationFn: (coverUrl: string) => updateProfileCover(coverUrl)
+  })
+  const queryClient = useQueryClient()
   const { uploadFiles } = useUploadFile()
   const { successMessage, errorMessage } = useNotification()
   // States
@@ -34,11 +39,12 @@ const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
         coverUrl = uploadedUrls[0];
       }
 
-      await editProfileCover(coverUrl)
+      profileMutate.mutate(coverUrl)
       successMessage('Imagem de capa salva com sucesso!')
 
       setTimeout(() => {
         closeModal()
+        queryClient.invalidateQueries('profile')
       }, 2000)
     } catch(err) {
       console.error('Erro ao atualiza a imagem de capa do perfil', err)
@@ -93,7 +99,7 @@ const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
         handleFiles={handleFiles}
         previewFiles={previewFiles}
         submitProfileCover={submitProfileCover}
-        isLoading={isLoading}
+        isLoading={profileMutate.isPending}
         isModalOpen={isMoadalOpen}
         openModal={openModal}
         closeModal={closeModal}

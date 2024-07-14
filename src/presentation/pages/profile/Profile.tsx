@@ -1,8 +1,8 @@
-import { useAuth } from '../../../hooks/auth/useAuth'
 import ProfilePostsContainer from '../../containers/profile/profilePosts.container'
 import ProfileCoverContainer from '../../containers/profile/profileCover.container'
 import ProfileHeader from '../../components/profile/ProfileHeader'
-import useProfile from '../../../hooks/profile/useProfile'
+import useProfile from '../../../services/useProfile'
+import useAuth from '../../../services/useAuth'
 
 const Profile: React.FC = () => {
   // Hooks

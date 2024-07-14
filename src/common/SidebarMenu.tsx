@@ -1,17 +1,17 @@
 import { AddFour, Calendar, Close, HamburgerButton, Home, Logout, Message, Search, TipsOne } from '@icon-park/react'
 import { Modal, ModalBody, ModalContent, ModalHeader, Skeleton, Tooltip, User, useDisclosure } from '@nextui-org/react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../hooks/auth/useAuth'
 import PostContainer from '../presentation/containers/post/Posts.container'
-import useProfile from '../hooks/profile/useProfile'
 import InkFolioLogo from '/logos/InkFolio-black.png'
 import { useState } from 'react'
+import useProfile from '../services/useProfile'
+import useAuth from '../services/useAuth'
 
 const SidebarMenu: React.FC = () => {
   // States
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   // Hooks
-  const { user, isLoading, signOut } = useAuth()
+  const { user, userQuery, userSignOut } = useAuth()
   const {profile} = useProfile()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -19,7 +19,7 @@ const SidebarMenu: React.FC = () => {
     onOpenChange()
   }
 
-  if(isLoading) {
+  if(userQuery.isLoading) {
     return (
       <div className='w-full h-screen border-r border-gray-50 shadow-xl bg-white pt-8'>
         <ul className='px-4 flex flex-col gap-8'>
@@ -111,7 +111,7 @@ const SidebarMenu: React.FC = () => {
               </li>
             </Tooltip>
           </Link>
-          <div onClick={signOut} className='cursor-pointer'>
+          <div onClick={userSignOut} className='cursor-pointer'>
             <li className='flex gap-4 h-11 items-center rounded-lg pl-4 hover:bg-gray-100 ease-linear duration-200'>
               <Logout theme='outline' size='24' fill='#333' strokeWidth={3}/>
                 Sair

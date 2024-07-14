@@ -3,6 +3,8 @@ import {
   DocumentReference,
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   getDoc,
   getDocs,
   orderBy,
@@ -35,6 +37,24 @@ const usePosts = () => {
     }
   }
 
+  const getUserPosts = async (userId: string): Promise<IPost[]> => {
+    try {
+      const postsRef = collection(db, 'posts')
+      const userPosts: IPost[] = []
+      const res = query(postsRef, where('user.id', '==', userId))
+      const querySnapshot = await getDocs(res)
+      querySnapshot.forEach((doc) => {
+        const post = doc.data()
+        post.id = doc.id
+        userPosts.push(post as IPost)
+      })
+      return userPosts
+    } catch (err) {
+      console.error(err)
+      throw new Error()
+    }
+  }
+
   const createPost = async (newPost: IPostFormValues): Promise<IPost> => {
     try {
       const created: string = new Date().toISOString()
@@ -51,9 +71,21 @@ const usePosts = () => {
     }
   }
 
+  const deletePost = async (postId: string) => {
+    try {
+      const postRef = doc(db, 'posts', postId)
+      await deleteDoc(postRef)
+      console.log('Post deletado com sucesso!')
+    } catch (err) {
+      console.error('Erro ao deletar o post:', err)
+    }
+  }
+
   return {
     getPosts,
+    getUserPosts,
     createPost,
+    deletePost,
   }
 }
 
