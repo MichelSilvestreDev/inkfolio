@@ -8,15 +8,15 @@ import useAuth from '../../../services/useAuth'
 const Login: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
-  const {user, userQuery} = useAuth()
-  const {profile, profileQuery} = useProfile()
+  const {user, isLoading: fetchingUser} = useAuth()
+  const {profile, isLoading: fetchingProfile} = useProfile()
 
   useEffect(() => {
     /*
     * Redict user to complete your register or to profile page if his profile is complete
     */
     if(user.uid && profile.name === '') {
-      if(!userQuery.isLoading && !profileQuery.isLoading) {
+      if(!fetchingUser && !fetchingProfile) {
         if(profile.name === ''){
           navigate('/completar-cadastro')
         } else {
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       */
       navigate('/perfil')
     }
-  }, [profile, profileQuery.isLoading, user.uid, userQuery.isLoading])
+  }, [profile, fetchingProfile, user.uid, fetchingUser])
 
   return (
     <div className={`w-full h-screen flex justify-center items-center auth-bg login-page`}>

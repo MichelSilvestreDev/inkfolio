@@ -4,20 +4,16 @@ import { IProfile } from '../types/profile.types'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeProfile, selectProfile } from '../store/profile/profileSlice'
 import { selectUser } from '../store/auth/authSlice'
-import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
 const useProfile = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const profile = useSelector(selectProfile)
   const user = useSelector(selectUser)
   const dispatch = useDispatch()
 
-  const profileQuery = useQuery({
-    queryKey: ['profile'],
-    queryFn: () => dispatchProfile,
-    enabled: !!user.uid && !profile.name,
-  })
-
   const getProfile = async (userId: string): Promise<IProfile> => {
+    setIsLoading(true)
     try {
       const profileRef = collection(db, 'profiles')
       const profiles: IProfile[] = []
@@ -31,14 +27,17 @@ const useProfile = () => {
     } catch (err) {
       console.error(err)
       throw new Error()
+    } finally {
+      setIsLoading(false)
     }
   }
 
-  const dispatchProfile = async () => {
+  const dispatchProfile = async (userId?: string): Promise<IProfile> => {
     try {
-      const profileData = await getProfile(user.uid)
+      const profileData = await getProfile(userId ?? user.uid)
       if (!profile) throw new Error()
       dispatch(changeProfile(profileData))
+      return profileData
     } catch (err) {
       console.error(err)
       throw new Error()
@@ -99,9 +98,10 @@ const useProfile = () => {
 
   return {
     profile,
-    profileQuery,
+    isLoading,
     getProfile,
     getPublicProfile,
+    dispatchProfile,
     createProfile,
     updateProfile,
     updateProfileCover,

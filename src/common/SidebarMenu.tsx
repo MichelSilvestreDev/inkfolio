@@ -11,7 +11,7 @@ const SidebarMenu: React.FC = () => {
   // States
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   // Hooks
-  const { user, userQuery, userSignOut } = useAuth()
+  const { user, isLoading, userSignOut } = useAuth()
   const {profile} = useProfile()
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -19,7 +19,7 @@ const SidebarMenu: React.FC = () => {
     onOpenChange()
   }
 
-  if(userQuery.isLoading) {
+  if(isLoading) {
     return (
       <div className='w-full h-screen border-r border-gray-50 shadow-xl bg-white pt-8'>
         <ul className='px-4 flex flex-col gap-8'>

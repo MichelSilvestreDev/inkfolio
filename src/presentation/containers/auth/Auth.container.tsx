@@ -9,12 +9,11 @@ interface IContainer {
 
 const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
   // Hooks
-  const { userQuery, userSigIn, userSigUp } = useAuth()
+  const { isLoading, userSigIn, userSigUp } = useAuth()
   // States
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
   const [selected, setSelected] = useState<string>(isLogin ? 'login' : 'sigup');
-  const isLoading = userQuery.isLoading
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
     const userCreds: IUserCredentials = {

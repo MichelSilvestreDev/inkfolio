@@ -13,8 +13,10 @@ import { firebaseAuth } from '../config/firebase/baseConfig'
 import { handleSendMail } from './mailService'
 import { useDispatch, useSelector } from 'react-redux'
 import { changeUser, selectUser } from '../store/auth/authSlice'
-import { useQuery } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
+import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useProfile from './useProfile'
 
 interface IUserResponse {
   user: User
@@ -22,55 +24,66 @@ interface IUserResponse {
 }
 
 const useAuth = () => {
+  // Hooks
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { dispatchProfile } = useProfile()
+  // States
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const user = useSelector(selectUser)
   const token = Cookies.get('token')
-  const dispatch = useDispatch()
-  const userQuery = useQuery({
-    queryKey: ['user'],
-    queryFn: () => dispathUser,
-    enabled: !!token,
-  })
 
   setPersistence(firebaseAuth, browserLocalPersistence)
   const auth = getAuth()
 
-  // const fetchUserData = async () => {
-  //   console.log('aaaaaaaaaa')
-  //   try {
-  //     const userData = await getUser()
+  const fetchUserData = useCallback(async () => {
+    if (!user.uid) {
+      setIsLoading(true)
+      try {
+        await dispathUser()
+      } catch (err) {
+        console.error(err)
+        throw new Error()
+      } finally {
+        setIsLoading(false)
+      }
+      // await GetUserService()
+      //   .then(async (res) => {
+      //     if (token && res) {
+      //       const userData: IUserData = {
+      //         uid: res.uid,
+      //         displayName: res.displayName,
+      //         email: res.email,
+      //         emailVerified: res.emailVerified,
+      //         phoneNumber: res.phoneNumber,
+      //         photoUrl: res.photoURL,
+      //         isLogged: true,
+      //       }
+      //       dispatch(changeUser(userData))
+      //       const profile = await dispatchProfile(userData.uid)
+      //       if (!profile) navigate('/completar-cadastro')
+      //     } else {
+      //       console.log('Usuário não autenticado.')
+      //     }
+      //   })
+      //   .catch((err: any) => {
+      //     console.error(err)
+      //   })
+      //   .finally(() => {
+      //     setIsLoading(false)
+      //   })
+    }
+  }, [user.uid])
 
-  //     if(userData) {
-
-  //       return userData
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw new Error();
-  //   }
-  //     .then(async (res) => {
-  //       if (token && res) {
-  //         const userData: IUserData = {
-
-  //         }
-  //         const profileData = await getProfile(user.uid)
-  //         if (profileData) {
-  //           dispatch(changeProfile(profileData))
-  //         } else {
-  //           navigate('/completar-cadastro')
-  //           dispatch(changeUser(userData))
-  //         }
-  //       } else {
-  //         console.log('Usuário não autenticado.')
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err)
-  //     })
-  // }
+  useEffect(() => {
+    fetchUserData()
+  }, [fetchUserData])
 
   const dispathUser = async () => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    console.log('aqui')
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) throw new Error()
+      if (!token) console.error('Usuário não autenticado')
 
       const userData: IUserData = {
         uid: user.uid,
@@ -82,6 +95,8 @@ const useAuth = () => {
         isLogged: true,
       }
       dispatch(changeUser(userData))
+      const profile = await dispatchProfile(userData.uid)
+      if (!profile) navigate('/completar-cadastro')
       unsubscribe()
     })
   }
@@ -135,7 +150,7 @@ const useAuth = () => {
 
   return {
     user,
-    userQuery,
+    isLoading,
     userSigIn,
     userSigUp,
     userSignOut,
