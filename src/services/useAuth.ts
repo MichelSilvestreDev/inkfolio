@@ -47,31 +47,6 @@ const useAuth = () => {
       } finally {
         setIsLoading(false)
       }
-      // await GetUserService()
-      //   .then(async (res) => {
-      //     if (token && res) {
-      //       const userData: IUserData = {
-      //         uid: res.uid,
-      //         displayName: res.displayName,
-      //         email: res.email,
-      //         emailVerified: res.emailVerified,
-      //         phoneNumber: res.phoneNumber,
-      //         photoUrl: res.photoURL,
-      //         isLogged: true,
-      //       }
-      //       dispatch(changeUser(userData))
-      //       const profile = await dispatchProfile(userData.uid)
-      //       if (!profile) navigate('/completar-cadastro')
-      //     } else {
-      //       console.log('Usuário não autenticado.')
-      //     }
-      //   })
-      //   .catch((err: any) => {
-      //     console.error(err)
-      //   })
-      //   .finally(() => {
-      //     setIsLoading(false)
-      //   })
     }
   }, [user.uid])
 

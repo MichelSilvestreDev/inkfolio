@@ -6,7 +6,7 @@ import useNotification from '../../../hooks/common/useNotification'
 import 'react-toastify/dist/ReactToastify.css';
 import { IProfile } from '../../../types/profile.types'
 import useProfile from '../../../services/useProfile'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
 interface IProfileCover {
   profile: IProfile
@@ -15,11 +15,10 @@ interface IProfileCover {
 
 const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
   // Hooks
-  const { updateProfileCover } = useProfile()
+  const { updateProfileCover, dispatchProfile } = useProfile()
   const profileMutate = useMutation({
     mutationFn: (coverUrl: string) => updateProfileCover(coverUrl)
   })
-  const queryClient = useQueryClient()
   const { uploadFiles } = useUploadFile()
   const { successMessage, errorMessage } = useNotification()
   // States
@@ -44,7 +43,8 @@ const ProfileCoverContainer: React.FC<IProfileCover> = ({profile, canEdit}) => {
 
       setTimeout(() => {
         closeModal()
-        queryClient.invalidateQueries('profile')
+        dispatchProfile()
+        // queryClient.invalidateQueries('profile')
       }, 2000)
     } catch(err) {
       console.error('Erro ao atualiza a imagem de capa do perfil', err)
