@@ -12,11 +12,12 @@ import { IUserCredentials, IUserData, IUserFormValues } from '../types/auth.type
 import { firebaseAuth } from '../config/firebase/baseConfig'
 import { handleSendMail } from './mailService'
 import { useDispatch, useSelector } from 'react-redux'
-import { changeUser, selectUser } from '../store/auth/authSlice'
+import { changeUser, logout, selectUser } from '../store/auth/authSlice'
 import Cookies from 'js-cookie'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useProfile from './useProfile'
+import { removeProfile } from '../store/profile/profileSlice'
 
 interface IUserResponse {
   user: User
@@ -55,7 +56,6 @@ const useAuth = () => {
   }, [fetchUserData])
 
   const dispathUser = async () => {
-    console.log('aqui')
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) throw new Error()
       if (!token) console.error('Usuário não autenticado')
@@ -79,7 +79,7 @@ const useAuth = () => {
   const userSigIn = async ({
     userEmail,
     userPassword,
-  }: IUserCredentials): Promise<IUserResponse | boolean> => {
+  }: IUserCredentials): Promise<IUserResponse> => {
     try {
       const result = await signInWithEmailAndPassword(firebaseAuth, userEmail, userPassword)
       const token = await result.user.getIdToken()
@@ -93,11 +93,11 @@ const useAuth = () => {
       return userResponse
     } catch (err) {
       console.error(err)
-      return false
+      throw new Error()
     }
   }
 
-  const userSigUp = async ({ email, password }: IUserFormValues): Promise<User | boolean> => {
+  const userSigUp = async ({ email, password }: IUserFormValues): Promise<User> => {
     try {
       const result = await createUserWithEmailAndPassword(firebaseAuth, email, password)
       if (result) {
@@ -108,17 +108,20 @@ const useAuth = () => {
       return result.user
     } catch (err) {
       console.error(err)
-      return false
+      throw new Error()
     }
   }
 
-  const userSignOut = async (): Promise<boolean> => {
+  const userSignOut = async () => {
     try {
       await signOut(firebaseAuth)
-      return true
+      navigate('/')
+      dispatch(logout())
+      dispatch(removeProfile())
+      Cookies.remove('token')
     } catch (err) {
       console.error(err)
-      return false
+      throw new Error()
     }
     1
   }
