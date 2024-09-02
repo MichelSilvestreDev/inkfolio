@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
-import { deleteUserPost, getUserPosts } from "../../../services/profileService"
-import { IPost } from "../../../types/posts.types"
-import PostCard, { IAction } from "../../components/feed/PostCard"
-import ConfirmModal from "../../../common/ConfirmModal"
+import { useState } from 'react'
+import PostCard, { IAction } from '../../components/feed/PostCard'
+import ConfirmModal from '../../../common/ConfirmModal'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import calcMilliSeconds from '../../../utils/calcMilliSeconds'
+import usePosts from '../../../services/usePosts'
 
 interface IProfilePosts {
   userID: string
@@ -10,17 +11,18 @@ interface IProfilePosts {
 }
 
 const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
+  // Hooks
+  const { getUserPosts, deletePost } = usePosts()
   // States
-  const [userPosts, setUserPosts] = useState<IPost[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [postId, setPostId] = useState<string | null>(null)
-
-  useEffect(() => {
-    (async () => {
-      const posts = await getUserPosts(userID)
-      setUserPosts(posts)
-    })()
-  },[userID])
+  const queryClient = useQueryClient()
+  const { data: userPosts } = useQuery({
+    queryKey: ['userPosts', userID],
+    queryFn: () => getUserPosts(userID),
+    enabled: !!userID,
+    staleTime: calcMilliSeconds(2)
+  })
 
   const actions: IAction = {
     options: [
@@ -33,7 +35,9 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   }
 
   const onDelete = async (postId: string) => {
-    await deleteUserPost(postId)
+    await deletePost(postId)
+    queryClient.invalidateQueries({queryKey: ['userPosts']})
+    handleCloseModal()
   }
 
   const handleDeletePost = async () => {
@@ -56,7 +60,7 @@ const ProfilePostsContainer: React.FC<IProfilePosts>  = ({userID, canEdit}) => {
   return (
     <div className='w-full'>
       {
-        userPosts.map(post => {
+        userPosts?.map(post => {
           return (
             <PostCard
               post={post}

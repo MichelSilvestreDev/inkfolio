@@ -2,18 +2,18 @@ import { Button, Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, Nav
 import InkFolioLogo from '/logos/InkFolio-white.png'
 import { Link } from 'react-router-dom'
 import { useState } from 'react';
-import { useAuth } from '../hooks/auth/useAuth';
-import useProfile from '../hooks/profile/useProfile';
+import useProfile from '../services/useProfile';
+import useAuth from '../services/useAuth';
 
 const Menu: React.FC = () => {
   // Hooks
-  const {user, signOut} = useAuth()
+  const {user, userSignOut} = useAuth()
   const {profile} = useProfile()
   // States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
-    await signOut()
+    await userSignOut()
   }
 
   return (

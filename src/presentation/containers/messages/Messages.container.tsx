@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from '../../../hooks/auth/useAuth';
-import { PostMessageValues } from '../../../types/message.types';
+import { IPostMessageValues } from '../../../types/message.types';
 import MessageForm from '../../components/messages/MessageForm';
 import { DeleteUserMessage, GetUserMessages, NewMessageService } from '../../../services/MessageService';
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Tooltip } from '@nextui-org/react';
+import useAuth from '../../../services/useAuth';
 
-const initialValues: PostMessageValues = {
+const initialValues: IPostMessageValues = {
   id: '',
   label: '',
   text: '',
@@ -47,7 +47,7 @@ const MessageContainer: React.FC = () => {
   const [formData, setFormData] = useState(initialValues);
   const [isLoadingData, setIsLoading] = useState(false);
   const [messageId, setMessageId] = useState('');
-  const [messageData, setMessagesData] = useState<PostMessageValues[]>([]);
+  const [messageData, setMessagesData] = useState<IPostMessageValues[]>([]);
 
   // Function to fetch user messages
   const getUserMessages = async (userId: string) => {

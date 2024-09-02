@@ -7,8 +7,8 @@ import PostImgSlide from './PostImgSlide'
 import { Link } from 'react-router-dom'
 import { Key } from 'react'
 import PostContactBtn from './PostContactBtn'
-import useProfile from '../../../hooks/profile/useProfile'
 import { DiallingCodes } from '../../../types/enums/diallingCode.enum'
+import useProfile from '../../../services/useProfile'
 
 interface ICard {
   post: IPost,

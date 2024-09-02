@@ -1,36 +1,43 @@
-import { useEffect, useState } from 'react'
-import usePost from '../../../hooks/posts/usePost'
-import { IPost } from '../../../types/posts.types'
 import PostCard from '../../components/feed/PostCard'
 import tattooStyles from '../../../assets/data/tattooStyles'
 import CardSkeleton from '../../components/feed/CardSkeleton'
 import { Button } from '@nextui-org/react'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import ALertMessage from '../../../common/AlertMessage'
+import usePosts from '../../../services/usePosts'
+import { IQueryParams } from '../../../types/query.types'
+import calcMilliSeconds from '../../../utils/calcMilliSeconds'
 
 interface IFeed {
   tattooStyle: string
 }
 
 const FeedByStyleContainer: React.FC<IFeed> = ({tattooStyle}) => {
+  const style = tattooStyles.find(e => e.url === tattooStyle);
+  const queryParam: IQueryParams | undefined = style ? {key: "styles", value: style.value} : undefined;
+
   // Hooks
-  const { getPostsByStyle, isLoading } = usePost()
-  // States
-  const [posts, setPosts] = useState<IPost[]>()
-
-  const style = tattooStyles.find(e => e.url === tattooStyle)
-
-  useEffect(() => {
-    if(style) {
-      (async () => {
-        const postsData = await getPostsByStyle(style.value)
-        setPosts(postsData)
-      })()
-    }
-  },[style])
+  const { getPosts } = usePosts();
+  const { data: posts, isLoading, isError } = useQuery({
+    queryKey: ["postsByStyle", style],
+    queryFn: () => getPosts(queryParam),
+    enabled: !!style,
+    staleTime: calcMilliSeconds(2)
+  });
 
   if(isLoading) {
     return (
       <CardSkeleton />
+    )
+  }
+
+  if(isError) {
+    return (
+      <ALertMessage
+      message='Ocorreu um erro ao carregar os posts'
+      status='error'
+      />
     )
   }
 

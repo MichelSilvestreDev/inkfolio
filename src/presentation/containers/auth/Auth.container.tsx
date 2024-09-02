@@ -1,7 +1,7 @@
 import { Button, Input, Skeleton, Spinner, Tab, Tabs, Tooltip } from '@nextui-org/react'
 import { useState } from 'react'
-import { useAuth } from '../../../hooks/auth/useAuth'
-import { UserCredentials, UserFormValues } from '../../../types/auth.types'
+import { IUserCredentials, IUserFormValues } from '../../../types/auth.types'
+import useAuth from '../../../services/useAuth'
 
 interface IContainer {
   isLogin: boolean
@@ -9,28 +9,28 @@ interface IContainer {
 
 const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
   // Hooks
-  const { isLoading, sigIn, sigUp } = useAuth()
+  const { isLoading, userSigIn, userSigUp } = useAuth()
   // States
   const [userEmail, setUserEmail] = useState<string>('')
   const [userPassword, setUserPassword] = useState<string>('')
   const [selected, setSelected] = useState<string>(isLogin ? 'login' : 'sigup');
 
   const handleLogin = async (event: { preventDefault: () => void }) => {
-    const userCreds: UserCredentials = {
+    const userCreds: IUserCredentials = {
       userEmail: userEmail,
       userPassword: userPassword
     }
     event.preventDefault()
-    await sigIn(userCreds)
+    await userSigIn(userCreds)
   }
 
   const handleCreateAccount = async (event: { preventDefault: () => void }) => {
-    const userCreds: UserFormValues = {
+    const userCreds: IUserFormValues = {
       email: userEmail,
       password: userPassword
     }
     event.preventDefault()
-    await sigUp(userCreds)
+    await userSigUp(userCreds)
   }
 
   return (
@@ -44,7 +44,7 @@ const AuthContainer: React.FC<IContainer> = ({isLogin}) => {
         aria-label='Options'
         className='w-full flex justify-center'
         selectedKey={selected}
-        onSelectionChange={(e:any)=> setSelected(e)}
+        onSelectionChange={(e:React.Key)=> setSelected(e.toString())}
       >
           <Tab key='login' title='Login'>
             {

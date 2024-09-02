@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import AuthContainer from '../../containers/auth/Auth.container'
 import './login.styles.css'
-import { useAuth } from '../../../hooks/auth/useAuth'
-import useProfile from '../../../hooks/profile/useProfile'
 import { useEffect } from 'react'
+import useProfile from '../../../services/useProfile'
+import useAuth from '../../../services/useAuth'
 
 const Register: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
   const {user} = useAuth()
-  const {profile, getUserProfile} = useProfile()
+  const {profile, getProfile} = useProfile()
 
   useEffect(() => {
     /*
@@ -17,7 +17,7 @@ const Register: React.FC = () => {
     */
     if(user.uid && profile.name === '') {
       (async () => {
-        const profileData = await getUserProfile(user.uid)
+        const profileData = await getProfile(user.uid)
         if(profileData.name === ''){
           navigate('/completar-cadastro')
         } else {

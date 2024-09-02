@@ -1,4 +1,4 @@
-export type UserData = {
+interface IUserData {
   uid: string
   displayName: string | null
   email: string | null
@@ -8,20 +8,21 @@ export type UserData = {
   isLogged: boolean
 }
 
-// type StsTokenManager = {
+// type StsTokenManager {
 //   accessToken: string
 //   expirationTime?: number
 //   refreshToken: string
 //   isExpired: boolean
 // }
 
-export type UserCredentials = {
+interface IUserCredentials {
   userEmail: string
   userPassword: string
 }
 
-export type UserFormValues = {
+interface IUserFormValues {
   email: string
   password: string
-  // displayName: string
 }
+
+export type { IUserData, IUserCredentials, IUserFormValues }
