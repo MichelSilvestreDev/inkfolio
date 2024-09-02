@@ -3,46 +3,41 @@ import ProfilePostsContainer from '../../containers/profile/profilePosts.contain
 import ProfileCoverContainer from '../../containers/profile/profileCover.container'
 import ProfileHeader from '../../components/profile/ProfileHeader'
 import { Calendar } from '@icon-park/react'
-import useProfile from '../../../hooks/profile/useProfile'
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { initialState, IProfile } from '../../../types/profile.types'
+import useProfile from '../../../services/useProfile'
+import { useQuery } from '@tanstack/react-query'
+import ALertMessage from '../../../common/AlertMessage'
+import Loader from '../../../common/Loader'
 
 const PublicProfile: React.FC = () => {
   // Hooks
   const {profile_url} = useParams()
-  const { getUserPublicProfile, isLoading, isError } = useProfile()
-  // States
-  const [profile, setProfile] = useState<IProfile>(initialState)
-
-  useEffect(() => {
-    if(profile_url) {
-      const getProfile = async () => {
-        const profileData = await getUserPublicProfile(profile_url)
-        if(profileData) setProfile(profileData)
-      }
-      getProfile()
-    }
-  }, [profile_url])
+  const { getPublicProfile } = useProfile()
+  const { data: profile, isError, isLoading } = useQuery({
+    queryKey: ['publicProfile'],
+    queryFn: () => getPublicProfile(profile_url ?? ''),
+    enabled: !!profile_url
+  })
 
   const shareOnWhatsApp = () => {
     const message = `Olá! Acabei de encontrar seu perfil no Inkfolio. Será que poderíamos conversar para discutir um orçamento? Fico no aguardo do seu retorno. Obrigado!`;
 
-
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile.phone}&text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${profile?.phone}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
-
   }
 
   if(isLoading) {
     return (
-      <p>Carregando.........</p>
+      <Loader />
     )
   }
 
-  if(isError) {
+  if(isError || !profile) {
     return (
-      <p>Perfil não encontrado</p>
+      <ALertMessage
+        message='Ocorreu um erro ao carregar os posts'
+        status='error'
+      />
     )
   }
 

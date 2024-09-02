@@ -1,7 +1,7 @@
 import { Button } from '@nextui-org/react'
-import useProfile from '../../../hooks/profile/useProfile'
 // import { SocialMidiaEnum } from '../../../types/enums/socialMidiaEnum'
 import { Behance, FacebookOne, Instagram, Youtube } from '@icon-park/react'
+import useProfile from '../../../services/useProfile'
 
 const SocialMidiaButtons: React.FC = () => {
   // Hooks

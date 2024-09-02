@@ -1,4 +1,4 @@
-export interface IProfile {
+interface IProfile {
   user_id: string
   name: string
   phone: string
@@ -12,7 +12,7 @@ export interface IProfile {
   [key: string]: any // FIXME: remove any
 }
 
-export interface IProfileAddress {
+interface IProfileAddress {
   street?: string
   number?: string
   city?: string
@@ -20,7 +20,7 @@ export interface IProfileAddress {
   cep?: string
 }
 
-export interface IProfileRedes {
+interface IProfileRedes {
   instagram?: string
   facebook?: string
   pinterest?: string
@@ -29,7 +29,7 @@ export interface IProfileRedes {
   linkedin?: string
 }
 
-export const initialState: IProfile = {
+const initialState: IProfile = {
   user_id: '',
   name: '',
   phone: '',
@@ -53,5 +53,8 @@ export const initialState: IProfile = {
     behance: '',
     linkedin: '',
   },
-};
+}
 
+export type { IProfile, IProfileAddress, IProfileRedes }
+
+export { initialState }

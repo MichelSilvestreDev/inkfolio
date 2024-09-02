@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 import ProfileForm from '../../components/profile/ProfileForm';
 import { IProfile, initialState } from '../../../types/profile.types';
-import useProfile from '../../../hooks/profile/useProfile';
-import { useAuth } from '../../../hooks/auth/useAuth';
 import useUploadFile from '../../../hooks/posts/useUploadFile';
 import useNotification from '../../../hooks/common/useNotification';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Skeleton } from '@nextui-org/react';
+import useProfile from '../../../services/useProfile';
+import { useMutation } from '@tanstack/react-query';
+import useAuth from '../../../services/useAuth';
 
 const RegisterProfileContainer: React.FC = () => {
   // Hooks
   const navigate = useNavigate()
-  const { registerProfile, editProfile, isLoading: PostinProfile, profile } = useProfile()
+  const { profile, createProfile, updateProfile } = useProfile()
+  const createProfileMutate = useMutation({
+    mutationFn: (profile: IProfile) => createProfile(profile)
+  })
+  const updateProfileMutate = useMutation({
+    mutationFn: (profile: IProfile) => updateProfile(profile)
+  })
   const {uploadFiles, isLoading: Uploading} = useUploadFile()
   const { user } = useAuth()
   const {successMessage, errorMessage} = useNotification()
@@ -28,8 +35,6 @@ const RegisterProfileContainer: React.FC = () => {
   }
 
   const handleInputChange = (fieldName: string, value: string | number | string[]) => {
-    console.log(value);
-    
     let updatedFormData = { ...formData };
     let fieldValue = value;
     if(fieldName === 'tattoo_styles' && typeof(value) === 'string') fieldValue = value?.replace(/^,/, "");
@@ -51,7 +56,6 @@ const RegisterProfileContainer: React.FC = () => {
     }
   
     setFormData(updatedFormData);
-    
   };
   
 
@@ -68,8 +72,8 @@ const RegisterProfileContainer: React.FC = () => {
         profileData.avatar = uploadedUrls[0];
       }
 
-      if(isEditing) await editProfile(profileData)
-      else await registerProfile(profileData)
+      if(isEditing) updateProfileMutate.mutate(profileData)
+      else createProfileMutate.mutate(profileData)
 
       successMessage('Perfil salvo com sucesso!')
       setTimeout(() => {
@@ -146,7 +150,7 @@ const RegisterProfileContainer: React.FC = () => {
     <div>
       <ToastContainer />
       <ProfileForm
-        isLoading={Uploading || PostinProfile}
+        isLoading={Uploading || createProfileMutate.isPending || updateProfileMutate.isPending}
         formValues={formData}
         previewFiles={previewFiles}
         handleFiles={handleFiles}

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { UserData } from '../../types/auth.types'
+import { IUserData } from '../../types/auth.types'
 
-const initialState: UserData = {
+const initialState: IUserData = {
   uid: '',
   displayName: '',
   email: '',
@@ -37,6 +37,6 @@ export const slice = createSlice({
 
 export const { changeUser, logout } = slice.actions
 
-export const selectUser = (state: { user: UserData }) => state.user
+export const selectUser = (state: { user: IUserData }) => state.user
 
 export default slice.reducer
