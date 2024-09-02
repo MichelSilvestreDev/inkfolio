@@ -1,8 +1,8 @@
 ---
 name: Feature request
-about: Resume of the feature
+about: New feature or request
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
@@ -23,5 +23,5 @@ assignees: ''
 
 No one.
 
-### Artia's Task
+### Trello's Task
 [Task name](task URL)
