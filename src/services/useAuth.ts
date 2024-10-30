@@ -57,8 +57,8 @@ const useAuth = () => {
 
   const dispathUser = async () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (!user) throw new Error()
-      if (!token) console.error('Usuário não autenticado')
+      if (!user) return
+      if (!token) return console.error('Usuário não autenticado')
 
       const userData: IUserData = {
         uid: user.uid,
@@ -70,8 +70,12 @@ const useAuth = () => {
         isLogged: true,
       }
       dispatch(changeUser(userData))
-      const profile = await dispatchProfile(userData.uid)
-      if (!profile) navigate('/completar-cadastro')
+
+      try {
+        await dispatchProfile(userData.uid)
+      } catch {
+        if (user) navigate('/completar-cadastro')
+      }
       unsubscribe()
     })
   }
@@ -92,7 +96,6 @@ const useAuth = () => {
       dispathUser()
       return userResponse
     } catch (err) {
-      console.error(err)
       throw new Error()
     }
   }

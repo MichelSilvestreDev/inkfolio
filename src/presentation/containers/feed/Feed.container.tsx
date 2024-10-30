@@ -33,9 +33,9 @@ const FeedContainer: React.FC = () => {
   return (
     <div  className='container'>
       {
-        posts?.map((post: IPost) => {
+        posts?.map((post: IPost, index: number) => {
           return (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={index} post={post} />
           )
         })
       }
