@@ -39,8 +39,7 @@ const useProfile = () => {
       dispatch(changeProfile(profileData))
       return profileData
     } catch (err) {
-      console.error(err)
-      throw new Error()
+      throw new Error('User profile not found')
     }
   }
 
